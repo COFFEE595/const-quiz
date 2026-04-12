@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار القانون الدستوري - المستوى المتقدم</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* وضع القراءة: ألوان دافئة وتباين مريح للعين */
+    body {
+      background-color: #f3efe8;
+      font-family: 'Amiri', 'Cairo', 'Segoe UI', serif;
+      min-height: 100vh;
+      padding: 30px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .exam-container {
+      max-width: 1100px;
+      width: 100%;
+      background: #fdfbf7;  /* خلفية كريمي فاتح جداً */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      padding: 35px 30px;
+      border: 1px solid #ddd2c2;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      text-align: center;
+      color: #3b2e22;
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #c9b69c;
+      display: inline-block;
+      padding-bottom: 10px;
+      width: 100%;
+    }
+
+    .subhead {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #6b5a4a;
+      margin-bottom: 30px;
+      font-style: normal;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin: 40px 0 20px 0;
+      color: #4a3a2c;
+      border-right: 8px solid #c9b69c;
+      padding-right: 18px;
+      font-weight: 600;
+    }
+
+    .question-card {
+      background: #ffffff;
+      margin-bottom: 28px;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e8ddd1;
+      transition: all 0.2s;
+    }
+
+    .question-card:hover {
+      border-color: #c9b69c;
+      background-color: #fefcf9;
+    }
+
+    .q-num {
+      display: inline-block;
+      background: #7a6852;
+      color: white;
+      font-weight: bold;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 50%;
+      margin-left: 12px;
+      font-size: 1rem;
+    }
+
+    .q-text {
+      font-size: 1.3rem;
+      font-weight: 650;
+      color: #2c241c;
+      margin-bottom: 18px;
+      display: inline;
+    }
+
+    .options {
+      margin-top: 12px;
+      padding-right: 20px;
+    }
+
+    .option {
+      display: block;
+      margin: 12px 0;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: background 0.15s;
+      border: 1px solid transparent;
+      color: #3e3328;
+    }
+
+    .option:hover {
+      background: #f5efe7;
+      border-color: #d6c5b2;
+    }
+
+    input[type="radio"] {
+      margin-left: 14px;
+      transform: scale(1.1);
+      accent-color: #7a6852;
+      cursor: pointer;
+    }
+
+    .truefalse-group {
+      display: flex;
+      gap: 35px;
+      margin-top: 15px;
+      padding-right: 20px;
+    }
+
+    .tf-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.15rem;
+      cursor: pointer;
+      padding: 6px 18px;
+      border-radius: 30px;
+      border: 1.5px solid #d6c5b2;
+      background: #faf6f1;
+      color: #3e3328;
+    }
+
+    .tf-option:hover {
+      background: #ede3d8;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      margin: 45px 0 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: #7a6852;
+      color: white;
+      border: none;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 14px 36px;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #4e4033;
+      transition: 0.1s ease;
+      border: 1px solid #9b8a78;
+      letter-spacing: 0.5px;
+    }
+
+    .btn:hover {
+      background: #8c7a64;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #4e4033;
+    }
+
+    .btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #4e4033;
+    }
+
+    .btn.reset {
+      background: #6b7c6b;
+      box-shadow: 0 4px 0 #465246;
+      border-color: #8a9a8a;
+    }
+
+    .result-area {
+      margin-top: 35px;
+      padding: 22px;
+      background: #efe8df;
+      border-radius: 24px;
+      font-size: 1.6rem;
+      text-align: center;
+      font-weight: bold;
+      color: #2f261e;
+      border: 1px solid #d6c9bb;
+    }
+
+    .correction-detail {
+      margin-top: 20px;
+      background: #f7f2eb;
+      padding: 18px;
+      border-radius: 16px;
+      font-size: 1.05rem;
+      max-height: 380px;
+      overflow-y: auto;
+      border: 1px solid #dacfc2;
+      text-align: right;
+    }
+
+    .correct-highlight {
+      background: #e3edd9;
+      border-right: 6px solid #4f7a4f;
+      padding: 8px 15px;
+      margin: 8px 0;
+      border-radius: 8px;
+    }
+
+    .wrong-highlight {
+      background: #f0dbdb;
+      border-right: 6px solid #b35e5e;
+      padding: 8px 15px;
+      margin: 8px 0;
+      border-radius: 8px;
+    }
+
+    .exp {
+      color: #4f4237;
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      margin-top: 20px;
+      color: #7b6d5e;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .option, .tf-option {
+      direction: rtl;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="exam-container">
+  <h1>⚖️ امتحان القانون الدستوري ⚖️</h1>
+  <div class="subhead">النظرية العامة · المفاهيم الشكلية والموضوعية · طبيعة القواعد · المصادر</div>
+
+  <form id="examForm">
+    <div class="section-title">📌 القسم الأول: اختيار من متعدد</div>
+
+    <!-- س 1 (تم حذف "حسب المذكرة") -->
+    <div class="question-card" id="q1">
+      <span class="q-num">1</span><span class="q-text"> أي العبارات التالية تُجسّد بدقة المفهوم الشكلي للقانون الدستوري؟</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q1" value="a"> أ) مجموعة القواعد التي تنظّم السلطات العامة بغضّ النظر عن مصدرها، سواء كانت مكتوبة أو عرفية.</label>
+        <label class="option"><input type="radio" name="q1" value="b"> ب) مجموعة القواعد القانونية الأساسية الموجودة في الوثيقة المسماة بالدستور، والتي وضعتها هيئة خاصة بإجراءات مغايرة للقانون العادي.</label>
+        <label class="option"><input type="radio" name="q1" value="c"> ج) القواعد التي تحدد شكل الدولة (موحدة/اتحادية) ونظام الحكم (ملكي/جمهوري) وعلاقة السلطات.</label>
+        <label class="option"><input type="radio" name="q1" value="d"> د) مجموعة المبادئ العامة المستخلصة من أحكام المحكمة الدستورية العليا.</label>
+      </div>
+    </div>
+
+    <!-- س 2 -->
+    <div class="question-card" id="q2">
+      <span class="q-num">2</span><span class="q-text"> وُصِف المفهوم الشكلي بأنه "غير جامع". أي الأمثلة الآتية تُبرز هذا العيب بوضوح؟</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q2" value="a"> أ) إدراج نص المادة 171 من دستور 1956 المصري حول الجمع بين منصب وزير الحربية والقائد العام.</label>
+        <label class="option"><input type="radio" name="q2" value="b"> ب) عدم تضمين دستور 1923 المصري النص على منصب رئيس الوزراء، رغم أهميته الجوهرية في النظام البرلماني.</label>
+        <label class="option"><input type="radio" name="q2" value="c"> ج) نص دستور 1946 الفرنسي على إلغاء عقوبة الإعدام في الجرائم السياسية.</label>
+        <label class="option"><input type="radio" name="q2" value="d"> د) التعديل الدستوري الثامن عشر في أمريكا (منع الخمور).</label>
+      </div>
+    </div>
+
+    <!-- س 3 -->
+    <div class="question-card" id="q3">
+      <span class="q-num">3</span><span class="q-text"> من الانتقادات الموجهة للمفهوم الشكلي أنه "غير مانع". ما المقصود بذلك تحديدًا؟</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q3" value="a"> أ) أنه لا يشمل الأنظمة ذات الدساتير العرفية كالنظام الإنجليزي.</label>
+        <label class="option"><input type="radio" name="q3" value="b"> ب) أنه يضفي الصفة الدستورية على قواعد عادية بطبيعتها لمجرد ورودها في الوثيقة الدستورية.</label>
+        <label class="option"><input type="radio" name="q3" value="c"> ج) أنه يمنع القاضي من الرقابة على دستورية القوانين.</label>
+        <label class="option"><input type="radio" name="q3" value="d"> د) أنه يجعل دراسة القانون الدستوري مرتبطة فقط بالنصوص الجامدة.</label>
+      </div>
+    </div>
+
+    <!-- س 4 -->
+    <div class="question-card" id="q4">
+      <span class="q-num">4</span><span class="q-text"> يرى أنصار المفهوم الموضوعي أن القانون الدستوري هو:</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q4" value="a"> أ) الدستور المطبّق فعلاً في وثيقة رسمية فقط.</label>
+        <label class="option"><input type="radio" name="q4" value="b"> ب) مجموعة القواعد التي تعتبر دستورية بطبيعتها، حتى لو وردت في قوانين عادية أو عرف.</label>
+        <label class="option"><input type="radio" name="q4" value="c"> ج) فرع القانون الذي يدرس تنظيم السلطة القضائية وإجراءات التقاضي.</label>
+        <label class="option"><input type="radio" name="q4" value="d"> د) المصادر التاريخية والفلسفية لنظام الحكم.</label>
+      </div>
+    </div>
+
+    <!-- س 5 -->
+    <div class="question-card" id="q5">
+      <span class="q-num">5</span><span class="q-text"> فيما يتعلق بموضوع "الدولة" في نطاق القانون الدستوري حسب المفهوم الموضوعي:</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q5" value="a"> أ) يتفق الفقه كله على إدخال دراسة الدولة ضمن القانون الدستوري.</label>
+        <label class="option"><input type="radio" name="q5" value="b"> ب) يُستبعد موضوع الدولة نهائيًا لأن الدستور لاحق على وجود الدولة.</label>
+        <label class="option"><input type="radio" name="q5" value="c"> ج) هناك خلاف فقهي: فريق يُدخله، وفريق يستبعده لأسباب أكاديمية أو لتدريسه في النظم السياسية.</label>
+        <label class="option"><input type="radio" name="q5" value="d"> د) لا يدرس موضوع الدولة إلا في القانون الدولي العام فقط.</label>
+      </div>
+    </div>
+
+    <!-- س 6 -->
+    <div class="question-card" id="q6">
+      <span class="q-num">6</span><span class="q-text"> أي الأمثلة التالية يُعدّ دليلاً على أن المفهوم الشكلي "غير مانع"؟</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q6" value="a"> أ) تنظيم الأحزاب السياسية بقوانين عادية رغم دورها الدستوري.</label>
+        <label class="option"><input type="radio" name="q6" value="b"> ب) عدم ذكر رئيس الوزراء في دستور 1923.</label>
+        <label class="option"><input type="radio" name="q6" value="c"> ج) النص في دستور 1923 على "تصفية أملاك الخديوي السابق عباس حلمي".</label>
+        <label class="option"><input type="radio" name="q6" value="d"> د) خلو دستور 1964 من النص على الاتحاد الاشتراكي العربي.</label>
+      </div>
+    </div>
+
+    <!-- س 7 -->
+    <div class="question-card" id="q7">
+      <span class="q-num">7</span><span class="q-text"> ميّز بين الجزاءات الدستورية: أي مما يلي يُصنف "جزاءً سياسياً"؟</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q7" value="a"> أ) الحكم بعدم دستورية نص في قانون الانتخابات.</label>
+        <label class="option"><input type="radio" name="q7" value="b"> ب) مسؤولية رئيس الجمهورية عن انتهاك الدستور أمام محكمة جنائية.</label>
+        <label class="option"><input type="radio" name="q7" value="c"> ج) حق السلطة التشريعية في سحب الثقة من الوزارة.</label>
+        <label class="option"><input type="radio" name="q7" value="d"> د) بطلان التصرفات الإدارية المخالفة للدستور.</label>
+      </div>
+    </div>
+
+    <!-- س 8 -->
+    <div class="question-card" id="q8">
+      <span class="q-num">8</span><span class="q-text"> وفقًا لأنصار المدرسة الشكلية (مثل أوستن)، القاعدة الدستورية ليست قانونًا بالمعنى الصحيح لأن:</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q8" value="a"> أ) لا تنظم علاقات الأفراد فيما بينهم.</label>
+        <label class="option"><input type="radio" name="q8" value="b"> ب) لا تحتوي على أمر صادر من الحاكم مقترن بجزاء مادي توقعه السلطة العامة.</label>
+        <label class="option"><input type="radio" name="q8" value="c"> ج) مصدرها العرف وليس التشريع المكتوب.</label>
+        <label class="option"><input type="radio" name="q8" value="d"> د) تفتقر إلى الثبات والاستقرار.</label>
+      </div>
+    </div>
+
+    <!-- س 9 -->
+    <div class="question-card" id="q9">
+      <span class="q-num">9</span><span class="q-text"> أي العبارات أدق في وصف الدستور المرن؟</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q9" value="a"> أ) دستور مكتوب لا يمكن تعديله إلا بأغلبية مشددة.</label>
+        <label class="option"><input type="radio" name="q9" value="b"> ب) دستور يمكن تعديله بذات الإجراءات والشروط المتبعة لتعديل القانون العادي.</label>
+        <label class="option"><input type="radio" name="q9" value="c"> ج) دستور عرفي فقط، كالدستور الإنجليزي.</label>
+        <label class="option"><input type="radio" name="q9" value="d"> د) دستور يتمتع بعلو شكلي على القوانين العادية.</label>
+      </div>
+    </div>
+
+    <!-- س 10 -->
+    <div class="question-card" id="q10">
+      <span class="q-num">10</span><span class="q-text"> مثال الدستور المكتوب المرن هو:</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q10" value="a"> أ) دستور الولايات المتحدة 1787.</label>
+        <label class="option"><input type="radio" name="q10" value="b"> ب) دستور مصر 2014.</label>
+        <label class="option"><input type="radio" name="q10" value="c"> ج) الدستور الإيطالي القديم (1848) الذي كان يمكن تعديله بقوانين عادية.</label>
+        <label class="option"><input type="radio" name="q10" value="d"> د) دستور الجمهورية الفرنسية الخامسة 1958.</label>
+      </div>
+    </div>
+
+    <!-- س 11 -->
+    <div class="question-card" id="q11">
+      <span class="q-num">11</span><span class="q-text"> بحسب الفقه التقليدي، الفرق بين "القانون الدستوري" و"النظام الدستوري":</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q11" value="a"> أ) لا فرق، فالمصطلحان مترادفان.</label>
+        <label class="option"><input type="radio" name="q11" value="b"> ب) القانون الدستوري يوجد في كل الدول، بينما النظام الدستوري لا يوجد إلا في دول الحكومات الدستورية (الديمقراطية).</label>
+        <label class="option"><input type="radio" name="q11" value="c"> ج) النظام الدستوري أعمّ من القانون الدستوري.</label>
+        <label class="option"><input type="radio" name="q11" value="d"> د) القانون الدستوري يهتم بالحريات فقط، والنظام الدستوري بالسلطات.</label>
+      </div>
+    </div>
+
+    <!-- س 12 -->
+    <div class="question-card" id="q12">
+      <span class="q-num">12</span><span class="q-text"> حسب التحليل الفقهي، الدستور في الدول ناقصة السيادة:</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q12" value="a"> أ) لا يمكن وصفه بالدستور مطلقًا.</label>
+        <label class="option"><input type="radio" name="q12" value="b"> ب) يمكن أن يوجد، لكنه غالبًا لا يكون كاملاً في ضمان الحريات وقد يعكس إرادة دولة الحماية.</label>
+        <label class="option"><input type="radio" name="q12" value="c"> ج) لا يوجد إلا في الدول كاملة السيادة.</label>
+        <label class="option"><input type="radio" name="q12" value="d"> د) هو نفسه دستور الدولة القائمة بالحماية.</label>
+      </div>
+    </div>
+
+    <div class="section-title">📌 القسم الثاني: صح أم خطأ</div>
+
+    <!-- س 13 -->
+    <div class="question-card" id="q13">
+      <span class="q-num">13</span><span class="q-text"> "الدستور المكتوب يكون دائماً جامداً."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q13" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q13" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 14 -->
+    <div class="question-card" id="q14">
+      <span class="q-num">14</span><span class="q-text"> "المفهوم الموضوعي يستبعد من نطاق القانون الدستوري أية قاعدة واردة في الوثيقة الدستورية إذا لم تكن موضوعها دستورياً بطبيعتها."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q14" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q14" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 15 -->
+    <div class="question-card" id="q15">
+      <span class="q-num">15</span><span class="q-text"> "في الدستور المرن، لا يوجد سمو شكلي للقواعد الدستورية على القوانين العادية، بل يتساويان في القوة القانونية."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q15" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q15" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 16 -->
+    <div class="question-card" id="q16">
+      <span class="q-num">16</span><span class="q-text"> "حسب المدرسة الشكلية، يمكن وصف العمل المخالف للدستور بأنه 'غير قانوني' لأن الدستور قاعدة قانونية كاملة."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q16" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q16" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 17 -->
+    <div class="question-card" id="q17">
+      <span class="q-num">17</span><span class="q-text"> "من مزايا المفهوم الشكلي أنه يشمل دراسة الأحزاب السياسية حتى لو نُظمت بقوانين عادية."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q17" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q17" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 18 -->
+    <div class="question-card" id="q18">
+      <span class="q-num">18</span><span class="q-text"> "الدستور الإنجليزي العرفي المرن يتمتع بثبات واستقرار شكلي وقانوني يفوق استقرار الدساتير المكتوبة الجامدة."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q18" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q18" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 19 -->
+    <div class="question-card" id="q19">
+      <span class="q-num">19</span><span class="q-text"> "وجود نصوص مثل المادة 8 (التضامن الاجتماعي) في الدستور المصري يُعدّ مثالاً على قواعد موضوعية بحتة تتعلق بالسلطات."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q19" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q19" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 20 -->
+    <div class="question-card" id="q20">
+      <span class="q-num">20</span><span class="q-text"> "يعتبر القضاء في الوقت الحالي مصدراً رسمياً للقانون الدستوري في جميع الأنظمة القانونية."</span>
+      <div class="truefalse-group">
+        <label class="tf-option"><input type="radio" name="q20" value="true"> ✅ صح</label>
+        <label class="tf-option"><input type="radio" name="q20" value="false"> ❌ خطأ</label>
+      </div>
+    </div>
+
+    <!-- س 21 -->
+    <div class="question-card" id="q21">
+      <span class="q-num">21</span><span class="q-text"> (اختيار) أي من الآتي يُمثل عيباً مشتركاً بين المفهوم الشكلي والمفهوم الموضوعي معاً؟</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q21" value="a"> أ) كلاهما لا يصلح للدول ذات الدساتير العرفية.</label>
+        <label class="option"><input type="radio" name="q21" value="b"> ب) كلاهما يهمل دراسة الحريات العامة.</label>
+        <label class="option"><input type="radio" name="q21" value="c"> ج) كلاهما يجعل دراسة القانون الدستوري متغيرة بتغير الوثيقة الدستورية.</label>
+        <label class="option"><input type="radio" name="q21" value="d"> د) لا يوجد عيب مشترك، فلكل منهما مزاياه وعيوبه المستقلة.</label>
+      </div>
+    </div>
+  </form>
+
+  <div class="btn-group">
+    <button class="btn" id="submitBtn">📋 تصحيح الإجابات</button>
+    <button class="btn reset" id="resetBtn">🔄 إعادة ضبط</button>
+  </div>
+
+  <div id="resultPanel" class="result-area" style="display: none;"></div>
+  <div id="correctionPanel" class="correction-detail" style="display: none;"></div>
+  <footer>⚖️ اختبار عام في مبادئ القانون الدستوري</footer>
+</div>
+
+<script>
+  (function() {
+    const form = document.getElementById('examForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultPanel = document.getElementById('resultPanel');
+    const correctionPanel = document.getElementById('correctionPanel');
+
+    // الإجابات النموذجية (لم تتغير)
+    const answerKey = {
+      q1: 'b',
+      q2: 'b',
+      q3: 'b',
+      q4: 'b',
+      q5: 'c',
+      q6: 'c',
+      q7: 'c',
+      q8: 'b',
+      q9: 'b',
+      q10: 'c',
+      q11: 'b',
+      q12: 'b',
+      q13: 'false',
+      q14: 'true',
+      q15: 'true',
+      q16: 'false',
+      q17: 'false',
+      q18: 'false',
+      q19: 'false',
+      q20: 'false',
+      q21: 'd'
+    };
+
+    const explanations = {
+      q1: 'المفهوم الشكلي يربط القانون الدستوري بالوثيقة الدستورية المكتوبة وإجراءاتها الخاصة.',
+      q2: 'عدم النص على رئيس الوزراء في دستور 1923 مثال لعدم شمول الوثيقة لموضوعات دستورية هامة (غير جامع).',
+      q3: '"غير مانع" يعني إضفاء صفة دستورية على قواعد عادية لمجرد وجودها في الوثيقة.',
+      q4: 'المفهوم الموضوعي يعتمد على مضمون القاعدة لا مصدرها، فيشمل القواعد الدستورية بطبيعتها أينما وردت.',
+      q5: 'الخلاف قائم: بعض الفقه يُدخل الدولة والبعض يرى أنها تُدرس في النظم السياسية.',
+      q6: 'تصفية أملاك الخديوي مثال لقاعدة عادية أُدرجت في الدستور (غير مانع).',
+      q7: 'سحب الثقة جزاء سياسي تمارسه السلطة التشريعية.',
+      q8: 'المدرسة الشكلية تشترط الأمر المقرون بجزاء مادي توقعه السلطة، وهو مفقود في الدستور حسب رأيهم.',
+      q9: 'المرن يُعدل بنفس إجراءات القانون العادي.',
+      q10: 'الدستور الإيطالي 1848 مكتوب لكنه مرن (عدّلته قوانين عادية).',
+      q11: 'الفقه التقليدي يفرق: القانون الدستوري موجود بكل دولة، والنظام الدستوري خاص بالديمقراطيات.',
+      q12: 'يمكن وجود دستور في دولة ناقصة السيادة لكنه ناقص في ضمان الحريات.',
+      q13: 'خطأ: يوجد دساتير مكتوبة مرنة مثل الإيطالي 1848 والفرنسي 1814.',
+      q14: 'صح: المفهوم الموضوعي يميز القواعد بمضمونها، ويستبعد ما ليس دستورياً ولو في الوثيقة.',
+      q15: 'صح: الدستور المرن لا يتمتع بعلو شكلي، القوانين العادية والدستور في مرتبة واحدة.',
+      q16: 'خطأ: أنصار المدرسة الشكلية يرون أن مخالفة الدستور "غير دستورية" وليست "غير قانونية" لأن الدستور ليس قانوناً.',
+      q17: 'خطأ: المفهوم الشكلي يهمل الأحزاب لأنها تنظم بقوانين عادية خارج الوثيقة (عيب عدم الشمول).',
+      q18: 'خطأ: العبارة خاطئة. الدستور الإنجليزي يتمتع بـ "استقرار عملي" كبير، لكنه من الناحية الشكلية والنظرية ليس أكثر ثباتاً من الدستور الجامد.',
+      q19: 'خطأ: المادة 8 من قبيل التوجيهات العامة وليست قاعدة موضوعية تنظم السلطات.',
+      q20: 'خطأ: القضاء مصدر تفسيري في أغلب الدول، إلا في إنجلترا حيث يعتبر مصدراً رسمياً.',
+      q21: 'لا يوجد عيب مشترك بالمعنى المطروح؛ لكل مفهوم نقاط قوة وضعف مختلفة.'
+    };
+
+    function calculateScore() {
+      let total = 0;
+      let answered = 0;
+      const totalQuestions = Object.keys(answerKey).length;
+
+      for (let q in answerKey) {
+        const correct = answerKey[q];
+        const inputs = document.getElementsByName(q);
+        let selected = null;
+        for (let inp of inputs) {
+          if (inp.checked) {
+            selected = inp.value;
+            break;
+          }
+        }
+        if (selected !== null) answered++;
+        if (selected === correct) total++;
+      }
+
+      return { score: total, totalQ: totalQuestions, answered };
+    }
+
+    function showResults() {
+      const { score, totalQ, answered } = calculateScore();
+      const percentage = Math.round((score / totalQ) * 100);
+      
+      let resultHTML = `🔍 نتيجتك: ${score} / ${totalQ}  (${percentage}%) · أجبت على ${answered} سؤالاً.`;
+      if (percentage >= 85) resultHTML += `<br>🏆 مستوى متميز.`;
+      else if (percentage >= 65) resultHTML += `<br>📚 مستوى جيد جداً.`;
+      else if (percentage >= 50) resultHTML += `<br>⚠️ مستوى مقبول.`;
+      else resultHTML += `<br>📖 ينصح بالمراجعة.`;
+      
+      resultPanel.style.display = 'block';
+      resultPanel.innerHTML = resultHTML;
+
+      let correctionHTML = `<h3 style="margin-bottom:15px;">📝 تفصيل الإجابات الصحيحة:</h3>`;
+      for (let q in answerKey) {
+        const correctVal = answerKey[q];
+        const inputs = document.getElementsByName(q);
+        let userAnswer = 'لم يُجب';
+        let isCorrect = false;
+        for (let inp of inputs) {
+          if (inp.checked) {
+            userAnswer = inp.value;
+            break;
+          }
+        }
+        isCorrect = (userAnswer === correctVal);
+        
+        let correctText = '';
+        if (q.startsWith('q') && !isNaN(q.substring(1))) {
+          const qNum = parseInt(q.substring(1));
+          if (qNum <= 12 || qNum === 21) {
+            const radio = document.querySelector(`input[name="${q}"][value="${correctVal}"]`);
+            if (radio) {
+              const parentLabel = radio.closest('label');
+              if (parentLabel) correctText = parentLabel.innerText.trim().substring(2).trim();
+              else correctText = correctVal;
+            } else correctText = correctVal;
+          } else {
+            correctText = (correctVal === 'true') ? 'صح' : 'خطأ';
+          }
+        }
+
+        const explanation = explanations[q] || '';
+        const questionDiv = document.getElementById(q);
+        let questionText = '';
+        if (questionDiv) {
+          const qSpan = questionDiv.querySelector('.q-text');
+          if (qSpan) questionText = qSpan.innerText;
+          else questionText = `سؤال ${q}`;
+        } else questionText = `سؤال ${q}`;
+
+        const statusClass = isCorrect ? 'correct-highlight' : 'wrong-highlight';
+        const statusIcon = isCorrect ? '✅' : '❌';
+        correctionHTML += `<div class="${statusClass}"><strong>${statusIcon} ${questionText}</strong><br>`;
+        correctionHTML += `📌 الإجابة الصحيحة: ${correctText}`;
+        if (!isCorrect && userAnswer !== 'لم يُجب') {
+          let userText = userAnswer;
+          if (userAnswer === 'true') userText = 'صح';
+          else if (userAnswer === 'false') userText = 'خطأ';
+          else {
+            const selectedRadio = document.querySelector(`input[name="${q}"][value="${userAnswer}"]`);
+            if (selectedRadio) {
+              const label = selectedRadio.closest('label');
+              if (label) userText = label.innerText.trim().substring(2);
+            }
+          }
+          correctionHTML += `<br>❕ إجابتك: ${userText}`;
+        } else if (userAnswer === 'لم يُجب') {
+          correctionHTML += `<br>⏳ لم تختر إجابة.`;
+        }
+        correctionHTML += `<div class="exp">💡 ${explanation}</div></div>`;
+      }
+      
+      correctionPanel.style.display = 'block';
+      correctionPanel.innerHTML = correctionHTML;
+    }
+
+    function resetExam() {
+      form.reset();
+      resultPanel.style.display = 'none';
+      correctionPanel.style.display = 'none';
+      resultPanel.innerHTML = '';
+      correctionPanel.innerHTML = '';
+    }
+
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showResults();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+
+    resetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetExam();
+    });
+
+  })();
+</script>
+</body>
+</html>
