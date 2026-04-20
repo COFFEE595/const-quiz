@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>اختبار أشكال الدول · 40 سؤالاً</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f2ebe2;
+      font-family: 'Cairo', 'Segoe UI', 'Amiri', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      direction: rtl;
+      color: #2e281f;
+    }
+    .test-wrapper {
+      width: 100%;
+      max-width: 950px;
+      background: #fefcf8;
+      border-radius: 40px;
+      box-shadow: 0 18px 40px -8px rgba(60, 40, 20, 0.12);
+      border: 1px solid #e4d8ca;
+      padding: 28px 24px 32px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #4f3f2e;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #7b6852;
+      margin-bottom: 24px;
+      border-bottom: 1px dashed #d9cbbe;
+      padding-bottom: 14px;
+      font-size: 1rem;
+    }
+    .progress-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .q-counter {
+      background: #e5d9cd;
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #3f3224;
+      border: 1px solid #cdbcab;
+      font-size: 1rem;
+    }
+    .timer-display {
+      background: #d6c8b6;
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #2e261d;
+      border: 1px solid #b8a793;
+      font-family: monospace;
+      font-size: 1rem;
+    }
+    .badge-score {
+      background: #dbcdbd;
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      color: #2c241c;
+    }
+    .question-card {
+      background: #fffffffa;
+      border-radius: 32px;
+      padding: 28px 26px;
+      margin: 12px 0 20px;
+      border: 1px solid #e2d2c0;
+      box-shadow: 0 8px 14px rgba(0,0,0,0.02);
+    }
+    .q-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .q-num {
+      background: #b8a793;
+      color: #fefaf5;
+      font-weight: 700;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .q-text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #342a1f;
+      line-height: 1.5;
+    }
+    .options-container { margin: 20px 0 6px; }
+    .option-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      background: #f8f3ec;
+      border: 1.5px solid #e1d2c2;
+      border-radius: 60px;
+      padding: 14px 20px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .option-row:hover { background: #efe4d8; border-color: #b8a086; }
+    .option-row.disabled-opt {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .option-row.correct-highlight {
+      background: #d9ebd3;
+      border-color: #5f9e6e;
+    }
+    .option-row.wrong-highlight {
+      background: #ecd9d9;
+      border-color: #c38b8b;
+    }
+    .option-row input[type="radio"] {
+      margin-left: 16px;
+      accent-color: #7e6953;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .option-row label {
+      font-size: 1.05rem;
+      width: 100%;
+      cursor: pointer;
+      color: #3a3026;
+      font-weight: 450;
+    }
+    .feedback-panel {
+      margin-top: 22px;
+      background: #f3ede5;
+      border-radius: 24px;
+      padding: 18px 22px;
+      border-right: 6px solid #9e8b77;
+      font-size: 1rem;
+      display: none;
+    }
+    .feedback-correct { border-right-color: #4f7a5c; background: #ecf3e8; }
+    .feedback-wrong { border-right-color: #b57070; background: #f9efed; }
+    .explanation-text { margin-top: 8px; color: #3f352b; }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 18px;
+      gap: 15px;
+    }
+    .nav-btn {
+      background: #dbcebe;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      cursor: pointer;
+      color: #2e261d;
+      border: 1px solid #b9a693;
+      box-shadow: 0 3px 0 #a3927e;
+      transition: all 0.1s;
+      min-width: 120px;
+      font-family: 'Cairo', sans-serif;
+    }
+    .nav-btn:active { transform: translateY(3px); box-shadow: none; }
+    .nav-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: 0 3px 0 #a3927e; }
+    .finish-btn {
+      background: #8f7a64;
+      color: #fdf7f0;
+      border-color: #6e5c4c;
+      box-shadow: 0 3px 0 #5e4e3f;
+    }
+    .result-screen { text-align: center; padding: 15px 0 10px; }
+    .final-score {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: #efe2d4;
+      display: inline-block;
+      padding: 18px 48px;
+      border-radius: 80px;
+      margin: 25px 0;
+      color: #3f2f1d;
+      border: 2px solid #cab89e;
+    }
+    .time-final { font-size: 1.4rem; margin-bottom: 20px; color: #5c4f3f; }
+    .analysis-box {
+      background: #f3ede5;
+      border-radius: 24px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      text-align: right;
+      border-right: 6px solid #7a6852;
+      font-size: 1rem;
+    }
+    .section-scores {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .section-badge {
+      background: #e5d9cd;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      border: 1px solid #cdbcab;
+    }
+    .restart-btn {
+      background: #a28d78;
+      color: white;
+      border: none;
+      font-size: 1.2rem;
+      padding: 16px 42px;
+      border-radius: 50px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .flex-center { display: flex; justify-content: center; }
+    @media (max-width: 550px) {
+      .test-wrapper { padding: 18px 14px; }
+      .q-text { font-size: 1.15rem; }
+      .nav-btn { padding: 12px 16px; font-size: 1rem; min-width: 90px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="test-wrapper" id="testWrapper">
+  <div id="quizSection">
+    <h1>🌍 أشكال الدول والنظم السياسية</h1>
+    <div class="subtitle">اختبار شامل · 40 سؤالاً (MCQ + صح/خطأ) · تصحيح فوري</div>
+
+    <div class="progress-area">
+      <span class="q-counter" id="questionCounter">السؤال 1 / 40</span>
+      <span class="timer-display" id="timerDisplay">⏱️ 00:00</span>
+      <span class="badge-score" id="miniScore">✨ تقدمك</span>
+    </div>
+
+    <div class="question-card">
+      <div class="q-header">
+        <span class="q-num" id="qNumDisplay">1</span>
+        <span class="q-text" id="qTextDisplay">تحميل...</span>
+      </div>
+      <div id="mcOptions" class="options-container"></div>
+      <div id="feedbackArea" class="feedback-panel">
+        <div id="feedbackIcon"></div>
+        <div id="feedbackMessage"></div>
+        <div id="explanationBlock" class="explanation-text"></div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prevBtn" disabled>← السابق</button>
+      <button class="nav-btn" id="nextBtn">التالي →</button>
+    </div>
+    <div class="flex-center" style="margin-top: 12px;">
+      <button class="nav-btn finish-btn" id="finishBtn" style="display: none;">📋 إنهاء وعرض النتيجة</button>
+    </div>
+  </div>
+
+  <div id="resultSection" style="display: none;">
+    <div class="result-screen">
+      <h2>📊 نتيجتك النهائية</h2>
+      <div class="final-score" id="finalScoreDisplay">0 / 40</div>
+      <div id="percentageDisplay" style="font-size: 1.6rem; margin-bottom: 5px;"></div>
+      <div class="time-final" id="finalTimeDisplay"></div>
+      <div class="section-scores" id="sectionScores"></div>
+      <div class="analysis-box" id="analysisBox"></div>
+      <button class="restart-btn" id="restartBtn">🔄 إعادة الاختبار</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    // ---------- بنك الأسئلة (40 سؤالاً) مع التصنيف الموضوعي ----------
+    const rawQuestions = [
+      // MCQ (1-20)
+      { type: 'mc', text: 'ما هو المعيار الجوهري لتمييز الدولة البسيطة عن الدولة الفيدرالية رغم وجود "لامركزية" في كليهما؟', options: [
+        'تعدد الدساتير والتشريعات في الأقاليم التابعة للدولة البسيطة.',
+        'انفراد السلطة المركزية بالوظيفة السياسية والتشريعية في الدولة البسيطة.',
+        'تمتع الأقاليم في الدولة البسيطة بتمثيل دبلوماسي خارجي مستقل.',
+        'غياب أي تقسيم إداري أو وحدات محلية داخل إقليم الدولة البسيطة.'
+      ], correct: 1, explanation: 'في الدولة البسيطة، السلطة المركزية هي الوحيدة التي تملك الوظيفة السياسية والتشريعية.', topic: 'الدولة البسيطة والمركبة' },
+      { type: 'mc', text: 'ينشأ "الاتحاد الكونفدرالي" استناداً إلى أداة قانونية محددة هي:', options: [
+        'دستور اتحادي يوافق عليه شعب الدول المنضمة للاتحاد.',
+        'معاهدة دولية تبرمها دول كاملة السيادة لتحقيق أهداف مشتركة.',
+        'قرار سيادي من رئيس الدولة الأكبر في الاتحاد لدمج باقي الدول.',
+        'قانون داخلي يصدر من برلمان الدولة الأم لتنظيم الأقاليم التابعة.'
+      ], correct: 1, explanation: 'ص 24: الاتحاد الكونفدرالي هو اتحاد دول بموجب معاهدة دولية وليس دستوراً.', topic: 'الاتحاد الكونفدرالي' },
+      { type: 'mc', text: 'أي من المبادئ التالية يضمن للولايات في النظام الفيدرالي عدم المساس بدستور الاتحاد دون موافقتها؟', options: [
+        'مبدأ الاستقلالية الإدارية والقضائية للولايات داخل إقليمها.',
+        'مبدأ الازدواجية في ممارسة الوظيفة التنفيذية والتشريعية.',
+        'مبدأ المشاركة في صياغة وإقرار وتعديل الدستور الاتحادي.',
+        'مبدأ الانفصال القانوني الذي يتيح لكل ولاية الانسحاب بإرادتها.'
+      ], correct: 2, explanation: 'ص 19: مبدأ المشاركة يضمن للولايات المساهمة في تعديل الدستور الاتحادي.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: 'في "الاتحاد الشخصي"، إذا قامت حرب بين الدولتين العضوتين، تعتبر الحرب:', options: [
+        'حرباً أهلية داخلية تلتزم فيها المنظمات الدولية بالحياد التام.',
+        'حرباً دولية لأن كل دولة تحتفظ بشخصيتها وسيادتها المستقلة.',
+        'حرباً غير قانونية تؤدي فوراً إلى سقوط العرش المشترك والاتحاد.',
+        'اضطرابات داخلية تخضع لسيادة وسلطة رئيس الدولة المشترك.'
+      ], correct: 1, explanation: 'ص 23: في الاتحاد الشخصي الدول تظل مستقلة، لذا الحرب بينها دولية.', topic: 'الاتحاد الشخصي' },
+      { type: 'mc', text: 'تتميز الدولة البسيطة في عنصرها "البشري" بصفة أساسية هي:', options: [
+        'التجانس بين أفراد الشعب وغياب الاختلافات العرقية أو الدينية تماماً.',
+        'خضوع جميع الأفراد لسلطة سياسية واحدة وقوانين موحدة في الإقليم.',
+        'ضرورة انتماء جميع السكان لأصل عرقي واحد لضمان استقرار الدولة.',
+        'منع أي شكل من أشكال التعددية الثقافية داخل حدود الدولة الجغرافية.'
+      ], correct: 1, explanation: 'ص 16: الوحدة في العنصر البشري تعني خضوعهم لسلطة واحدة وقوانين واحدة.', topic: 'الدولة البسيطة والمركبة' },
+      { type: 'mc', text: 'ما هي النتيجة القانونية المترتبة على اكتساب الاتحاد الفيدرالي "شخصية دولية جديدة"؟', options: [
+        'بقاء المعاهدات القديمة التي أبرمتها الولايات قبل الاتحاد سارية دولياً.',
+        'فقدان الدول المنضمة لسيادتها الخارجية وشخصيتها الدولية المستقلة.',
+        'احتفاظ كل ولاية بالحق في الانضمام للمنظمات الدولية بصفة منفردة.',
+        'إلزام كافة الولايات باستخدام عملة موحدة وقانون مدني داخلي واحد.'
+      ], correct: 1, explanation: 'ص 18: بمجرد قيام الفيدرالية، تفقد الولايات سيادتها الخارجية وتظهر شخصية دولية واحدة.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: 'تعتمد طريقة توزيع الاختصاصات في الولايات المتحدة الأمريكية وسويسرا على:', options: [
+        'تحديد اختصاصات الولايات حصراً وترك ما عدا ذلك للسلطة الاتحادية.',
+        'تحديد اختصاصات السلطة الاتحادية حصراً وترك ما عدا ذلك للولايات.',
+        'حصر كافة الاختصاصات المشتركة وترك المسائل الهامة للبرلمان.',
+        'دمج كافة الاختصاصات في يد السلطة المركزية لتوزيعها لاحقاً بالتعيين.'
+      ], correct: 1, explanation: 'ص 20: الطريقة الثانية (تحديد اختصاصات الاتحاد وترك الباقي للولايات) هي المتبعة هناك.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: 'مصطلح "السيادة الرقمية" الذي ظهر في القوانين الأمريكية الحديثة (2018) يهدف إلى:', options: [
+        'السيطرة على وسائل التواصل الاجتماعي في الدول الحليفة والتابعة.',
+        'حماية البيانات المخزنة إلكترونياً لضمان سيادة الدولة على مواطنيها.',
+        'منع الولايات الداخلية من إصدار قوانين خاصة بتجارة البرمجيات.',
+        'توحيد الأنظمة التقنية بين دول الاتحاد الكونفدرالي لزيادة التنسيق.'
+      ], correct: 1, explanation: 'ص 15: السيادة الرقمية تعني البحث عن طرق بديلة وآمنة لتخزين بيانات المواطنين.', topic: 'السيادة' },
+      { type: 'mc', text: 'في الاتحاد الفيدرالي، يعتبر النزاع المسلح بين ولايتين داخلتين في الاتحاد:', options: [
+        'حرباً دولية تخضع لقواعد القانون الدولي العام والتمثيل الدبلوماسي.',
+        'حرباً أهلية تقع مسؤولية فضها على عاتق الحكومة المركزية الاتحادية.',
+        'نزاعاً قانونياً يتم حله عبر وساطة من دول الجوار غير المنضمة.',
+        'عملاً سيادياً يمنع الحكومة المركزية من التدخل فيه احتراماً للاستقلال.'
+      ], correct: 1, explanation: 'ص 18: أي نزاع بين الولايات في الفيدرالية يُعد حرباً أهلية تقع على عاتق الحكومة المركزية.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: '"الدول المحمية" هي مثال للدول التي توصف بأنها:', options: [
+        'دول كاملة السيادة لكنها تخضع لاتفاقيات دفاعية مشتركة اختيارية.',
+        'دول ناقصة السيادة تتولى دولة أخرى مباشرة شؤونها الخارجية والدفاع.',
+        'دول بسيطة تتبع نظام اللامركزية الإدارية الواسع في كافة أقاليمها.',
+        'دول فيدرالية فقدت استقلالها الداخلي نتيجة ديون مالية خارجية.'
+      ], correct: 1, explanation: 'ص 15: الدول المحمية هي صورة من صور الدول ناقصة السيادة.', topic: 'الدول ناقصة السيادة' },
+      { type: 'mc', text: 'حلل الفرق بين "اللامركزية الإدارية" في الدولة البسيطة و"اللامركزية السياسية" في الدولة الفيدرالية:', options: [
+        'الأولى توزيع للوظيفة الإدارية، بينما الثانية توزيع للسلطات التشريعية والقضائية والتنفيذية.',
+        'الأولى تمنح الأقاليم استقلالاً دستورياً، بينما الثانية تمنحهم استقلالاً في الميزانية فقط.',
+        'الأولى تؤدي إلى نشوء شخصيات دولية جديدة، بينما الثانية تحافظ على وحدة الشخصية الدولية.',
+        'الأولى تطبق في الدول ذات المساحات الكبيرة، بينما الثانية تقتصر على الدول الصغيرة المساحة.'
+      ], correct: 0, explanation: 'ص 22: اللامركزية الإدارية فنية/مهنية، أما السياسية فتوزع السلطات الثلاث.', topic: 'الدولة البسيطة والمركبة' },
+      { type: 'mc', text: 'ما هو التفسير القانوني لعدم اعتبار "الاتحاد الكونفدرالي" دولة بالمعنى الفني والقانوني؟', options: [
+        'لأنه يفتقر إلى وجود رئيس واحد يمثل كافة الدول الأعضاء في المحافل الدولية.',
+        'لأن العلاقة بين أعضائه دولية تحكمها معاهدة، ولا تنشئ كيانًا يعلو فوق سيادة أعضائه.',
+        'بسبب عدم وجود إقليم جغرافي متصل يجمع الدول المنضمة لهذا النوع من الاتحادات.',
+        'لعدم اشتراط توحيد العملة أو الجنسية بين مواطني الدول الأعضاء في ذلك الاتحاد.'
+      ], correct: 1, explanation: 'ص 17 و24: هو مجرد رابطة تعاقدية دولية لا ينبثق عنها شخص قانوني جديد.', topic: 'الاتحاد الكونفدرالي' },
+      { type: 'mc', text: 'بناءً على "مبدأ الازدواجية" في النظام الفيدرالي، كيف تُمارس الوظيفة القضائية؟', options: [
+        'بوجود قضاء محلي داخل كل ولاية يفصل في كافة المنازعات دون استثناء أو رقابة.',
+        'بوجود قضاء محلي للولاية وقضاء اتحادي (محكمة عليا) يفصل في النزاعات الدستورية.',
+        'بإلزام المحاكم المحلية بتطبيق قوانين العاصمة فقط في القضايا ذات البعد الجنائي.',
+        'بجعل القضاء الاتحادي هو الدرجة الأولى والقضاء المحلي هو الدرجة الاستئنافية للخصوم.'
+      ], correct: 1, explanation: 'ص 19: يوجد قضاء محلي للولاية وقضاء اتحادي (المحكمة العليا) للفصل في تنازع السلطات.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: 'ناقش ظاهرة "انفصال الدولة البسيطة إلى ولايات" لتكوين اتحاد فيدرالي (مثل البرازيل والمكسيك):', options: [
+        'هي الطريقة الأكثر نجاحاً لأنها تضمن بقاء السلطة في يد الحاكم المركزي القديم.',
+        'تأتي استجابة لعوامل تباين في الأقاليم، حيث تُمنح قدراً من الاستقلال الذاتي لتجنب الانفصال.',
+        'تعتبر إجراءً شكلياً لا يغير من طبيعة الدولة البسيطة أو توزيع السلطات التشريعية فيها.',
+        'تؤدي دائماً إلى ضعف الدولة دولياً وتحولها إلى اتحاد كونفدرالي هش ينتهي بالتفكك.'
+      ], correct: 1, explanation: 'ص 21: تنشأ الفيدرالية بالانفصال لتلبية مطالب الأقاليم المتباينة وتجنب تفكك الدولة.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: 'لماذا يُعتبر "حق الانفصال" في الاتحاد الكونفدرالي حقاً مكفولاً، بينما يُعد جريمة في الفيدرالي؟', options: [
+        'لأن الاتحاد الكونفدرالي يقوم على اتفاق إرادات دول مستقلة تحتفظ بسيادتها الكاملة.',
+        'لأن الدستور الفيدرالي يمنح الولايات حق التصويت على الانفصال كل عشر سنوات فقط.',
+        'بسبب قوة الجيش في النظام الفيدرالي وقدرته على قمع أي محاولة للانفراد بالسلطة.',
+        'لعدم وجود برلمان مشترك في الاتحاد الكونفدرالي يمثل شعوب الدول المنضمة للاتحاد.'
+      ], correct: 0, explanation: 'ص 24: الكونفدرالي يحفظ حق الانفصال، أما الفيدرالي فيعتبره خروجاً على الدستور.', topic: 'الاتحاد الكونفدرالي' },
+      { type: 'mc', text: 'عند تطبيق "مبدأ المشاركة" في البرلمان الاتحادي، لماذا يتم الاعتماد غالباً على نظام "المجلسين"؟', options: [
+        'ليكون أحدهما مخصصاً للأثرياء والآخر للفقراء لضمان العدالة الاجتماعية في الاتحاد.',
+        'ليمثل أحدهما "شعب الاتحاد" ككل، والآخر يمثل "الولايات" بتمثيل متساوٍ يضمن مصالحها.',
+        'لتسهيل عملية إصدار القوانين حيث يختص كل مجلس بنوع محدد من التشريعات المحلية.',
+        'لضمان وجود مجلس تشريعي في العاصمة ومجلس آخر متنقل بين عواصم الولايات المختلفة.'
+      ], correct: 1, explanation: 'ص 19: مجلس النواب يمثل الشعب، ومجلس الشيوخ يمثل الولايات بانتظام.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: 'كيف عالجت بعض الدول البسيطة (مثل السودان قديماً) وجود قوانين خاصة ببعض أقاليمها؟', options: [
+        'عن طريق تحويل الدولة من بسيطة إلى فيدرالية بشكل مفاجئ لامتصاص الغضب الشعبي.',
+        'بوضع تنظيمات وقوانين خاصة مؤقتة لبعض المناطق مع بقاء الدولة "بسيطة" في جوهرها.',
+        'بإلغاء كافة القوانين المحلية وفرض القانون الموحد بالقوة العسكرية لضمان وحدة الإقليم.',
+        'بمنح تلك الأقاليم حق التمثيل الدبلوماسي المستقل مع البقاء تحت لواء الدستور الواحد.'
+      ], correct: 1, explanation: 'ص 17: قد تخرج الدولة البسيطة عن قاعدة القانون الواحد لظروف جغرافية أو تاريخية مؤقتة.', topic: 'الدولة البسيطة والمركبة' },
+      { type: 'mc', text: 'ما هو وضع "الجنسية" في الاتحاد الكونفدرالي مقارنة بالفيدرالي؟', options: [
+        'في الكونفدرالي توجد جنسية واحدة للاتحاد، وفي الفيدرالي تتعدد الجنسيات بتعدد الولايات.',
+        'في الكونفدرالي تتعدد الجنسيات بتعدد الدول، وفي الفيدرالي توجد جنسية واحدة للاتحاد.',
+        'الجنسية في كليهما اختيارية ويمكن للمواطن الجمع بين أكثر من ثلاث جنسيات اتحادية.',
+        'لا توجد جنسية في الاتحاد الكونفدرالي، بينما في الفيدرالي تظل جنسية الولايات هي الأساس.'
+      ], correct: 1, explanation: 'ص 25 (الجدول): الكونفدرالي (تعدد جنسيات)، الفيدرالي (جنسية واحدة للاتحاد).', topic: 'الاتحاد الكونفدرالي' },
+      { type: 'mc', text: 'استخلص العيب الرئيسي لنظام "حصر اختصاصات الاتحاد والولايات معاً" في الدستور الفيدرالي:', options: [
+        'يؤدي إلى جمود الحياة السياسية ومنع تطور القوانين لمواكبة التغيرات الاجتماعية السريعة.',
+        'قد يؤدي إلى ظهور مسائل مستجدة (فراغ تشريعي) لا تقع ضمن اختصاص أي من الطرفين.',
+        'يمنح الحكومة المركزية سلطة مطلقة في تفسير الدستور لصالحها عند حدوث أي نزاع.',
+        'يزيد من التكاليف المالية للانتخابات بسبب كثرة المجالس التشريعية والقضائية المحلية.'
+      ], correct: 1, explanation: 'ص 20: الحصر المتبادل يعيب بوجود مسائل مستجدة قد تضيع بين السلطتين.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'mc', text: 'ما الذي يميز "اتحاد هانوفر مع إنجلترا" (1714) كنموذج للاتحاد الشخصي؟', options: [
+        'أنه انتهى بمجرد اعتلاء ملكة للعرش، لأن قانون إحدى الدولتين كان يمنع تولي النساء.',
+        'أنه تحول بمرور الوقت إلى اتحاد فيدرالي قوي يسيطر على التجارة العالمية والبحار.',
+        'أنه أدى إلى ذوبان شخصية هانوفر الدولية تماماً داخل المملكة المتحدة البريطانية.',
+        'أنه قام على أساس دستور مكتوب يحدد صلاحيات الملك في كلتا الدولتين بشكل دقيق.'
+      ], correct: 0, explanation: 'ص 24: انتهى الاتحاد بسبب اختلاف قوانين الوراثة في العرش بين إنجلترا وهانوفر.', topic: 'الاتحاد الشخصي' },
+
+      // صح وخطأ (21-40)
+      { type: 'tf', text: 'اتخذت الجمعية العامة للأمم المتحدة قراراً بالإجماع في سبتمبر 1995 باعتبار دولة "تركمانستان" دولة ذات حياد دائم.', correct: true, explanation: 'ذكرت ص 15 أن تركمانستان أعلنت حيادها واعتمدته الجمعية العامة بالإجماع في 12 سبتمبر 1995.', topic: 'الدول ناقصة السيادة' },
+      { type: 'tf', text: 'يهدف قانون "CLOUD" الأمريكي لعام 2018 إلى منع السلطات الأمريكية من الوصول للبيانات المخزنة إلكترونياً خارج حدودها الجغرافية.', correct: false, explanation: 'ص 15: القانون يسمح للسلطات الأمريكية بالوصول للبيانات المخزنة إلكترونياً من قبل الشركات الأمريكية خارج القطر الأمريكي.', topic: 'السيادة' },
+      { type: 'tf', text: 'نظام "الانتتداب" هو النظام الذي استُحدث في ظل هيئة الأمم المتحدة ليحل محل "نظام الوصاية" الذي كان معمولاً به في عصبة الأمم.', correct: false, explanation: 'ص 16: العكس هو الصحيح؛ نظام الوصاية هو الذي حل محل نظام الانتداب (الذي كان في ظل عصبة الأمم).', topic: 'الوصاية والانتداب' },
+      { type: 'tf', text: 'أُغلق ملف مجلس الوصاية التابع للأمم المتحدة تماماً في نوفمبر 1994 بعد استقلال دولة "بالاو" التي كانت تحت وصاية الولايات المتحدة.', correct: true, explanation: 'ص 16: تم تعليق أعمال المجلس في 1 نوفمبر 1994 بعد استقلال "بالاو"، وهي آخر إقليم مشمول بالوصاية.', topic: 'الوصاية والانتداب' },
+      { type: 'tf', text: 'لا يؤثر اتساع رقعة الدولة أو كونها مكونة من عدة أقاليم أو جزر لا يوجد بينها اتصال أرضي على وصفها كـ "دولة بسيطة".', correct: true, explanation: 'ص 17: اتساع الرقعة أو تعدد الأقاليم أو الجزر (مثل الدول الجزرية) لا يغير من وصفها كدولة بسيطة.', topic: 'الدولة البسيطة والمركبة' },
+      { type: 'tf', text: 'يُعد نظام "اللامركزية الإدارية" في الدولة الموحدة أسلوباً لتوزيع الوظيفة الإدارية، ولا يمس وحدة السلطة التشريعية أو القضائية.', correct: true, explanation: 'ص 22: اللامركزية الإدارية هي أسلوب توزيع الوظيفة التنفيذية فقط بين المركز والأقاليم في الدولة البسيطة.', topic: 'الدولة البسيطة والمركبة' },
+      { type: 'tf', text: 'في الاتحاد الفيدرالي، يتمتع رعايا الدولة الاتحادية بجنسيات متعددة تختلف باختلاف الولايات التي ينتمون إليها داخل الاتحاد.', correct: false, explanation: 'ص 18 وص 25: في الاتحاد الفيدرالي يتمتع الرعايا بجنسية واحدة (جنسية دولة الاتحاد).', topic: 'الاتحاد الفيدرالي' },
+      { type: 'tf', text: 'يُشترط في "الاتحاد الشخصي" أن تخضع الدولتان العضوتان لنظام حكم ملكي فقط، ولا يمكن أن ينشأ الاتحاد إذا كان رئيس إحدى الدولتين رئيساً لجمهورية.', correct: false, explanation: 'ص 23: العلامة الوحيدة هي وجود شخص واحد يتربع على القمة، سواء كان ملكاً أو رئيساً لجمهورية.', topic: 'الاتحاد الشخصي' },
+      { type: 'tf', text: 'نص الدستور المصري لعام 1923 في المادة (47) على جواز تولي ملك مصر أمور دولة أخرى بشرط الحصول على موافقة البرلمان.', correct: true, explanation: 'ص 24: نصت المادة 47 على عدم جواز تولي الملك دولة أخرى إلا برضاء البرلمان.', topic: 'الاتحاد الشخصي' },
+      { type: 'tf', text: 'تُعتبر منظمة "الكومنولث" في الوقت الحاضر نموذجاً حياً ووحيداً لما يُعرف بـ "الاتحاد الشخصي" بين بريطانيا وكندا وأستراليا.', correct: false, explanation: 'ص 24: الكومنولث يُوصف بأنه "تقريباً" يشبه الاتحاد الشخصي، لكن الأوراق تذكر أن الاتحاد الشخصي "لا وجود له في الوقت الحاضر".', topic: 'الاتحاد الشخصي' },
+      { type: 'tf', text: 'تُعد الطريقة التي اتبعتها كندا والهند في توزيع الاختصاصات هي "حصر اختصاصات الولايات" وترك ما عدا ذلك (الاختصاص العام) للسلطة الاتحادية.', correct: true, explanation: 'ص 20: الطريقة الثالثة (حصر اختصاصات الولايات) متبعة في كندا والهند، والاختصاص العام يكون للسلطة الاتحادية.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'tf', text: 'تنشأ الدولة الاتحادية بطريقة "الانضمام" عندما تتفكك دولة بسيطة سابقة إلى عدة دويلات ترغب في الاستقلال الذاتي مع البقاء في كيان واحد.', correct: false, explanation: 'ص 20: تفكك دولة بسيطة إلى ولايات يسمى "طريقة الانفصال"، أما "الانضمام" فهو تجمع دول مستقلة في اتحاد.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'tf', text: 'من مزايا النظام الفيدرالي أنه يمثل "حقلاً للتجارب"، حيث يمكن تطبيق نظام قانوني ناجح في إحدى الولايات وتعميمه لاحقاً على باقي الاتحاد.', correct: true, explanation: 'ص 22: من مزايا النظام الفيدرالي اعتباره حقلاً واسعاً للتجارب السياسية والإدارية المختلفة.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'tf', text: 'في "الاتحاد الكونفدرالي"، تصدر القرارات بالإجماع كقاعدة عامة، وتعتبر هذه القرارات ملزمة للدول الأعضاء بمجرد صدورها دون الحاجة لإقرارها داخلياً.', correct: false, explanation: 'ص 24: في الاتحاد الكونفدرالي، القرارات لا تنطبق مباشرة على مواطني الدول بل تحتاج لإقرارها من السلطات المحلية لكل دولة.', topic: 'الاتحاد الكونفدرالي' },
+      { type: 'tf', text: 'تميز الاتحاد الشخصي بين السويد والنرويج (1815-1905) بأنه النوع الوحيد الذي لم يعد له وجود فعلي في عالمنا المعاصر.', correct: true, explanation: 'ص 23: ذُكر أن هذا النوع (الاتحاد الشخصي) لم يعد له وجود في الوقت الحاضر.', topic: 'الاتحاد الشخصي' },
+      { type: 'tf', text: 'يؤدي تعدد السلطات العامة وازدواجها في النظام الفيدرالي إلى زيادة النفقات المالية التي يتحملها المواطنون في شكل ضرائب ورسوم.', correct: true, explanation: 'ص 22: من عيوب النظام الفيدرالي أن ازدواج السلطات يؤدي لنفقات مالية كبيرة.', topic: 'الاتحاد الفيدرالي' },
+      { type: 'tf', text: 'يتكون إقليم الدولة في "الاتحاد الكونفدرالي" من أقاليم الدول الأعضاء المتباعدة، بينما يشكل إقليم الدولة الفيدرالية وحدة جغرافية واحدة.', correct: true, explanation: 'ص 25: في الجدول المقارن؛ إقليم الكونفدرالي مختلف باختلاف الأعضاء، والفيدرالي إقليم واحد للدولة الاتحادية.', topic: 'الاتحاد الكونفدرالي' },
+      { type: 'tf', text: 'يُعد "الاتحاد الشخصي" أضعف أنواع الاتحادات على الإطلاق، لأن الرابطة الوحيدة فيه هي وحدة شخص رئيس الدولة، وتزول بمجرد اختلاف قوانين الوراثة.', correct: true, explanation: 'ص 23: يُعد الأضعف لغياب أي روابط قانونية أو دستورية بخلاف وحدة شخص الرئيس.', topic: 'الاتحاد الشخصي' },
+      { type: 'tf', text: 'استمر "اتحاد الجمهوريات العربية" الذي ضم مصر وسوريا واليمن كنموذج للاتحاد الفيدرالي الناجح لمدة تزيد عن عشر سنوات قبل انفصاله.', correct: false, explanation: 'ص 21 وص 25: اتحاد مصر وسوريا واليمن لم يستمر سوى ثلاث سنوات (1958-1961).', topic: 'الاتحاد الفيدرالي' },
+      { type: 'tf', text: 'في ظل "نظام الوصاية"، يتألف مجلس الوصاية من الدول الخمس دائمة العضوية في مجلس الأمن فقط، دون تمثيل للدول الأخرى.', correct: true, explanation: 'ص 16: يتألف مجلس الوصاية من أعضاء مجلس الأمن الدائمين الخمسة (روسيا، الصين، فرنسا، إنجلترا، أمريكا).', topic: 'الوصاية والانتداب' }
+    ];
+
+    let questions = [...rawQuestions];
+    const TOTAL = questions.length;
+    let currentIndex = 0;
+    let userAnswers = new Array(TOTAL).fill(null);
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let quizFinished = false;
+
+    const quizSection = document.getElementById('quizSection');
+    const resultSection = document.getElementById('resultSection');
+    const qCounter = document.getElementById('questionCounter');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const qNumDisplay = document.getElementById('qNumDisplay');
+    const qTextDisplay = document.getElementById('qTextDisplay');
+    const mcOptionsDiv = document.getElementById('mcOptions');
+    const feedbackArea = document.getElementById('feedbackArea');
+    const feedbackIcon = document.getElementById('feedbackIcon');
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    const explanationBlock = document.getElementById('explanationBlock');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const finishBtn = document.getElementById('finishBtn');
+    const miniScore = document.getElementById('miniScore');
+
+    const STORAGE_KEY = 'state_forms_40_quiz';
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentIndex, userAnswers, timerSeconds }));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const s = JSON.parse(saved);
+          currentIndex = s.currentIndex;
+          userAnswers = s.userAnswers;
+          timerSeconds = s.timerSeconds;
+          return true;
+        } catch(e) { return false; }
+      }
+      return false;
+    }
+
+    function formatTime(secs) {
+      const m = Math.floor(secs / 60).toString().padStart(2, '0');
+      const s = (secs % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (!quizFinished) {
+          timerSeconds++;
+          timerDisplay.textContent = `⏱️ ${formatTime(timerSeconds)}`;
+          saveState();
+        }
+      }, 1000);
+    }
+
+    function stopTimer() { quizFinished = true; if (timerInterval) clearInterval(timerInterval); }
+
+    function applyVisualFeedback(index) {
+      const q = questions[index];
+      const userAns = userAnswers[index];
+      if (userAns === null) return;
+      const rows = document.querySelectorAll('.option-row');
+      rows.forEach((row, optIdx) => {
+        row.classList.remove('correct-highlight', 'wrong-highlight', 'disabled-opt');
+        if (q.type === 'mc') {
+          if (optIdx === q.correct) row.classList.add('correct-highlight');
+          else if (optIdx === userAns) row.classList.add('wrong-highlight');
+        } else {
+          // صح وخطأ: خياران فقط (0: صح, 1: خطأ) ولكن نعرضها كـ option-row عادية
+          if ((optIdx === 0 && q.correct === true) || (optIdx === 1 && q.correct === false)) row.classList.add('correct-highlight');
+          else if (optIdx === userAns) row.classList.add('wrong-highlight');
+        }
+        row.classList.add('disabled-opt');
+      });
+      document.querySelectorAll(`input[name="q${index}"]`).forEach(r => r.disabled = true);
+      const isCorrect = (q.type === 'mc') ? (userAns === q.correct) : (userAns === 0 && q.correct === true) || (userAns === 1 && q.correct === false);
+      feedbackArea.style.display = 'block';
+      feedbackArea.className = `feedback-panel ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
+      feedbackIcon.innerHTML = isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة';
+      let correctAnswerStr = '';
+      if (q.type === 'mc') correctAnswerStr = `${String.fromCharCode(65 + q.correct)}) ${q.options[q.correct]}`;
+      else correctAnswerStr = q.correct ? 'صح' : 'خطأ';
+      feedbackMessage.innerHTML = isCorrect ? 'أحسنت!' : `الإجابة الصحيحة هي: ${correctAnswerStr}`;
+      explanationBlock.textContent = q.explanation;
+    }
+
+    function renderQuestion(index) {
+      const q = questions[index];
+      qNumDisplay.textContent = index + 1;
+      qTextDisplay.textContent = q.text;
+      qCounter.textContent = `السؤال ${index+1} / ${TOTAL}`;
+      
+      let html = '';
+      if (q.type === 'mc') {
+        q.options.forEach((opt, optIdx) => {
+          const letter = String.fromCharCode(65 + optIdx);
+          const checked = (userAnswers[index] === optIdx) ? 'checked' : '';
+          const disabled = (userAnswers[index] !== null) ? 'disabled' : '';
+          html += `<div class="option-row" onclick="${userAnswers[index] === null ? `selectRadio(${index}, ${optIdx})` : ''}">
+            <input type="radio" name="q${index}" value="${optIdx}" ${checked} ${disabled}>
+            <label>${letter}) ${opt}</label>
+          </div>`;
+        });
+      } else {
+        const opts = ['صح', 'خطأ'];
+        opts.forEach((opt, optIdx) => {
+          const checked = (userAnswers[index] === optIdx) ? 'checked' : '';
+          const disabled = (userAnswers[index] !== null) ? 'disabled' : '';
+          html += `<div class="option-row" onclick="${userAnswers[index] === null ? `selectRadio(${index}, ${optIdx})` : ''}">
+            <input type="radio" name="q${index}" value="${optIdx}" ${checked} ${disabled}>
+            <label>${optIdx === 0 ? '✔️' : '❌'} ${opt}</label>
+          </div>`;
+        });
+      }
+      mcOptionsDiv.innerHTML = html;
+
+      if (userAnswers[index] !== null) {
+        applyVisualFeedback(index);
+      } else {
+        feedbackArea.style.display = 'none';
+      }
+
+      updateNavButtons();
+      updateMiniScore();
+    }
+
+    window.selectRadio = function(qIdx, optIdx) {
+      if (userAnswers[qIdx] !== null) return;
+      userAnswers[qIdx] = optIdx;
+      renderQuestion(qIdx);
+      saveState();
+    };
+
+    function updateNavButtons() {
+      prevBtn.disabled = (currentIndex === 0);
+      const isLast = (currentIndex === TOTAL - 1);
+      nextBtn.style.display = isLast ? 'none' : 'inline-block';
+      finishBtn.style.display = isLast ? 'inline-block' : 'none';
+    }
+
+    function updateMiniScore() {
+      const answered = userAnswers.filter(a => a !== null).length;
+      const correct = userAnswers.reduce((acc, ans, i) => {
+        if (ans === null) return acc;
+        const q = questions[i];
+        return acc + ((q.type === 'mc') ? (ans === q.correct) : ((ans === 0 && q.correct === true) || (ans === 1 && q.correct === false)) ? 1 : 0);
+      }, 0);
+      miniScore.textContent = `📊 ${correct} / ${answered} صحيحة`;
+    }
+
+    function goPrev() { if (currentIndex > 0) { currentIndex--; renderQuestion(currentIndex); saveState(); } }
+    function goNext() { if (currentIndex < TOTAL - 1) { currentIndex++; renderQuestion(currentIndex); saveState(); } }
+
+    function finishQuiz() {
+      stopTimer();
+      const correctCount = userAnswers.reduce((acc, ans, i) => {
+        if (ans === null) return acc;
+        const q = questions[i];
+        return acc + ((q.type === 'mc') ? (ans === q.correct) : ((ans === 0 && q.correct === true) || (ans === 1 && q.correct === false)) ? 1 : 0);
+      }, 0);
+      const percent = Math.round((correctCount / TOTAL) * 100);
+      
+      quizSection.style.display = 'none';
+      resultSection.style.display = 'block';
+      
+      document.getElementById('finalScoreDisplay').textContent = `${correctCount} / ${TOTAL}`;
+      document.getElementById('percentageDisplay').textContent = `${percent}%`;
+      document.getElementById('finalTimeDisplay').textContent = `⏱️ الوقت المستغرق: ${formatTime(timerSeconds)}`;
+      
+      const topicStats = {};
+      questions.forEach(q => { if (!topicStats[q.topic]) topicStats[q.topic] = { correct: 0, total: 0 }; topicStats[q.topic].total++; });
+      questions.forEach((q, i) => {
+        if (userAnswers[i] !== null) {
+          const isCorrect = (q.type === 'mc') ? (userAnswers[i] === q.correct) : ((userAnswers[i] === 0 && q.correct === true) || (userAnswers[i] === 1 && q.correct === false));
+          if (isCorrect) topicStats[q.topic].correct++;
+        }
+      });
+      
+      let sectionHtml = '';
+      for (let t in topicStats) sectionHtml += `<div class="section-badge">${t}: ${topicStats[t].correct}/${topicStats[t].total}</div>`;
+      document.getElementById('sectionScores').innerHTML = sectionHtml;
+      
+      let analysis = '<strong>📌 تحليل الأداء حسب الموضوعات:</strong><br>';
+      for (let t in topicStats) {
+        const p = Math.round((topicStats[t].correct / topicStats[t].total) * 100);
+        analysis += `• ${t}: ${p}% `;
+        analysis += p >= 70 ? '(متمكن)' : (p >= 50 ? '(متوسط)' : '(يحتاج مراجعة)');
+        analysis += '<br>';
+      }
+      analysis += '<br><strong>💡 نصائح عامة:</strong><br>';
+      if (percent >= 80) analysis += 'أداء ممتاز. أنت ملم بأشكال الدول والنظم السياسية.';
+      else if (percent >= 60) analysis += 'أداء جيد. راجع الفروق بين الكونفدرالي والفيدرالي والاتحاد الشخصي.';
+      else analysis += 'يُنصح بمراجعة شاملة للمادة، خاصة طرق نشأة الفيدراليات والوصاية.';
+      document.getElementById('analysisBox').innerHTML = analysis;
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    function restartQuiz() {
+      stopTimer();
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    function init() {
+      const hasState = loadState();
+      if (!hasState) {
+        currentIndex = 0;
+        userAnswers = new Array(TOTAL).fill(null);
+        timerSeconds = 0;
+      }
+      timerDisplay.textContent = `⏱️ ${formatTime(timerSeconds)}`;
+      renderQuestion(currentIndex);
+      startTimer();
+      prevBtn.addEventListener('click', goPrev);
+      nextBtn.addEventListener('click', goNext);
+      finishBtn.addEventListener('click', finishQuiz);
+      document.getElementById('restartBtn').addEventListener('click', restartQuiz);
+    }
+
+    init();
+  })();
+</script>
+</body>
+  </html>
