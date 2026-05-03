@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>النظم السياسية | الباب الأول | منصة اختبارات</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f2ebe2;
+      font-family: 'Cairo', 'Segoe UI', 'Amiri', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      direction: rtl;
+      color: #2e281f;
+    }
+    .platform-wrapper {
+      width: 100%;
+      max-width: 960px;
+      background: #fefcf8;
+      border-radius: 40px;
+      box-shadow: 0 18px 40px -8px rgba(60, 40, 20, 0.12);
+      border: 1px solid #e4d8ca;
+      padding: 32px 28px 36px;
+    }
+    h1 { font-size: 2rem; font-weight: 700; color: #4f3f2e; text-align: center; margin-bottom: 6px; }
+    .subtitle { text-align: center; color: #7b6852; margin-bottom: 28px; border-bottom: 1px dashed #d9cbbe; padding-bottom: 16px; font-size: 1rem; }
+
+    .section-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; margin: 20px 0;
+    }
+    .section-card {
+      background: #f8f3ec; border: 1.5px solid #e1d2c2; border-radius: 28px; padding: 28px 18px;
+      text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .section-card:hover { background: #efe4d8; border-color: #b8a086; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .section-icon { font-size: 3rem; margin-bottom: 14px; }
+    .section-name { font-size: 1.35rem; font-weight: 700; color: #3f3224; }
+    .section-desc { font-size: 0.9rem; color: #6b5a4a; margin-top: 10px; line-height: 1.4; }
+    .section-count { font-size: 0.85rem; color: #8b7a66; margin-top: 8px; font-weight: 600; }
+
+    #quizSection { display: none; }
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+    .subject-badge { background: #b8a793; color: #fefaf5; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 1.1rem; }
+    .back-btn { background: #c9b9a7; color: #2e261d; border: none; padding: 8px 20px; border-radius: 30px; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: 1px solid #b09e8b; transition: all 0.15s; }
+    .back-btn:hover { background: #b8a692; }
+    .progress-area { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+    .q-counter { background: #e5d9cd; padding: 8px 22px; border-radius: 40px; font-weight: 600; color: #3f3224; border: 1px solid #cdbcab; font-size: 1rem; }
+    .timer-display { background: #d6c8b6; padding: 8px 22px; border-radius: 40px; font-weight: 600; color: #2e261d; border: 1px solid #b8a793; font-family: monospace; font-size: 1rem; }
+    .badge-score { background: #dbcdbd; padding: 6px 18px; border-radius: 30px; font-size: 0.9rem; color: #2c241c; }
+    .question-card {
+      background: #fffffffa; border-radius: 32px; padding: 28px 26px; margin: 12px 0 20px;
+      border: 1px solid #e2d2c0; box-shadow: 0 8px 14px rgba(0,0,0,0.02);
+    }
+    .q-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; }
+    .q-num { background: #b8a793; color: #fefaf5; font-weight: 700; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 30px; font-size: 1.2rem; flex-shrink: 0; }
+    .q-text { font-size: 1.25rem; font-weight: 600; color: #342a1f; line-height: 1.5; }
+    .options-container { margin: 20px 0 6px; }
+    .option-row {
+      display: flex; align-items: center; margin-bottom: 12px; background: #f8f3ec;
+      border: 1.5px solid #e1d2c2; border-radius: 60px; padding: 14px 20px; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .option-row:hover { background: #efe4d8; border-color: #b8a086; }
+    .option-row.disabled-opt { pointer-events: none; opacity: 0.8; }
+    .option-row.correct-highlight { background: #d9ebd3; border-color: #5f9e6e; }
+    .option-row.wrong-highlight { background: #ecd9d9; border-color: #c38b8b; }
+    .option-row input[type="radio"] { margin-left: 16px; accent-color: #7e6953; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0; }
+    .option-row label { font-size: 1.05rem; width: 100%; cursor: pointer; color: #3a3026; font-weight: 450; }
+    .feedback-panel { margin-top: 22px; background: #f3ede5; border-radius: 24px; padding: 18px 22px; border-right: 6px solid #9e8b77; font-size: 1rem; display: none; }
+    .feedback-correct { border-right-color: #4f7a5c; background: #ecf3e8; }
+    .feedback-wrong { border-right-color: #b57070; background: #f9efed; }
+    .explanation-text { margin-top: 8px; color: #3f352b; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 18px; gap: 15px; }
+    .nav-btn {
+      background: #dbcebe; border: none; padding: 14px 30px; font-size: 1.1rem; font-weight: 600;
+      border-radius: 60px; cursor: pointer; color: #2e261d; border: 1px solid #b9a693;
+      box-shadow: 0 3px 0 #a3927e; transition: all 0.1s; min-width: 120px; font-family: 'Cairo', sans-serif;
+    }
+    .nav-btn:active { transform: translateY(3px); box-shadow: none; }
+    .nav-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: 0 3px 0 #a3927e; }
+    .finish-btn { background: #8f7a64; color: #fdf7f0; border-color: #6e5c4c; box-shadow: 0 3px 0 #5e4e3f; }
+    #resultSection { display: none; }
+    .result-screen { text-align: center; padding: 15px 0 10px; }
+    .final-score { font-size: 2.8rem; font-weight: 800; background: #efe2d4; display: inline-block; padding: 18px 48px; border-radius: 80px; margin: 25px 0; color: #3f2f1d; border: 2px solid #cab89e; }
+    .time-final { font-size: 1.4rem; margin-bottom: 20px; color: #5c4f3f; }
+    .analysis-box { background: #f3ede5; border-radius: 24px; padding: 18px 22px; margin: 20px 0; text-align: right; border-right: 6px solid #7a6852; font-size: 1rem; }
+    .section-scores { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin: 20px 0; }
+    .section-badge { background: #e5d9cd; padding: 8px 20px; border-radius: 40px; font-size: 0.95rem; border: 1px solid #cdbcab; }
+    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
+    .restart-btn { background: #a28d78; color: white; border: none; font-size: 1.1rem; padding: 14px 36px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+    .home-btn { background: #7a6852; color: white; border: none; font-size: 1.1rem; padding: 14px 36px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+    .flex-center { display: flex; justify-content: center; }
+    @media (max-width: 550px) {
+      .platform-wrapper { padding: 18px 14px; }
+      .q-text { font-size: 1.15rem; }
+      .nav-btn { padding: 12px 16px; font-size: 1rem; min-width: 90px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="platform-wrapper" id="platformWrapper">
+  <div id="homeSection">
+    <h1>🏛️ النظم السياسية</h1>
+    <div class="subtitle">الباب الأول · اختر المبحث للبدء</div>
+    <div class="section-grid">
+      <div class="section-card" data-section="1">
+        <div class="section-icon">🌍</div><div class="section-name">المبحث الأول</div>
+        <div class="section-desc">أركان الدولة · المقدمة · الاعتراف</div><div class="section-count">33 سؤالاً</div>
+      </div>
+      <div class="section-card" data-section="2">
+        <div class="section-icon">⚖️</div><div class="section-name">المبحث الثاني</div>
+        <div class="section-desc">الشخصية المعنوية · السيادة · حدود السيادة</div><div class="section-count">36 سؤالاً</div>
+      </div>
+      <div class="section-card" data-section="3">
+        <div class="section-icon">🏴</div><div class="section-name">المبحث الثالث</div>
+        <div class="section-desc">أشكال الدول · الاتحادات · السيادة الرقمية</div><div class="section-count">32 سؤالاً</div>
+      </div>
+    </div>
+    <p style="text-align:center;color:#7b6852;margin-top:20px;">اختر مبحثاً لبدء اختبار تفاعلي متسلسل مع تصحيح فوري وتحليل للأداء</p>
+  </div>
+  <div id="quizSection">
+    <div class="top-bar">
+      <span class="subject-badge" id="currentSectionTitle">المبحث الأول</span>
+      <button class="back-btn" id="backToHomeBtn">← العودة للقائمة</button>
+    </div>
+    <div class="progress-area">
+      <span class="q-counter" id="questionCounter">السؤال 1 / 33</span>
+      <span class="timer-display" id="timerDisplay">⏱️ 00:00</span>
+      <span class="badge-score" id="miniScore">✨ تقدمك</span>
+    </div>
+    <div class="question-card">
+      <div class="q-header"><span class="q-num" id="qNumDisplay">1</span><span class="q-text" id="qTextDisplay">تحميل...</span></div>
+      <div id="mcOptions" class="options-container"></div>
+      <div id="feedbackArea" class="feedback-panel">
+        <div id="feedbackIcon"></div><div id="feedbackMessage"></div>
+        <div id="explanationBlock" class="explanation-text"></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prevBtn" disabled>← السابق</button>
+      <button class="nav-btn" id="nextBtn">التالي →</button>
+    </div>
+    <div class="flex-center" style="margin-top:12px;">
+      <button class="nav-btn finish-btn" id="finishBtn" style="display:none;">📋 إنهاء وعرض النتيجة</button>
+    </div>
+  </div>
+  <div id="resultSection">
+    <div class="result-screen">
+      <h2>📊 نتيجتك في <span id="resultSectionName"></span></h2>
+      <div class="final-score" id="finalScoreDisplay">0 / 0</div>
+      <div id="percentageDisplay" style="font-size:1.6rem;margin-bottom:5px;"></div>
+      <div class="time-final" id="finalTimeDisplay"></div>
+      <div class="section-scores" id="sectionScores"></div>
+      <div class="analysis-box" id="analysisBox"></div>
+      <div class="btn-group">
+        <button class="restart-btn" id="restartQuizBtn">🔄 إعادة الاختبار</button>
+        <button class="home-btn" id="homeFromResultBtn">🏠 العودة للقائمة</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+"use strict";
+
+// ============ بنوك الأسئلة الثلاثة (كاملة) ============
+const sectionsData = {
+  "1": { name: "المبحث الأول: أركان الدولة", rawQuestions: [
+    { type:'mc', text:'يهتم علم النظم السياسية في جوهره بـ:', options:['صياغة النصوص.','تفسير القواعد.','فلسفة الحكم.','الإلزام القانوني.'], correct:2, explanation:'علم النظم يبحث في "لماذا" (الفلسفة) وليس "كيف" (النص القانوني).', topic:'المقدمة' },
+    { type:'mc', text:'الوظيفة "التكاملية" لعلم النظم السياسية تظهر في:', options:['وضع البدائل.','تطبيق العقوبات.','إلغاء الدستور.','الفصل بين السلطات.'], correct:0, explanation:'هو يسبق الدستور بوضع الحلول ويتلوه بتقييم النتائج.', topic:'المقدمة' },
+    { type:'mc', text:'الرابطة التي تمنح الفرد صفة "المواطن" هي رابطة:', options:['جغرافية.','عرقية.','سياسية وقانونية.','اقتصادية.'], correct:2, explanation:'الجنسية هي الرابطة القانونية والسياسية المقصودة.', topic:'الشعب' },
+    { type:'mc', text:'الفرق الجوهري بين "الشعب" و"السكان" يكمن في:', options:['العدد.','الحقوق السياسية.','مكان الإقامة.','مدة البقاء.'], correct:1, explanation:'السكان يشملون الأجانب، وهم محرومون من الحقوق السياسية.', topic:'الشعب' },
+    { type:'mc', text:'أي من المفاهيم التالية يعبر عن رغبة جماعة في العيش معاً بناءً على "وحدة المصير"؟', options:['الشعب.','الأمة.','السكان.','الرعايا.'], correct:1, explanation:'الأمة مفهوم معنوي يقوم على التاريخ والمصير المشترك.', topic:'الشعب' },
+    { type:'mc', text:'فيما يتعلق بركن "عدد الشعب" ، يعتبر العدد شرطاً:', options:['للوجود القانوني.','للقوة والنفوذ.','للاعتراف الدولي.','لمنح الجنسية.'], correct:1, explanation:'العدد لا يمنع قيام الدولة (مثل الفاتيكان) لكنه يمنح الثقل.', topic:'الشعب' },
+    { type:'mc', text:'"الاتصال الجغرافي" لليابسة في الإقليم البري يعتبر:', options:['شرطاً جوهرياً.','غير ملزم قانوناً.','أساس السيادة.','معياراً للاعتراف.'], correct:1, explanation:'الدولة قد تكون مجزأة (أرخبيل أو ولايات منفصلة) وتظل دولة.', topic:'الإقليم' },
+    { type:'mc', text:'تمارس الدولة سيادة "كاملة" مع قيد "المرور البريء" في:', options:['المياه الداخلية.','البحر الإقليمي.','المنطقة المتاخمة.','المنطقة الاقتصادية.'], correct:1, explanation:'البحر الإقليمي هو المنطقة الوحيدة التي تجمع السيادة مع حق المرور البريء.', topic:'الإقليم' },
+    { type:'mc', text:'تبدأ السيادة "الرقابية" (جمركياً وأمنياً) للدولة بعد مسافة:', options:['12 ميلاً.','24 ميلاً.','200 ميل.','100 كم.'], correct:0, explanation:'الرقابة تبدأ في "المنطقة المتاخمة" التي تلي الـ 12 ميلاً الإقليمية.', topic:'الإقليم' },
+    { type:'mc', text:'"المنطقة الاقتصادية الخالصة" تمنح الدولة حقوقاً:', options:['سيادية مطلقة.','وظيفية استغلالية.','تشريعية كاملة.','رقابية أمنية.'], correct:1, explanation:'حقوق الدولة هناك محصورة في الموارد (سمك، غاز) وليست سيادة إقليمية.', topic:'الإقليم' },
+    { type:'mc', text:'ينتهي الإقليم الجوي للدولة عند:', options:['طبقة الأوزون.','أعلى نقطة طيران.','خط كارمان.','نهاية الغلاف الجوي.'], correct:2, explanation:'خط كارمان (100 كم) هو الحد الفاصل بين الجو والفضاء دولياً.', topic:'الإقليم' },
+    { type:'mc', text:'"احتكار القوة المادية" هو مظهر لسيادة السلطة في:', options:['الداخل فقط.','الخارج فقط.','الداخل والخارج.','المنظمات الدولية.'], correct:0, explanation:'احتكار القوة مظهر داخلي للسيادة لفرض النظام ومنع الميليشيات.', topic:'السلطة' },
+    { type:'mc', text:'"تآكل الشرعية وعجز المؤسسات" يشير تقنياً إلى الدولة:', options:['الناشئة.','الفاشلة.','الديمقراطية.','الفيدرالية.'], correct:1, explanation:'الدولة الفاشلة هي التي تفقد السيطرة المؤسسية والأمنية.', topic:'السلطة' },
+    { type:'mc', text:'وفقاً للاتجاه "المنشئ"، تعتبر الدولة موجودة بمجرد:', options:['اكتمال الأركان.','إعلان الاستقلال.','صدور الاعتراف.','صياغة الدستور.'], correct:2, explanation:'المنشئ يرى أن الاعتراف هو "شهادة الميلاد" القانونية.', topic:'الاعتراف' },
+    { type:'mc', text:'"الاعتراف لا يخلق الدولة بل يقر بوجودها" هو جوهر الاتجاه:', options:['المنشئ.','المقرر.','الفقهي.','السياسي.'], correct:1, explanation:'المقرر يرى الدولة "واقعة مادية" تسبق الاعتراف.', topic:'الاعتراف' },
+    { type:'mc', text:'حظر سحب الاعتراف بالدولة هو مبدأ استقر عليه العمل في:', options:['اتفاقية شيكاغو.','اتفاقية مونتيفيديو.','ميثاق الأمم المتحدة.','معاهدة فيينا.'], correct:1, explanation:'المادة 6 من اتفاقية مونتيفيديو نصت صراحة على عدم جواز سحبه.', topic:'الاعتراف' },
+    { type:'tf', text:'يقتصر دور علم النظم السياسية على الجانب الفني للظاهرة السياسية قبل صياغتها في قواعد قانونية.', correct:false, explanation:'دوره يمتد أيضاً لتحليل وتفسير نتائج تطبيق القواعد القانونية.', topic:'المقدمة' },
+    { type:'tf', text:'تكمن قيمة القانون الدستوري في الإجابة على التساؤل المتعلق بـ "لماذا" تحكم الشعوب بنحو معين.', correct:false, explanation:'القانون الدستوري يجيب على "كيف"، بينما علم النظم يجيب على "لماذا".', topic:'المقدمة' },
+    { type:'tf', text:'يمكن أن ينطبق وصف "الأمة" على جماعة بشرية لا تملك إقليماً مستقراً تمارس عليه سيادتها.', correct:true, explanation:'الأمة رابطة معنوية (تاريخ، لغة) كالأمة العربية التي تتوزع في عدة دول.', topic:'الشعب' },
+    { type:'tf', text:'يعتبر "السكان" هم الركن البشري للدولة الذي يتمتع بالحقوق السياسية دون غيرهم.', correct:false, explanation:'"الشعب" (المواطنون) هم أصحاب الحقوق السياسية، والسكان يشملون الأجانب.', topic:'الشعب' },
+    { type:'tf', text:'لا يؤثر تفتت الإقليم البري للدولة جغرافياً (مثل الجزر المنفصلة) على قيامها ككيان قانوني موحد.', correct:true, explanation:'الاتصال الجغرافي ليس شرطاً، كحال الدول التي تتكون من عدة جزر.', topic:'الإقليم' },
+    { type:'tf', text:'تملك الدولة سيادة مطلقة على مياه "البحر الإقليمي" تماثل تماماً سيادتها على "المياه الداخلية".', correct:false, explanation:'البحر الإقليمي مقيد بـ "حق المرور البريء"، والداخلية سيادة مطلقة.', topic:'الإقليم' },
+    { type:'tf', text:'تنتهي السيادة الأمنية والجمركية للدولة بنهاية الـ 12 ميلاً بحرياً الأولى من خط الأساس.', correct:false, explanation:'السيادة الرقابية (الجمرك والأمن) تمتد في المنطقة المتاخمة حتى 24 ميلاً.', topic:'الإقليم' },
+    { type:'tf', text:'يحق للدولة الساحلية منع الملاحة الأجنبية في منطقتها الاقتصادية الخالصة لحماية ثرواتها السمكية.', correct:false, explanation:'المنطقة الاقتصادية تضمن حرية الملاحة والتحليق للدول الأخرى.', topic:'الإقليم' },
+    { type:'tf', text:'السيادة الجوية للدولة لا سقف لها، وتمتد قانوناً إلى الفضاء الخارجي طالما كانت قادرة على حمايته.', correct:false, explanation:'تنتهي عند "خط كارمان" (100 كم)؛ فالفضاء الخارجي مشاع دولي.', topic:'الإقليم' },
+    { type:'tf', text:'"الدولة الهشة" هي التي فقدت شخصيتها القانونية الدولية تماماً بسبب تآكل مؤسساتها.', correct:false, explanation:'الدولة الهشة تضعف مؤسساتها لكنها لا تفقد شخصيتها القانونية بمجرد الضعف.', topic:'السلطة' },
+    { type:'tf', text:'وفقاً للاتجاه "المقرر"، فإن الدولة تكتسب حق الدفاع عن نفسها حتى لو لم يعترف بها أحد.', correct:true, explanation:'لأن الوجود واقعة مادية سابقة للاعتراف تمنح حقوقاً أصيلة كالدفاع.', topic:'الاعتراف' },
+    { type:'tf', text:'المنطق القانوني للاتجاه "المنشئ" يقتضي ضمناً إجازة سحب الاعتراف بالدولة الجديدة.', correct:true, explanation:'إذا كان الاعتراف هو من "خلق" الدولة، فإن زواله يؤدي لزوالها نظرياً.', topic:'الاعتراف' },
+    { type:'tf', text:'تعتبر اتفاقية "مونتيفيديو" أن الاعتراف هو شرط أساسي لنشوء الشخصية القانونية للدولة.', correct:false, explanation:'الاتفاقية تبنت الاتجاه "المقرر" الذي يعتبر وجود الدولة مستقلاً عن الاعتراف.', topic:'الاعتراف' },
+    { type:'mc', text:'🎯 واقعة "سفينة الصيد والمطاردة البحرية": قامت سفينة أجنبية بالصيد غير المشروع على مسافة 18 ميلاً بحرياً من ساحل الدولة. أي العبارات تصف الوضع القانوني بدقة؟', options:['للدولة حق توقيفها لأنها في البحر الإقليمي.','للدولة حق المطاردة لأن الواقعة حدثت في المنطقة الاقتصادية حيث تملك الدولة حقوقاً سيادية على الثروات.','لا يحق للدولة توقيفها لأنها تجاوزت مسافة 12 ميلاً.','يحق للدولة توقيفها فقط إذا كانت السفينة تهدد الأمن القومي.'], correct:1, explanation:'المسافة (18 ميلاً) تقع في المنطقة الاقتصادية، وللدولة "حقوق سيادية وظيفية" على الموارد.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 معضلة "الدولة الوليدة والعدوان": نشأ كيان جديد ولم تعترف به أي دولة، ثم تعرض لهجوم عسكري. حسب الاتجاه المقرر واتفاقية مونتيفيديو:', options:['ليس للكيان حق الدفاع لأن الشخصية القانونية لا تنشأ إلا بالاعتراف.','للكيان حق الدفاع لأن وجوده واقعة مادية تسبق الاعتراف.','يعتبر الهجوم شرعياً لأن الكيان لم يصبح دولة بعد.','يتوقف حق الدفاع على نيل اعتراف مستقبلي من الأمم المتحدة.'], correct:1, explanation:'الوجود المادي للأركان كافٍ لمنح حقوق البقاء والدفاع حسب الاتجاه المقرر.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 التكييف القانوني لـ "الاضطراب المؤسسي": دولة تعاني من ميليشيات مسلحة وعجز حكومي. وفقاً لمصطلحات علم النظم، يوصف هذا بأنه:', options:['فقد ركن الإقليم قانوناً.','تحول إلى أمة لغياب التنظيم السياسي.','دخل في طور الدولة الفاشلة.','زالت عنه صفة الدولة فوراً.'], correct:2, explanation:'الفشل يعني عجز "ركن السلطة" عن ممارسة مهامه الأساسية وليس زوال الدولة قانوناً.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 السيادة الجوية والأقمار الصناعية: قمر صناعي على ارتفاع 150 كم. بالاعتماد على خط كارمان، الرد القانوني:', options:['الاحتجاج صحيح؛ السيادة تمتد لما لا نهاية.','الاحتجاج غير صحيح؛ القمر في الفضاء الخارجي المشاع.','الاحتجاج صحيح طالما تملك الدولة تكنولوجيا الإسقاط.','يتوقف على موافقة منظمة الطيران المدني الدولي.'], correct:1, explanation:'خط كارمان (100 كم) هو الحد الفاصل؛ وما فوقه يخرج عن سيادة الدول.', topic:'مركبة', isComplex:true }
+  ]},
+  "2": { name: "المبحث الثاني: خصائص الدولة", rawQuestions: [
+    { type:'mc', text:'تكتسب الدولة الشخصية القانونية بمجرد:', options:['النص عليها في الدستور.','صدور قانون خاص بها.','اكتمال أركانها المادية.','اعتراف الدول الأخرى بها.'], correct:2, explanation:'الدولة تنشأ واقعياً وقانونياً باكتمال أركانها دون انتظار نص.', topic:'الشخصية المعنوية' },
+    { type:'mc', text:'تتميز الشخصية المعنوية للدولة عن الشركات الخاصة بأنها:', options:['ذات ذمة مالية مستقلة.','تتقيد بقاعدة التخصص.','لا تتقيد بقاعدة التخصص.','تنتهي بتغير نظام الحكم.'], correct:2, explanation:'الدولة لها ولاية عامة لممارسة كافة الأنشطة، عكس الشركات المقيدة.', topic:'الشخصية المعنوية' },
+    { type:'mc', text:'إذا تغير نظام الحكم من ملكي إلى جمهوري، فإن المعاهدات الدولية:', options:['تصبح باطلة قانوناً.','تستمر في النفاذ.','تحتاج لإعادة توقيع.','تسقط لزوال الشخصية.'], correct:1, explanation:'شخصية الدولة مستمرة ولا تترتب على تغير الحاكم زوال التزاماتها.', topic:'الشخصية المعنوية' },
+    { type:'mc', text:'الحاكم في ظل الشخصية المعنوية للدولة يعتبر:', options:['مالكاً لسيادة الدولة.','أصيلاً عن نفسه.','نائباً عن الكيان القانوني.','فوق القانون والالتزامات.'], correct:2, explanation:'التصرفات تنسب للدولة كشخص اعتباري، والحاكم مجرد أداة تعبير.', topic:'الشخصية المعنوية' },
+    { type:'mc', text:'الاستثناء الوارد على "قاعدة المصدر" بالنسبة للدولة هو:', options:['حاجتها لنص دستوري.','ثبوتها بمجرد الميلاد.','خضوعها للقانون العام.','محدودية نطاق نشاطها.'], correct:1, explanation:'الأصل أن الأشخاص الاعتبارية تنشأ بقانون، لكن الدولة تنشأ بالميلاد الفعلي.', topic:'الشخصية المعنوية' },
+    { type:'mc', text:'الشق الخارجي للسيادة يعني بالضرورة:', options:['السيطرة على الإقليم.','تشريع القوانين الوطنية.','الاستقلال عن التوجيه الأجنبي.','التفوق العسكري الكاسح.'], correct:2, explanation:'الاستقلال وعدم الخضوع لإرادة دولة أخرى هو جوهر السيادة الخارجية.', topic:'السيادة' },
+    { type:'mc', text:'مبدأ "المساواة في السيادة" أمام القانون الدولي يعني:', options:['تماثل القوة العسكرية.','تساوي المساحة الجغرافية.','التمتع بذات الحقوق القانونية.','انعدام الفوارق الاقتصادية.'], correct:2, explanation:'المساواة قانونية وليست واقعية؛ فالدول تتساوى في الحق في السيادة.', topic:'السيادة' },
+    { type:'mc', text:'في نظرية "سيادة الأمة"، يعتبر النائب ممثلاً لـ:', options:['دائرته الانتخابية فقط.','جيل الأحياء من الشعب.','الأمة ككيان مجرد.','الحكومة التي عينته.'], correct:2, explanation:'الأمة في هذه النظرية هي وحدة واحدة تشمل الماضي والحاضر والمستقبل.', topic:'نظريات السيادة' },
+    { type:'mc', text:'وفقاً لنظرية "سيادة الشعب"، يعتبر الانتخاب:', options:['وظيفة وتكليفاً.','حقاً شخصياً للمواطن.','منحة من السلطة.','واجباً يجوز الإجبار عليه.'], correct:1, explanation:'لأن السيادة مجزأة بين الأفراد، فلكل فرد جزء منها يمارسه كحق.', topic:'نظريات السيادة' },
+    { type:'mc', text:'النتيجة المترتبة على الأخذ بنظرية "سيادة الشعب" هي:', options:['النائب يمثل الأجيال القادمة.','تقييد حق الانتخاب.','مسؤولية النائب أمام ناخبيه.','استقلال النائب عن إرادة الأفراد.'], correct:2, explanation:'النائب وكيل عن ناخبيه، وبالتالي يمكن محاسبته أو عزله.', topic:'نظريات السيادة' },
+    { type:'mc', text:'القيد الذي يجعل حقوق الإنسان ليست "شأناً داخلياً" خالصاً هو:', options:['ضغوط جماعات المصالح.','التنظيم الدولي والمعاهدات.','السيادة الرقمية للدولة.','قوة الدستور الوطني.'], correct:1, explanation:'الالتزام بالمواثيق الدولية يجعل خرق حقوق الإنسان مدعاة للتدخل.', topic:'حدود السيادة' },
+    { type:'mc', text:'يظهر خطر "السيادة الرقمية" بشكل أساسي من خلال:', options:['الحروب التقليدية.','سيطرة الشركات التكنولوجية.','تغير أنظمة الحكم.','ضعف القوة العسكرية.'], correct:1, explanation:'تخزين بيانات المواطنين لدى شركات أجنبية يحد من سلطة الدولة الفعلية.', topic:'السيادة الرقمية' },
+    { type:'tf', text:'تقتصر الشخصية المعنوية في القانون على مجموعات الأشخاص فقط دون مجموعات الأموال.', correct:false, explanation:'تشمل مجموعات الأشخاص (شركات) ومجموعات الأموال (مؤسسات/جمعيات).', topic:'الشخصية المعنوية' },
+    { type:'tf', text:'تعتبر الدولة شخصاً معنوياً عاماً يخضع لقواعد القانون الخاص.', correct:false, explanation:'الدولة شخص معنوي عام يخضع للقانون العام.', topic:'الشخصية المعنوية' },
+    { type:'tf', text:'تثبت الشخصية المعنوية للدولة بمجرد اكتمال أركانها الثلاثة دون حاجة لإجراء آخر.', correct:true, explanation:'تثبت بالميلاد الفعلي للدولة (اكتمال الأركان) دون الحاجة لدستور أو اعتراف.', topic:'الشخصية المعنوية' },
+    { type:'tf', text:'تلتزم الدولة بـ "قاعدة التخصص" فلا تمارس إلا أنشطة محددة بنطاق جغرافي معين.', correct:false, explanation:'الدولة هي الوحيدة التي لا تتقيد بالتخصص، بل تمارس كافة الأنشطة.', topic:'الشخصية المعنوية' },
+    { type:'tf', text:'توصف سيادة الدولة بأنها "الأصيلة"، بينما سيادة المحافظات والهيئات "مشتقة".', correct:true, explanation:'الدولة صاحبة السلطة الأعلى، أما الهيئات فتستمد شخصيتها من قانون الدولة.', topic:'الشخصية المعنوية' },
+    { type:'tf', text:'يترتب على الشخصية المعنوية أن تكون الذمة المالية للحكام هي ذاتها ذمة الدولة.', correct:false, explanation:'للدولة ذمة مالية مستقلة تماماً عن ذمة الحكام والأفراد.', topic:'الشخصية المعنوية' },
+    { type:'tf', text:'تسقط التشريعات والمعاهدات بمجرد تغير نظام الحكم من ملكي إلى جمهوري.', correct:false, explanation:'تستمر المعاهدات والقوانين رغم تغير الحكام أو الأنظمة.', topic:'الشخصية المعنوية' },
+    { type:'tf', text:'الشق الداخلي للسيادة يعني عدم اعتداء دولة أخرى على إقليم الدولة.', correct:false, explanation:'هذا هو الشق الخارجي؛ أما الداخلي فهو سلطة الدولة على مواطنيها وإقليمها.', topic:'السيادة' },
+    { type:'tf', text:'السيادة صفة لصيقة بالدولة، فلا فرق بين دولة كبيرة وأخرى صغيرة في التمتع بها.', correct:true, explanation:'السيادة مرتبطة بوجود الدولة ككيان، وليست مرتبطة بحجمها.', topic:'السيادة' },
+    { type:'tf', text:'مبدأ المساواة في السيادة يعني بالضرورة تساوي القوة العسكرية والاقتصادية للدول.', correct:false, explanation:'المساواة قانونية (في الحقوق)، وليست واقعية (في القوة أو المساحة).', topic:'السيادة' },
+    { type:'tf', text:'في نظرية "سيادة الأمة"، تعتبر الأمة كياناً واقعياً ملموساً يمثله جيل الأحياء.', correct:false, explanation:'الأمة كيان مجرد (وهمي قانوناً) يضم الأجيال السابقة والحالية والقادمة.', topic:'نظريات السيادة' },
+    { type:'tf', text:'تؤدي نظرية "سيادة الأمة" بالضرورة إلى جعل الانتخاب "حقاً" لكل مواطن.', correct:false, explanation:'تجعل الانتخاب "وظيفة"، وبالتالي يجوز تقييده (الانتخاب المقيد).', topic:'نظريات السيادة' },
+    { type:'tf', text:'في نظرية "سيادة الشعب"، يكون النائب مسؤولاً أمام ناخبيه وملتزماً بطلباتهم.', correct:true, explanation:'لأن السيادة للشعب (الأفراد)، فالنائب وكيل عنهم ويأتمر بأمرهم.', topic:'نظريات السيادة' },
+    { type:'tf', text:'أخذ الدستور المصري الحالي بنظرية "سيادة الأمة" بشكل مطلق.', correct:false, explanation:'المادة 4 نصت بوضوح: "السيادة للشعب وحده" (نظرية سيادة الشعب).', topic:'نظريات السيادة' },
+    { type:'tf', text:'السيادة في العصر الحديث مطلقة ولا يرد عليها أي قيد خارجي أو داخلي.', correct:false, explanation:'مقيدة بالمعاهدات، قواعد القانون الدولي، وحقوق الإنسان.', topic:'حدود السيادة' },
+    { type:'tf', text:'يعد تدخل الأمم المتحدة لحماية حقوق الإنسان خرقاً غير مشروع للسيادة في كل الأحوال.', correct:false, explanation:'إذا لم تنطوِ الإجراءات على استخدام القوة المسلحة، فهي مشروعة دولياً.', topic:'حدود السيادة' },
+    { type:'tf', text:'التذرع بالسيادة لا يعفي الدولة من مسؤوليتها الدولية حال انتهاك حقوق الإنسان.', correct:true, explanation:'لا يجوز التذرع بـ "الاختصاص الداخلي" للهروب من الالتزامات الدولية.', topic:'حدود السيادة' },
+    { type:'tf', text:'قانون "CLOUD" الأمريكي يعزز السيادة الرقمية للدول التي تعمل بها الشركات التكنولوجية.', correct:false, explanation:'بل هو تهديد للسيادة، لأنه يسمح لأمريكا بالوصول لبيانات خارج حدودها.', topic:'السيادة الرقمية' },
+    { type:'tf', text:'تظهر السيادة الرقمية كحاجة ملحة بسبب تخزين بيانات المواطنين لدى شركات أجنبية.', correct:true, explanation:'السيطرة الأجنبية على البيانات جعلت الدول تشعر بالقلق على سيادتها المعلوماتية.', topic:'السيادة الرقمية' },
+    { type:'mc', text:'🎯 قامت ثورة غيرت نظام الحكم من ملكي إلى جمهوري وقرر النظام الجديد إلغاء ديون الدولة السابقة. هذا القرار قانوناً:', options:['صحيح؛ لزوال صفة الحاكم.','باطل؛ لاستمرار شخصية الدولة.','صحيح؛ لتغير شكل السلطة.','باطل؛ لضرورة الاعتراف الدولي.'], correct:1, explanation:'تغيير نظام الحكم لا ينهي الشخصية المعنوية للدولة، فالتزاماتها باقية.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 إذا أصدرت دولة قانوناً يحظر التصويت إلا على حاملي الشهادات الجامعية، فهي تطبق فلسفة:', options:['سيادة الشعب.','الانتخاب كحق.','سيادة الأمة.','المساواة القانونية.'], correct:2, explanation:'سيادة الأمة تعتبر الانتخاب وظيفة وليس حقاً، فيجوز وضع شروط.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 تختلف الدولة عن الشركات التجارية في ممارسة الأنشطة من حيث خضوعها لـ:', options:['قاعدة التخصص.','الذمة المالية.','الأهلية القانونية.','عدم التخصص.'], correct:3, explanation:'الدولة هي الشخص المعنوي الوحيد الذي لا يتقيد بقاعدة التخصص.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 تمسكت دولة بسيادتها المطلقة لرفض تفتيش دولي بعد توقيعها معاهدة تنص على ذلك. هذا التذرع:', options:['مقبول؛ فالسيادة تسمو فوق المعاهدات.','مرفوض؛ لتقييد السيادة بالاتفاقيات.','مقبول؛ لاندراجها ضمن الشأن الداخلي.','مرفوض؛ لتساوي الدول في القوة.'], correct:1, explanation:'السيادة في العصر الحديث مقيدة بالالتزامات الدولية والمعاهدات.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 قيام محكمة أجنبية بإلزام شركة سحابية بتسليم بيانات مواطنين داخل دولة أخرى هو تجسيد لـ:', options:['السيادة الوطنية المطلقة.','الشق الداخلي للسيادة.','تآكل السيادة الرقمية.','الحصانة الإقليمية للدولة.'], correct:2, explanation:'يعبر عن اختراق حدود الدولة معلوماتياً وتجاوز سلطتها على بيانات مواطنيها.', topic:'مركبة', isComplex:true }
+  ]},
+  "3": { name: "المبحث الثالث: أشكال الدولة", rawQuestions: [
+    { type:'mc', text:'المظلة التي ظهر تحتها مفهوم "السيادة الرقمية" تتعلق بشكل مباشر بـ:', options:['حماية الحدود الجغرافية.','الاستقلال الاقتصادي.','سرية البيانات ومكانها.','التحالفات العسكرية المعاصرة.'], correct:2, explanation:'قانون CLOUD الأمريكي دفع الدول للمناداة بالسيادة الرقمية لحماية بيانات مواطنيها.', topic:'السيادة الرقمية' },
+    { type:'mc', text:'تقسيم الدول بناءً على "الكثافة" و"التجانس العرقي" يندرج تحت المعيار:', options:['الديموغرافي.','الإقليمي.','السلطوي.','الجغرافي.'], correct:0, explanation:'الكثافة السكانية والتجانس العرقي مرتبطان بعلم السكان (الديموغرافيا).', topic:'تصنيف الدول' },
+    { type:'mc', text:'التزام دولة تركمانستان بالحياد الدائم يترتب عليه أثر قانوني يتمثل في:', options:['فقدان شخصيتها الدولية.','تقييد سيادتها الخارجية.','حرمانها من جيشها الوطني.','خضوعها لوصاية دولية.'], correct:1, explanation:'الحياد الدائم يحد من ممارسة السيادة الخارجية طواعية.', topic:'الدول ناقصة السيادة' },
+    { type:'mc', text:'الفارق القانوني الجوهري بين نظامي "الانتداب" و"الوصاية" يكمن في:', options:['الهدف المتمثل في الاستقلال.','المظلة الدولية المنشئة لكليهما.','سلب السيادة الداخلية للإقليم.','نقل الثروات للدولة المشرفة.'], correct:1, explanation:'الانتداب نشأ في ظل عصبة الأمم، والوصاية نشأت في ظل الأمم المتحدة.', topic:'الدول ناقصة السيادة' },
+    { type:'mc', text:'انتهاء الدور الفعلي لمجلس الوصاية التابع للأمم المتحدة كان بسبب:', options:['تعديل ميثاق المنظمة.','اندلاع نزاعات مسلحة.','استنفاد الغرض من إنشائه.','إلغاء النظام بقرار أمريكي.'], correct:2, explanation:'علق عمل المجلس بعد استقلال بالاو عام 1994.', topic:'الدول ناقصة السيادة' },
+    { type:'mc', text:'إذا قامت دولة موحدة بتفويض بعض الصلاحيات للمحافظات، فإن هذا التصرف يمس الوظيفة:', options:['التشريعية.','القضائية.','الإدارية.','السياسية.'], correct:2, explanation:'اللامركزية في الدولة البسيطة هي لامركزية إدارية بحتة.', topic:'الدولة البسيطة' },
+    { type:'mc', text:'الاستثناء التاريخي لوحدة تطبيق القوانين داخل إقليم الدولة البسيطة تحقق في:', options:['فرنسا إبان الثورة.','السودان تحت الحكم الإنجليزي.','إيطاليا قبل التوحيد.','مصر في دستور 1923.'], correct:1, explanation:'طبقت بريطانيا قانون العقوبات 1899 على جزء من السودان فقط.', topic:'الدولة البسيطة' },
+    { type:'mc', text:'الأثر الفوري المترتب على دخول دولتين في اتحاد فيدرالي بالنسبة للمعاهدات السابقة لهما:', options:['تظل سارية ومستقلة.','تعدل لتناسب الاتحاد.','تنقضي تلقائياً.','تحال للولايات لتنفيذها.'], correct:2, explanation:'تفقد الدويلات أهليتها الخارجية، وتنقضي معاهداتها لانقضاء الشخصية الدولية.', topic:'الاتحاد الفيدرالي' },
+    { type:'mc', text:'التكييف القانوني للنزاع المسلح الذي قد ينشأ بين ولايتين داخل دولة فيدرالية:', options:['حرب دولية.','نزاع كونفدرالي.','تمرد داخلي (حرب أهلية).','دفاع شرعي.'], correct:2, explanation:'الدولة الفيدرالية شخصية دولية واحدة، والنزاع بين ولاياتها نزاع داخلي.', topic:'الاتحاد الفيدرالي' },
+    { type:'mc', text:'مشاركة الولايات في تعديل الدستور الاتحادي أو من خلال مجلس الشيوخ هو تطبيق لمبدأ:', options:['الازدواجية.','اللامركزية.','المشاركة.','الاستقلالية.'], correct:2, explanation:'مشاركة الولايات في صنع القرار الاتحادي تجسد مبدأ المشاركة.', topic:'الاتحاد الفيدرالي' },
+    { type:'mc', text:'الطريقة الأوسع انتشاراً والأنجح في الدساتير الفيدرالية لتوزيع الاختصاصات هي:', options:['حصر اختصاصات الولايات.','حصر اختصاصات الاتحاد.','حصر اختصاصات كليهما.','ترك التوزيع للعرف الدستوري.'], correct:1, explanation:'تحديد اختصاصات الاتحاد على سبيل الحصر، وترك الباقي للولايات.', topic:'الاتحاد الفيدرالي' },
+    { type:'mc', text:'نشأة دولة فيدرالية عن طريق تفكك دولة موحدة بسيطة يهدف غالباً إلى:', options:['التوسع العسكري.','تجنب الانفصال الكلي.','الاندماج الاقتصادي.','توحيد القوانين المحلية.'], correct:1, explanation:'لمنح أقاليمها قدراً من الاستقلال الذاتي لمنع انفصالها كلياً.', topic:'الاتحاد الفيدرالي' },
+    { type:'mc', text:'الرابطة الأساسية التي يبنى عليها "الاتحاد الشخصي" هي:', options:['معاهدة دولية ملزمة.','دستور توافقي.','وحدة رئيس الدولة.','برلمان مشترك.'], correct:2, explanation:'المظهر الوحيد هو خضوع الدولتين لشخص واحد (ملك أو رئيس).', topic:'الاتحاد الشخصي' },
+    { type:'mc', text:'القاعدة العامة في قرارات الهيئة المشتركة في الاتحاد الكونفدرالي أنها تصدر بـ:', options:['الأغلبية البسيطة.','الأغلبية المطلقة.','الإجماع.','التصويت الشعبي.'], correct:2, explanation:'قراراتها تصدر بإجماع الآراء للحفاظ على سيادة الدول الأعضاء.', topic:'الاتحاد الكونفدرالي' },
+    { type:'mc', text:'خروج دولة كبريطانيا من الاتحاد الأوروبي يكيف قانونياً على أنه:', options:['ممارسة طبيعية للسيادة.','انفصال غير مشروع.','ثورة دستورية.','انتهاك لمعاهدة الفرسائل.'], correct:0, explanation:'في الاتحاد الكونفدرالي يحق لكل دولة الانسحاب لاحتفاظها بسيادتها.', topic:'الاتحاد الكونفدرالي' },
+    { type:'mc', text:'السند القانوني المنشئ للدولة الفيدرالية مقارنة بالاتحاد الكونفدرالي هو على الترتيب:', options:['معاهدة - دستور.','دستور - معاهدة.','دستور - قرار أممي.','معاهدة - اتفاق شخصي.'], correct:1, explanation:'الفيدرالي ينشأ بدستور اتحادي، والكونفدرالي بمعاهدة دولية.', topic:'مقارنات' },
+    { type:'tf', text:'السيادة الرقمية تعني بالضرورة أن تكون كافة البيانات مخزنة مادياً داخل الحدود الجغرافية للدولة.', correct:false, explanation:'تهدف لتوفير طرق آمنة وضمانات قانونية، وليست مجرد تخزين مادي حصري.', topic:'السيادة الرقمية' },
+    { type:'tf', text:'المعيار الديموغرافي لتقسيم الدول يعتمد على "الكيف" (كالتجانس) و"الكم" (كالكثافة) معاً.', correct:true, explanation:'الديموغرافيا تشمل دراسة عدد السكان وخصائصهم العرقية.', topic:'تصنيف الدول' },
+    { type:'tf', text:'الدولة ذات الحياد الدائم تفقد حقها في إنشاء جيش وطني أو الدفاع عن نفسها.', correct:false, explanation:'الحياد الدائم يمنع الحروب الهجومية، لكنه لا يسلب حق الدفاع عن النفس.', topic:'الدول ناقصة السيادة' },
+    { type:'tf', text:'انتهى الدور الفعلي لمجلس الوصاية الدولي بمجرد حصول الأقاليم على استقلالها.', correct:true, explanation:'الوصاية نظام مؤقت، وانتهى فعلياً باستقلال بالاو عام 1994.', topic:'الدول ناقصة السيادة' },
+    { type:'tf', text:'تحول الدولة من المركزية الإدارية إلى اللامركزية الإدارية يغير من وصفها كدولة بسيطة.', correct:false, explanation:'تظل الدولة بسيطة طالما بقيت المركزية السياسية.', topic:'الدولة البسيطة' },
+    { type:'tf', text:'في الدولة الموحدة، يجب أن تكون جميع القوانين مطبقة بشكل متماثل حرفياً دون استثناء.', correct:false, explanation:'قد توجد استثناءات قانونية مثل حالة السودان 1899.', topic:'الدولة البسيطة' },
+    { type:'tf', text:'بانضمام الدولة إلى اتحاد فيدرالي، تنقضي شخصيتها الدولية وتصبح المعاهدات السابقة غير ملزمة.', correct:true, explanation:'الانضمام للفيدرالية يعني صهر الشخصية الدولية للولايات في شخصية واحدة.', topic:'الاتحاد الفيدرالي' },
+    { type:'tf', text:'مبدأ الاستقلالية في الاتحاد الفيدرالي يمنح الولايات سلطة القضاء المستقل في الشؤون المحلية.', correct:true, explanation:'الاستقلالية تعني تمتع كل ولاية بسلطاتها الثلاث في شؤونها المحلية.', topic:'الاتحاد الفيدرالي' },
+    { type:'tf', text:'يعتبر توزيع الاختصاصات بحصر مهام الولايات وترك الباقي للاتحاد وسيلة لتعزيز استقلال الولايات.', correct:false, explanation:'العكس هو الصحيح؛ حصر اختصاصات الاتحاد وترك الباقي للولايات يدعم استقلالها.', topic:'الاتحاد الفيدرالي' },
+    { type:'tf', text:'النزاع المسلح بين عضوين في اتحاد كونفدرالي يكيف على أنه حرب أهلية.', correct:false, explanation:'يكيف كحرب دولية، لأن دول الاتحاد الكونفدرالي تحتفظ بسيادتها.', topic:'الاتحاد الكونفدرالي' },
+    { type:'tf', text:'الاتحاد الشخصي ينشئ كياناً قانونياً جديداً تذوب فيه شخصية الدول الأعضاء.', correct:false, explanation:'الاتحاد الشخصي هو أضعف الروابط، ولا ينشأ عنه دولة جديدة.', topic:'الاتحاد الشخصي' },
+    { type:'tf', text:'قرارات الهيئة المشتركة في الاتحاد الكونفدرالي لا تسري على المواطنين إلا بعد إقرارها محلياً.', correct:true, explanation:'لأن الاتحاد الكونفدرالي اتحاد دول لا أفراد، والسلطة لا تتصل بالأفراد مباشرة.', topic:'الاتحاد الكونفدرالي' },
+    { type:'mc', text:'🎯 إذا اندمجت دولتان لتكوين دولة فيدرالية، وكان للدولة (أ) معاهدة تحالف عسكري سابقة، فإن الموقف القانوني:', options:['تنتقل التزامات المعاهدة للدولة الجديدة.','تنقضي المعاهدة لزوال الشخصية الدولية للدولة (أ).','تظل المعاهدة سارية على إقليم الولاية (أ) فقط.','تتحول المعاهدة إلى قانون داخلي للولاية (أ).'], correct:1, explanation:'في الفيدرالية تذوب الشخصية الدولية، وتنقضي المعاهدات بزوالها.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 في ظل اللامركزية الإدارية، إذا تعارض قرار مجلس محلي مع قانون برلماني مركزي، الأولوية:', options:['للقرار المحلي لأنه الأقرب.','للقانون البرلماني تطبيقاً لوحدة السلطة التشريعية.','يتم اللجوء للاستفتاء الشعبي.','يلغى القانونان.'], correct:1, explanation:'الدولة الموحدة تتميز بوحدة السلطة التشريعية، والمجالس المحلية تمارس وظيفة إدارية.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 دولة عضو في اتحاد كونفدرالي أبرمت اتفاقية تجارية منفردة، ثم قررت الجمعية المشتركة إلغاءها. هذا القرار:', options:['نافذ لأن قرارات الاتحاد تسمو.','غير نافذ لأن الدولة العضو تحتفظ بسيادتها الخارجية.','نافذ بشرط الإجماع.','غير نافذ لأن الاتحاد يمنع الاتفاقيات المنفردة.'], correct:1, explanation:'كل دولة تحتفظ بسيادتها، ولا تملك الهيئة المشتركة سلطة إجبارها.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 أي الحالات التالية تخرج عن توصيف الدولة ناقصة السيادة:', options:['دولة تلتزم دستورياً بعدم الدخول في أحلاف عسكرية.','دولة تخضع لإشراف مجلس الوصاية.','دولة تمنح دولة أخرى إدارة شؤونها الدفاعية.','دولة موحدة تمنح أقاليمها حق التشريع في المسائل الجنائية.'], correct:3, explanation:'هذه الحالة تتعلق بتوزيع السلطات داخلياً وليس بالسيادة بمعناها الدولي.', topic:'مركبة', isComplex:true }
+  ]}
+};
+
+// ============ متغيرات الحالة ============
+let currentSection = null, questions = [], TOTAL = 0, currentIndex = 0, userAnswers = [], timerSeconds = 0, timerInterval = null, quizFinished = false;
+
+// ============ دوال التخزين ============
+function getStorageKey() { return `political_systems_section_${currentSection}`; }
+function saveState() { if (!currentSection) return; localStorage.setItem(getStorageKey(), JSON.stringify({ currentIndex, userAnswers, timerSeconds })); }
+function loadState() {
+  if (!currentSection) return false;
+  const saved = localStorage.getItem(getStorageKey());
+  if (saved) { try { const s = JSON.parse(saved); currentIndex = s.currentIndex; userAnswers = s.userAnswers; timerSeconds = s.timerSeconds; return true; } catch(e) { return false; } }
+  return false;
+}
+function clearState() { if (currentSection) localStorage.removeItem(getStorageKey()); }
+
+// ============ دوال المؤقت ============
+function formatTime(secs) { const m = Math.floor(secs / 60).toString().padStart(2, '0'); const s = (secs % 60).toString().padStart(2, '0'); return `${m}:${s}`; }
+function startTimer() { if (timerInterval) clearInterval(timerInterval); timerInterval = setInterval(() => { if (!quizFinished) { timerSeconds++; document.getElementById('timerDisplay').textContent = `⏱️ ${formatTime(timerSeconds)}`; saveState(); } }, 1000); }
+function stopTimer() { quizFinished = true; if (timerInterval) clearInterval(timerInterval); }
+
+// ============ عرض السؤال والتغذية الراجعة ============
+function applyVisualFeedback(index) {
+  const q = questions[index], userAns = userAnswers[index];
+  if (userAns === null) return;
+  const rows = document.querySelectorAll('.option-row');
+  rows.forEach((row, optIdx) => {
+    row.classList.remove('correct-highlight', 'wrong-highlight', 'disabled-opt');
+    if (q.type === 'mc') { if (optIdx === q.correct) row.classList.add('correct-highlight'); else if (optIdx === userAns) row.classList.add('wrong-highlight'); }
+    else { if ((optIdx === 0 && q.correct === true) || (optIdx === 1 && q.correct === false)) row.classList.add('correct-highlight'); else if (optIdx === userAns) row.classList.add('wrong-highlight'); }
+    row.classList.add('disabled-opt');
+  });
+  document.querySelectorAll(`input[name="q${index}"]`).forEach(r => r.disabled = true);
+  const isCorrect = (q.type === 'mc') ? (userAns === q.correct) : ((userAns === 0 && q.correct) || (userAns === 1 && !q.correct));
+  const fb = document.getElementById('feedbackArea'); fb.style.display = 'block';
+  fb.className = `feedback-panel ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
+  document.getElementById('feedbackIcon').innerHTML = isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة';
+  const correctStr = q.type === 'mc' ? `${String.fromCharCode(65 + q.correct)}) ${q.options[q.correct]}` : (q.correct ? 'صح' : 'خطأ');
+  document.getElementById('feedbackMessage').textContent = isCorrect ? 'أحسنت!' : `الإجابة الصحيحة هي: ${correctStr}`;
+  document.getElementById('explanationBlock').textContent = q.explanation;
+}
+
+function renderQuestion(index) {
+  const q = questions[index];
+  document.getElementById('qNumDisplay').textContent = index + 1;
+  document.getElementById('qTextDisplay').textContent = q.text;
+  document.getElementById('questionCounter').textContent = `السؤال ${index+1} / ${TOTAL}`;
+  let html = '';
+  if (q.type === 'mc') {
+    q.options.forEach((opt, optIdx) => {
+      const chk = userAnswers[index] === optIdx ? 'checked' : '', dis = userAnswers[index] !== null ? 'disabled' : '';
+      html += `<div class="option-row" onclick="${userAnswers[index]===null ? `window.selectRadio(${index},${optIdx})` : ''}"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${String.fromCharCode(65+optIdx)}) ${opt}</label></div>`;
+    });
+  } else {
+    ['صح','خطأ'].forEach((opt, optIdx) => {
+      const chk = userAnswers[index] === optIdx ? 'checked' : '', dis = userAnswers[index] !== null ? 'disabled' : '';
+      html += `<div class="option-row" onclick="${userAnswers[index]===null ? `window.selectRadio(${index},${optIdx})` : ''}"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${optIdx===0?'✔️':'❌'} ${opt}</label></div>`;
+    });
+  }
+  document.getElementById('mcOptions').innerHTML = html;
+  if (userAnswers[index] !== null) applyVisualFeedback(index); else document.getElementById('feedbackArea').style.display = 'none';
+  updateNavButtons(); updateMiniScore();
+}
+
+window.selectRadio = function(qIdx, optIdx) { if (userAnswers[qIdx] !== null) return; userAnswers[qIdx] = optIdx; renderQuestion(qIdx); saveState(); };
+
+function updateNavButtons() {
+  document.getElementById('prevBtn').disabled = (currentIndex === 0);
+  const isLast = (currentIndex === TOTAL - 1);
+  document.getElementById('nextBtn').style.display = isLast ? 'none' : 'inline-block';
+  document.getElementById('finishBtn').style.display = isLast ? 'inline-block' : 'none';
+}
+
+function updateMiniScore() {
+  const answered = userAnswers.filter(a => a !== null).length;
+  const correct = userAnswers.reduce((acc, ans, i) => { if (ans === null) return acc; const q = questions[i]; return acc + (q.type==='mc' ? (ans===q.correct) : ((ans===0&&q.correct)||(ans===1&&!q.correct)) ? 1 : 0); }, 0);
+  document.getElementById('miniScore').textContent = `📊 ${correct} / ${answered} صحيحة`;
+}
+
+function goPrev() { if (currentIndex > 0) { currentIndex--; renderQuestion(currentIndex); saveState(); } }
+function goNext() { if (currentIndex < TOTAL - 1) { currentIndex++; renderQuestion(currentIndex); saveState(); } }
+
+// ============ إنهاء الاختبار ============
+function finishQuiz() {
+  stopTimer();
+  const correctCount = userAnswers.reduce((acc, ans, i) => { if (ans === null) return acc; const q = questions[i]; return acc + (q.type==='mc' ? (ans===q.correct) : ((ans===0&&q.correct)||(ans===1&&!q.correct)) ? 1 : 0); }, 0);
+  const percent = Math.round((correctCount / TOTAL) * 100);
+  document.getElementById('quizSection').style.display = 'none'; document.getElementById('resultSection').style.display = 'block';
+  document.getElementById('resultSectionName').textContent = sectionsData[currentSection].name;
+  document.getElementById('finalScoreDisplay').textContent = `${correctCount} / ${TOTAL}`;
+  document.getElementById('percentageDisplay').textContent = `${percent}%`;
+  document.getElementById('finalTimeDisplay').textContent = `⏱️ الوقت المستغرق: ${formatTime(timerSeconds)}`;
+  const topicStats = {}; questions.forEach(q => { if (!topicStats[q.topic]) topicStats[q.topic] = { correct: 0, total: 0 }; topicStats[q.topic].total++; });
+  questions.forEach((q, i) => { if (userAnswers[i] !== null) { const isCorrect = (q.type==='mc' ? (userAnswers[i]===q.correct) : ((userAnswers[i]===0&&q.correct)||(userAnswers[i]===1&&!q.correct))); if (isCorrect) topicStats[q.topic].correct++; } });
+  let sectionHtml = ''; for (let t in topicStats) sectionHtml += `<div class="section-badge">${t}: ${topicStats[t].correct}/${topicStats[t].total}</div>`;
+  document.getElementById('sectionScores').innerHTML = sectionHtml;
+  let analysis = '<strong>📌 تحليل الأداء حسب الموضوعات:</strong><br>';
+  for (let t in topicStats) { const p = Math.round((topicStats[t].correct / topicStats[t].total) * 100); analysis += `• ${t}: ${p}% ${p>=70?'(متمكن)':(p>=50?'(متوسط)':'(يحتاج مراجعة)')}<br>`; }
+  analysis += `<br><strong>💡 توصية:</strong> ${percent>=70?'أداء ممتاز في هذا المبحث.':'يُنصح بمراجعة الموضوعات التي تحتاج تحسيناً.'}`;
+  document.getElementById('analysisBox').innerHTML = analysis;
+  clearState();
+}
+
+// ============ بدء اختبار مبحث ============
+function startSection(sectionKey) {
+  currentSection = sectionKey;
+  const sectionData = sectionsData[sectionKey];
+  document.getElementById('currentSectionTitle').textContent = sectionData.name;
+  const regular = sectionData.rawQuestions.filter(q => !q.isComplex), complex = sectionData.rawQuestions.filter(q => q.isComplex);
+  function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+  questions = [...shuffle(regular), ...shuffle(complex)]; TOTAL = questions.length;
+  document.getElementById('homeSection').style.display = 'none'; document.getElementById('quizSection').style.display = 'block'; document.getElementById('resultSection').style.display = 'none';
+  const hasState = loadState();
+  if (!hasState) { currentIndex = 0; userAnswers = new Array(TOTAL).fill(null); timerSeconds = 0; }
+  document.getElementById('timerDisplay').textContent = `⏱️ ${formatTime(timerSeconds)}`;
+  quizFinished = false; renderQuestion(currentIndex); startTimer();
+}
+
+function backToHome() { stopTimer(); saveState(); document.getElementById('homeSection').style.display='block'; document.getElementById('quizSection').style.display='none'; document.getElementById('resultSection').style.display='none'; }
+function restartQuiz() {
+  stopTimer(); clearState();
+  if (currentSection) {
+    const sectionData = sectionsData[currentSection];
+    const regular = sectionData.rawQuestions.filter(q => !q.isComplex), complex = sectionData.rawQuestions.filter(q => q.isComplex);
+    function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+    questions = [...shuffle(regular), ...shuffle(complex)]; TOTAL = questions.length;
+    userAnswers = new Array(TOTAL).fill(null); currentIndex = 0; timerSeconds = 0; document.getElementById('timerDisplay').textContent = '⏱️ 00:00'; quizFinished = false;
+    document.getElementById('resultSection').style.display = 'none'; document.getElementById('quizSection').style.display = 'block';
+    renderQuestion(0); startTimer();
+  }
+}
+
+// ============ ربط الأحداث ============
+document.querySelectorAll('.section-card').forEach(card => { card.addEventListener('click', function() { startSection(this.dataset.section); }); });
+document.getElementById('backToHomeBtn').addEventListener('click', backToHome);
+document.getElementById('homeFromResultBtn').addEventListener('click', () => { document.getElementById('resultSection').style.display='none'; document.getElementById('homeSection').style.display='block'; });
+document.getElementById('restartQuizBtn').addEventListener('click', restartQuiz);
+document.getElementById('prevBtn').addEventListener('click', goPrev);
+document.getElementById('nextBtn').addEventListener('click', goNext);
+document.getElementById('finishBtn').addEventListener('click', finishQuiz);
+})();
+</script>
+</body>
+</html>
