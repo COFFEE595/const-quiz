@@ -15,6 +15,7 @@
   </script>
 
   <style>
+    /* نفس التصميم السابق - تم الاحتفاظ به بالكامل */
     :root {
       --bg: #e8ddcf;
       --container-bg: #fdf9f3;
@@ -288,7 +289,7 @@
     </div>
     
     <div class="footer-note" style="margin-top: 16px; padding-top: 12px;">
-      <div class="home-link-icon" onclick="showMainPageLink()">
+      <div class="home-link-icon" id="mainPageLinkBtn">
         <span>الواجهة الرئيسية</span>
         <span>ⓘ</span>
       </div>
@@ -297,9 +298,7 @@
 </div>
 
 <script>
-(function(){
-"use strict";
-
+// ====================== تعريف البيانات (نفس الأسئلة السابقة) ======================
 const sectionsData = {
   "1": { name: "المبحث الأول: أركان الدولة", rawQuestions: [
     { type:'mc', text:'يهتم علم النظم السياسية في جوهره بـ:', options:['صياغة النصوص.','تفسير القواعد.','فلسفة الحكم.','الإلزام القانوني.'], correct:2, explanation:'علم النظم يبحث في "لماذا" (الفلسفة) وليس "كيف" (النص القانوني).', topic:'المقدمة' },
@@ -401,122 +400,213 @@ const sectionsData = {
   ]}
 };
 
-// ============ متغيرات الحالة ============
-let currentSection = null, questions = [], TOTAL = 0, currentIndex = 0, userAnswers = [], timerSeconds = 0, timerInterval = null, quizFinished = false;
+// ====================== متغيرات الحالة العامة ======================
+let currentSection = null;
+let currentQuestions = [];
+let totalQuestions = 0;
+let currentIndex = 0;
+let userAnswers = [];
+let timerSeconds = 0;
+let timerInterval = null;
+let quizFinished = false;
 
-// ============ إعدادات السمة (Theme) ============
-const THEME_KEY = 'political_systems_theme';
-function applyTheme(theme) {
-  if(theme === 'dark') { document.body.classList.add('dark'); document.getElementById('toggleThemeBtn').textContent = '☀️'; }
-  else { document.body.classList.remove('dark'); document.getElementById('toggleThemeBtn').textContent = '🌙'; }
-  localStorage.setItem(THEME_KEY, theme);
+// ====================== دوال مساعدة ======================
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
-document.getElementById('toggleThemeBtn').addEventListener('click', () => { const isDark = document.body.classList.contains('dark'); applyTheme(isDark ? 'light' : 'dark'); });
-const savedTheme = localStorage.getItem(THEME_KEY) || 'light'; applyTheme(savedTheme);
 
-// ============ التخزين ============
-function getStorageKey() { return `ps_quiz_section_${currentSection}`; }
-function saveState() { if (!currentSection) return; localStorage.setItem(getStorageKey(), JSON.stringify({ currentIndex, userAnswers, timerSeconds })); }
-function loadState() {
+function formatTime(secs) {
+  const m = Math.floor(secs / 60).toString().padStart(2, '0');
+  const s = (secs % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+// حفظ واسترجاع التقدم
+function saveProgress() {
+  if (!currentSection) return;
+  localStorage.setItem(`pol_quiz_${currentSection}`, JSON.stringify({
+    currentIndex, userAnswers, timerSeconds
+  }));
+}
+
+function loadProgress() {
   if (!currentSection) return false;
-  const saved = localStorage.getItem(getStorageKey());
-  if (saved) { try { const s = JSON.parse(saved); currentIndex = s.currentIndex; userAnswers = s.userAnswers; timerSeconds = s.timerSeconds; return true; } catch(e) { return false; } }
+  const saved = localStorage.getItem(`pol_quiz_${currentSection}`);
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+      currentIndex = data.currentIndex;
+      userAnswers = data.userAnswers;
+      timerSeconds = data.timerSeconds;
+      return true;
+    } catch(e) { return false; }
+  }
   return false;
 }
-function clearState() { if (currentSection) localStorage.removeItem(getStorageKey()); }
 
-// ============ المؤقت ============
-function formatTime(secs) { const m = Math.floor(secs / 60).toString().padStart(2, '0'); const s = (secs % 60).toString().padStart(2, '0'); return `${m}:${s}`; }
-function startTimer() { if (timerInterval) clearInterval(timerInterval); timerInterval = setInterval(() => { if (!quizFinished) { timerSeconds++; document.getElementById('timerDisplay').textContent = `⏱️ ${formatTime(timerSeconds)}`; saveState(); } }, 1000); }
-function stopTimer() { quizFinished = true; if (timerInterval) clearInterval(timerInterval); }
+function clearProgress() {
+  if (currentSection) localStorage.removeItem(`pol_quiz_${currentSection}`);
+}
 
-// ============ عرض السؤال والتغذية الراجعة ============
+// المؤقت
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!quizFinished) {
+      timerSeconds++;
+      document.getElementById('timerDisplay').textContent = `⏱️ ${formatTime(timerSeconds)}`;
+      saveProgress();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  quizFinished = true;
+  if (timerInterval) clearInterval(timerInterval);
+}
+
+// عرض السؤال والتغذية الراجعة
 function applyVisualFeedback(index) {
-  const q = questions[index], userAns = userAnswers[index];
+  const q = currentQuestions[index];
+  const userAns = userAnswers[index];
   if (userAns === null) return;
   const rows = document.querySelectorAll('.option-row');
-  
   rows.forEach((row, optIdx) => {
-    const old = row.querySelector('.result-indicator'); if (old) old.remove();
+    const oldInd = row.querySelector('.result-indicator');
+    if (oldInd) oldInd.remove();
     row.classList.remove('correct-highlight', 'wrong-highlight', 'disabled-opt');
-    
-    let isOptCorrect = false;
-    if (q.type === 'mc' && optIdx === q.correct) isOptCorrect = true;
-    if (q.type !== 'mc' && ((optIdx === 0 && q.correct === true) || (optIdx === 1 && q.correct === false))) isOptCorrect = true;
-
-    if (isOptCorrect) { 
-      row.classList.add('correct-highlight'); 
-      const ind = document.createElement('span'); ind.className = 'result-indicator'; ind.textContent = '✓'; row.appendChild(ind); 
-    } else if (optIdx === userAns) { 
-      row.classList.add('wrong-highlight'); 
-      const ind = document.createElement('span'); ind.className = 'result-indicator'; ind.textContent = '✗'; row.appendChild(ind); 
+    let isCorrectOpt = false;
+    if (q.type === 'mc') {
+      isCorrectOpt = (optIdx === q.correct);
+    } else {
+      if ((optIdx === 0 && q.correct === true) || (optIdx === 1 && q.correct === false)) isCorrectOpt = true;
+    }
+    if (isCorrectOpt) {
+      row.classList.add('correct-highlight');
+      const ind = document.createElement('span');
+      ind.className = 'result-indicator';
+      ind.textContent = '✓';
+      row.appendChild(ind);
+    } else if (optIdx === userAns) {
+      row.classList.add('wrong-highlight');
+      const ind = document.createElement('span');
+      ind.className = 'result-indicator';
+      ind.textContent = '✗';
+      row.appendChild(ind);
     }
     row.classList.add('disabled-opt');
   });
-  
   document.querySelectorAll(`input[name="q${index}"]`).forEach(r => r.disabled = true);
-  
   const isCorrect = (q.type === 'mc') ? (userAns === q.correct) : ((userAns === 0 && q.correct) || (userAns === 1 && !q.correct));
-  const fb = document.getElementById('feedbackArea'); fb.style.display = 'block';
+  const fb = document.getElementById('feedbackArea');
+  fb.style.display = 'block';
   fb.className = `feedback-panel ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
   document.getElementById('feedbackIcon').innerHTML = isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة';
-  const correctStr = q.type === 'mc' ? `${String.fromCharCode(65 + q.correct)}) ${q.options[q.correct]}` : (q.correct ? 'صح' : 'خطأ');
+  const correctStr = (q.type === 'mc') ? `${String.fromCharCode(65+q.correct)}) ${q.options[q.correct]}` : (q.correct ? 'صح' : 'خطأ');
   document.getElementById('feedbackMessage').textContent = isCorrect ? 'أحسنت!' : `الإجابة الصحيحة هي: ${correctStr}`;
-  document.getElementById('explanationBlock').textContent = q.explanation;
+  document.getElementById('explanationBlock').textContent = q.explanation || '';
 }
 
-function renderQuestion(index) {
-  const q = questions[index];
-  document.getElementById('qNumDisplay').textContent = index + 1;
+function renderCurrentQuestion() {
+  const q = currentQuestions[currentIndex];
+  document.getElementById('qNumDisplay').textContent = currentIndex + 1;
   document.getElementById('qTextDisplay').textContent = q.text;
-  document.getElementById('questionCounter').textContent = `السؤال ${index+1} / ${TOTAL}`;
+  document.getElementById('questionCounter').textContent = `السؤال ${currentIndex+1} / ${totalQuestions}`;
   let html = '';
-  
   if (q.type === 'mc') {
     q.options.forEach((opt, optIdx) => {
-      const chk = userAnswers[index] === optIdx ? 'checked' : '', dis = userAnswers[index] !== null ? 'disabled' : '';
-      html += `<div class="option-row" onclick="if(window.userAnswers && window.userAnswers[${index}]===null) window.selectRadio(${index},${optIdx})"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${String.fromCharCode(65+optIdx)}) ${opt}</label></div>`;
+      const checked = (userAnswers[currentIndex] === optIdx) ? 'checked' : '';
+      const disabled = (userAnswers[currentIndex] !== null) ? 'disabled' : '';
+      html += `<div class="option-row" data-qidx="${currentIndex}" data-optidx="${optIdx}">
+                <input type="radio" name="q${currentIndex}" value="${optIdx}" ${checked} ${disabled}>
+                <label>${String.fromCharCode(65+optIdx)}) ${opt}</label>
+               </div>`;
     });
   } else {
-    ['صح','خطأ'].forEach((opt, optIdx) => {
-      const chk = userAnswers[index] === optIdx ? 'checked' : '', dis = userAnswers[index] !== null ? 'disabled' : '';
-      html += `<div class="option-row" onclick="if(window.userAnswers && window.userAnswers[${index}]===null) window.selectRadio(${index},${optIdx})"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${optIdx===0?'✔️':'❌'} ${opt}</label></div>`;
+    ['صح', 'خطأ'].forEach((opt, optIdx) => {
+      const checked = (userAnswers[currentIndex] === optIdx) ? 'checked' : '';
+      const disabled = (userAnswers[currentIndex] !== null) ? 'disabled' : '';
+      html += `<div class="option-row" data-qidx="${currentIndex}" data-optidx="${optIdx}">
+                <input type="radio" name="q${currentIndex}" value="${optIdx}" ${checked} ${disabled}>
+                <label>${optIdx===0 ? '✔️' : '❌'} ${opt}</label>
+               </div>`;
     });
   }
-  
   document.getElementById('mcOptions').innerHTML = html;
-  if (userAnswers[index] !== null) applyVisualFeedback(index); else document.getElementById('feedbackArea').style.display = 'none';
-  updateNavButtons(); updateMiniScore();
+  if (userAnswers[currentIndex] !== null) {
+    applyVisualFeedback(currentIndex);
+  } else {
+    document.getElementById('feedbackArea').style.display = 'none';
+  }
+  updateNavButtons();
+  updateMiniScore();
 }
 
-window.selectRadio = function(qIdx, optIdx) { if (userAnswers[qIdx] !== null) return; userAnswers[qIdx] = optIdx; renderQuestion(qIdx); saveState(); };
+function selectOption(qIdx, optIdx) {
+  if (userAnswers[qIdx] !== null) return;
+  userAnswers[qIdx] = optIdx;
+  renderCurrentQuestion();
+  saveProgress();
+}
 
 function updateNavButtons() {
   document.getElementById('prevBtn').disabled = (currentIndex === 0);
-  const isLast = (currentIndex === TOTAL - 1);
+  const isLast = (currentIndex === totalQuestions - 1);
   document.getElementById('nextBtn').style.display = isLast ? 'none' : 'inline-block';
   document.getElementById('finishBtn').style.display = isLast ? 'inline-block' : 'none';
 }
 
 function updateMiniScore() {
   const answered = userAnswers.filter(a => a !== null).length;
-  const correct = userAnswers.reduce((acc, ans, i) => { if (ans === null) return acc; const q = questions[i]; return acc + (q.type==='mc' ? (ans===q.correct) : ((ans===0&&q.correct)||(ans===1&&!q.correct)) ? 1 : 0); }, 0);
+  let correct = 0;
+  for (let i = 0; i < totalQuestions; i++) {
+    if (userAnswers[i] !== null) {
+      const q = currentQuestions[i];
+      if (q.type === 'mc') {
+        if (userAnswers[i] === q.correct) correct++;
+      } else {
+        if ((userAnswers[i] === 0 && q.correct) || (userAnswers[i] === 1 && !q.correct)) correct++;
+      }
+    }
+  }
   document.getElementById('miniScore').textContent = `📊 ${correct} / ${answered} صحيحة`;
 }
 
-function goPrev() { if (currentIndex > 0) { currentIndex--; renderQuestion(currentIndex); saveState(); } }
-function goNext() { if (currentIndex < TOTAL - 1) { currentIndex++; renderQuestion(currentIndex); saveState(); } }
+function goPrev() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderCurrentQuestion();
+    saveProgress();
+  }
+}
 
-// ============ إنهاء الاختبار ============
+function goNext() {
+  if (currentIndex < totalQuestions - 1) {
+    currentIndex++;
+    renderCurrentQuestion();
+    saveProgress();
+  }
+}
+
 function finishQuiz() {
   stopTimer();
-  const correctCount = userAnswers.reduce((acc, ans, i) => { if (ans === null) return acc; const q = questions[i]; return acc + (q.type==='mc' ? (ans===q.correct) : ((ans===0&&q.correct)||(ans===1&&!q.correct)) ? 1 : 0); }, 0);
-  const percent = Math.round((correctCount / TOTAL) * 100);
+  let correctCount = 0;
+  for (let i = 0; i < totalQuestions; i++) {
+    if (userAnswers[i] !== null) {
+      const q = currentQuestions[i];
+      if (q.type === 'mc') {
+        if (userAnswers[i] === q.correct) correctCount++;
+      } else {
+        if ((userAnswers[i] === 0 && q.correct) || (userAnswers[i] === 1 && !q.correct)) correctCount++;
+      }
+    }
+  }
+  const percent = Math.round((correctCount / totalQuestions) * 100);
   document.getElementById('quizSection').style.display = 'none';
   document.getElementById('resultSection').style.display = 'block';
   document.getElementById('resultSectionName').textContent = sectionsData[currentSection].name;
-  document.getElementById('finalScoreDisplay').textContent = `${correctCount} / ${TOTAL}`;
-  document.getElementById('percentageDisplay').textContent = `${percent}%`;
-  document.getElementById('finalTimeDisplay').textContent = `⏱️ الوقت المستغرق: ${formatTime(timerSeconds)}`;
-  const topicStats = {};
-  ques
+  document.getElementById('finalS
