@@ -287,7 +287,6 @@
       </div>
     </div>
     
-    <!-- أيقونة الرابط الرئيسي مع عبارة "الواجهة الرئيسية" على اليسار -->
     <div class="footer-note" style="margin-top: 16px; padding-top: 12px;">
       <div class="home-link-icon" onclick="showMainPageLink()">
         <span>الواجهة الرئيسية</span>
@@ -513,8 +512,11 @@ function finishQuiz() {
   stopTimer();
   const correctCount = userAnswers.reduce((acc, ans, i) => { if (ans === null) return acc; const q = questions[i]; return acc + (q.type==='mc' ? (ans===q.correct) : ((ans===0&&q.correct)||(ans===1&&!q.correct)) ? 1 : 0); }, 0);
   const percent = Math.round((correctCount / TOTAL) * 100);
-  document.getElementById('quizSection').style.display = 'none'; document.getElementById('resultSection').style.display = 'block';
+  document.getElementById('quizSection').style.display = 'none';
+  document.getElementById('resultSection').style.display = 'block';
   document.getElementById('resultSectionName').textContent = sectionsData[currentSection].name;
   document.getElementById('finalScoreDisplay').textContent = `${correctCount} / ${TOTAL}`;
   document.getElementById('percentageDisplay').textContent = `${percent}%`;
-  document.getElementById('finalTimeDisplay').textContent = `⏱️ الوقت
+  document.getElementById('finalTimeDisplay').textContent = `⏱️ الوقت المستغرق: ${formatTime(timerSeconds)}`;
+  const topicStats = {};
+  ques
