@@ -3,192 +3,304 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>النظم السياسية | الباب الأول | منصة اختبارات</title>
+  <title>النظم السياسية | منصة اختبارات</title>
+  
+  <!-- Google tag (gtag.js) - NEW ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z3GQ6QRPXM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Z3GQ6QRPXM');
+  </script>
+
   <style>
+    :root {
+      --bg: #e8ddcf;
+      --container-bg: #fdf9f3;
+      --text: #1f1a14;
+      --text-secondary: #5c4a37;
+      --border: #d4c5b2;
+      --card-bg: #ffffff;
+      --card-border: #ccbbaa;
+      --option-bg: #f5efe6;
+      --option-border: #d6c6b4;
+      --option-hover-bg: #e9d9c8;
+      --option-hover-border: #a89070;
+      --correct-bg: #c8e6c9;
+      --correct-border: #388e3c;
+      --wrong-bg: #f1cfcf;
+      --wrong-border: #c62828;
+      --badge-bg: #9b7b5c;
+      --badge-text: #fef7f0;
+      --btn-bg: #d6c4ae;
+      --btn-text: #2b2016;
+      --btn-border: #b0977c;
+      --btn-shadow: #8b6f55;
+      --finish-btn-bg: #7d6046;
+      --finish-btn-text: #fef7f0;
+      --counter-bg: #e2d2be;
+      --timer-bg: #cfbb9f;
+      --score-badge-bg: #d4c0a6;
+      --qnum-bg: #a3886d;
+      --qnum-text: #fef7f0;
+      --header-color: #3e2c1c;
+      --toggle-bg: #d4c0a6;
+      --toggle-text: #3e2c1c;
+      --result-bg: #e7d7c0;
+      --result-text: #3e2c1c;
+      --result-border: #b3946e;
+      --restart-bg: #9b7b5c;
+      --footer-color: #5c4a37;
+      --brand-gradient: linear-gradient(135deg, #7d6046, #3e2c1c);
+      --brand-text: #fdf9f3;
+      --section-card-bg: #f5efe6;
+      --section-card-border: #d6c6b4;
+      --section-card-hover: #e9d9c8;
+      --feedback-correct-bg: #ecf3e8;
+      --feedback-correct-border: #4f7a5c;
+      --feedback-wrong-bg: #f9efed;
+      --feedback-wrong-border: #b57070;
+      --analysis-bg: #f3ede5;
+      --analysis-border: #7a6852;
+    }
+    body.dark {
+      --bg: #12161f;
+      --container-bg: #1b1f2a;
+      --text: #d4d8e0;
+      --text-secondary: #9aa0b0;
+      --border: #2d3340;
+      --card-bg: #212531;
+      --card-border: #333b4a;
+      --option-bg: #1a1f2b;
+      --option-border: #3a4252;
+      --option-hover-bg: #262d3a;
+      --option-hover-border: #d4a94e;
+      --correct-bg: #1e3b2a;
+      --correct-border: #4caf50;
+      --wrong-bg: #3d2020;
+      --wrong-border: #ef5350;
+      --badge-bg: #d4a94e33;
+      --badge-text: #d4a94e;
+      --btn-bg: #333b4a;
+      --btn-text: #d4d8e0;
+      --btn-border: #4a5568;
+      --btn-shadow: #161a22;
+      --finish-btn-bg: #d4a94e;
+      --finish-btn-text: #12161f;
+      --counter-bg: #212531;
+      --timer-bg: #212531;
+      --score-badge-bg: #212531;
+      --qnum-bg: #d4a94e;
+      --qnum-text: #12161f;
+      --header-color: #e8cc8a;
+      --toggle-bg: #333b4a;
+      --toggle-text: #d4d8e0;
+      --result-bg: #212531;
+      --result-text: #d4a94e;
+      --result-border: #d4a94e;
+      --restart-bg: #d4a94e;
+      --footer-color: #6b7280;
+      --brand-gradient: linear-gradient(135deg, #d4a94e, #e8cc8a);
+      --brand-text: #12161f;
+      --section-card-bg: #1e2532;
+      --section-card-border: #3a4252;
+      --section-card-hover: #262d3a;
+      --feedback-correct-bg: #1e3b2a;
+      --feedback-correct-border: #4caf50;
+      --feedback-wrong-bg: #3d2020;
+      --feedback-wrong-border: #ef5350;
+      --analysis-bg: #212531;
+      --analysis-border: #d4a94e;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #f2ebe2;
-      font-family: 'Cairo', 'Segoe UI', 'Amiri', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      direction: rtl;
-      color: #2e281f;
-    }
-    .platform-wrapper {
-      width: 100%;
-      max-width: 960px;
-      background: #fefcf8;
-      border-radius: 40px;
-      box-shadow: 0 18px 40px -8px rgba(60, 40, 20, 0.12);
-      border: 1px solid #e4d8ca;
-      padding: 32px 28px 36px;
-    }
-    h1 { font-size: 2rem; font-weight: 700; color: #4f3f2e; text-align: center; margin-bottom: 6px; }
-    .subtitle { text-align: center; color: #7b6852; margin-bottom: 28px; border-bottom: 1px dashed #d9cbbe; padding-bottom: 16px; font-size: 1rem; }
+    body { background: var(--bg); font-family: 'Cairo', 'Segoe UI', 'Amiri', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; direction: rtl; color: var(--text); transition: background 0.3s; }
+    .platform-wrapper { width: 100%; max-width: 960px; background: var(--container-bg); border-radius: 40px; box-shadow: 0 18px 40px -8px rgba(60, 40, 20, 0.18); border: 1px solid var(--border); overflow: hidden; }
+    .brand-bar { background: var(--brand-gradient); text-align: center; padding: 14px 20px; }
+    .brand-name { font-family: 'Poppins', 'Cairo', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 3px; color: var(--brand-text); text-transform: uppercase; }
+    .content-inner { padding: 28px 24px 32px; }
+    .top-actions { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+    .toggle-theme-btn { background: var(--toggle-bg); border: 1px solid var(--btn-border); color: var(--toggle-text); font-size: 1.2rem; padding: 7px 12px; border-radius: 50%; cursor: pointer; }
+    h1 { font-size: 1.8rem; font-weight: 700; color: var(--header-color); text-align: center; margin-bottom: 4px; }
+    .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; border-bottom: 1px dashed var(--border); padding-bottom: 16px; }
 
-    .section-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; margin: 20px 0;
-    }
-    .section-card {
-      background: #f8f3ec; border: 1.5px solid #e1d2c2; border-radius: 28px; padding: 28px 18px;
-      text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-    }
-    .section-card:hover { background: #efe4d8; border-color: #b8a086; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-    .section-icon { font-size: 3rem; margin-bottom: 14px; }
-    .section-name { font-size: 1.35rem; font-weight: 700; color: #3f3224; }
-    .section-desc { font-size: 0.9rem; color: #6b5a4a; margin-top: 10px; line-height: 1.4; }
-    .section-count { font-size: 0.85rem; color: #8b7a66; margin-top: 8px; font-weight: 600; }
-
-    .footer-credit {
-      text-align: center;
-      margin-top: 24px;
-      padding-top: 16px;
-      border-top: 1px dashed #d9cbbe;
-      color: #8b7a66;
-      font-size: 0.85rem;
-    }
-    .footer-credit a {
-      color: #6b5a4a;
-      text-decoration: none;
-      font-weight: 600;
-    }
+    #homeSection { display: block; }
+    .section-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+    .section-card { background: var(--section-card-bg); border: 1.5px solid var(--section-card-border); border-radius: 20px; padding: 24px 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .section-card:hover { background: var(--section-card-hover); border-color: var(--option-hover-border); transform: translateY(-3px); }
+    .card-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .card-title { font-weight: 700; font-size: 1.2rem; color: var(--text); margin-bottom: 6px; }
+    .card-desc { font-size: 0.9rem; color: var(--text-secondary); margin-top: 5px; line-height: 1.4; }
+    .card-count { font-size: 0.85rem; color: var(--badge-text); background: var(--badge-bg); display: inline-block; padding: 4px 12px; border-radius: 20px; margin-top: 10px; }
 
     #quizSection { display: none; }
-    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
-    .subject-badge { background: #b8a793; color: #fefaf5; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 1.1rem; }
-    .back-btn { background: #c9b9a7; color: #2e261d; border: none; padding: 8px 20px; border-radius: 30px; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: 1px solid #b09e8b; transition: all 0.15s; }
-    .back-btn:hover { background: #b8a692; }
-    .progress-area { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-    .q-counter { background: #e5d9cd; padding: 8px 22px; border-radius: 40px; font-weight: 600; color: #3f3224; border: 1px solid #cdbcab; font-size: 1rem; }
-    .timer-display { background: #d6c8b6; padding: 8px 22px; border-radius: 40px; font-weight: 600; color: #2e261d; border: 1px solid #b8a793; font-family: monospace; font-size: 1rem; }
-    .badge-score { background: #dbcdbd; padding: 6px 18px; border-radius: 30px; font-size: 0.9rem; color: #2c241c; }
-    .question-card {
-      background: #fffffffa; border-radius: 32px; padding: 28px 26px; margin: 12px 0 20px;
-      border: 1px solid #e2d2c0; box-shadow: 0 8px 14px rgba(0,0,0,0.02);
-    }
-    .q-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; }
-    .q-num { background: #b8a793; color: #fefaf5; font-weight: 700; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 30px; font-size: 1.2rem; flex-shrink: 0; }
-    .q-text { font-size: 1.25rem; font-weight: 600; color: #342a1f; line-height: 1.5; }
-    .options-container { margin: 20px 0 6px; }
-    .option-row {
-      display: flex; align-items: center; margin-bottom: 12px; background: #f8f3ec;
-      border: 1.5px solid #e1d2c2; border-radius: 60px; padding: 14px 20px; cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .option-row:hover { background: #efe4d8; border-color: #b8a086; }
-    .option-row.disabled-opt { pointer-events: none; opacity: 0.8; }
-    .option-row.correct-highlight { background: #d9ebd3; border-color: #5f9e6e; }
-    .option-row.wrong-highlight { background: #ecd9d9; border-color: #c38b8b; }
-    .option-row input[type="radio"] { margin-left: 16px; accent-color: #7e6953; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0; }
-    .option-row label { font-size: 1.05rem; width: 100%; cursor: pointer; color: #3a3026; font-weight: 450; }
-    .feedback-panel { margin-top: 22px; background: #f3ede5; border-radius: 24px; padding: 18px 22px; border-right: 6px solid #9e8b77; font-size: 1rem; display: none; }
-    .feedback-correct { border-right-color: #4f7a5c; background: #ecf3e8; }
-    .feedback-wrong { border-right-color: #b57070; background: #f9efed; }
-    .explanation-text { margin-top: 8px; color: #3f352b; }
-    .nav-buttons { display: flex; justify-content: space-between; margin-top: 18px; gap: 15px; }
-    .nav-btn {
-      background: #dbcebe; border: none; padding: 14px 30px; font-size: 1.1rem; font-weight: 600;
-      border-radius: 60px; cursor: pointer; color: #2e261d; border: 1px solid #b9a693;
-      box-shadow: 0 3px 0 #a3927e; transition: all 0.1s; min-width: 120px; font-family: 'Cairo', sans-serif;
-    }
+    .progress-area { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+    .q-counter, .timer-display, .badge-score { background: var(--counter-bg); padding: 8px 22px; border-radius: 40px; font-weight: 600; border: 1px solid var(--btn-border); font-size: 1rem; color: var(--text); }
+    .timer-display { font-family: monospace; }
+    .badge-score { background: var(--score-badge-bg); }
+    .question-card { background: var(--card-bg); border-radius: 28px; padding: 26px 24px; margin: 12px 0 18px; border: 1px solid var(--card-border); }
+    .q-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; }
+    .q-num { background: var(--qnum-bg); color: var(--qnum-text); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 30px; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;}
+    .q-text { font-size: 1.2rem; font-weight: 600; color: var(--text); line-height: 1.5; }
+    .options-container { margin: 20px 0 12px; }
+    .option-row { display: flex; align-items: center; margin-bottom: 10px; background: var(--option-bg); border: 1.5px solid var(--option-border); border-radius: 60px; padding: 12px 18px; cursor: pointer; transition: all 0.2s; position: relative; }
+    .option-row:hover:not(.disabled-opt) { background: var(--option-hover-bg); border-color: var(--option-hover-border); }
+    .option-row.disabled-opt { cursor: not-allowed; opacity: 0.9; }
+    .option-row.correct-highlight { background: var(--correct-bg); border-color: var(--correct-border); }
+    .option-row.wrong-highlight { background: var(--wrong-bg); border-color: var(--wrong-border); }
+    .option-row input[type="radio"] { margin-left: 16px; accent-color: #7e6953; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0;}
+    .option-row.disabled-opt input[type="radio"] { cursor: not-allowed; }
+    .option-row label { font-size: 1.05rem; width: 100%; cursor: pointer; color: var(--text); }
+    .option-row.disabled-opt label { cursor: not-allowed; }
+    .result-indicator { display: none; margin-right: auto; font-size: 1.4rem; font-weight: bold; }
+    .correct-highlight .result-indicator { display: block; color: #2e7d32; }
+    body.dark .correct-highlight .result-indicator { color: #81c784; }
+    .wrong-highlight .result-indicator { display: block; color: #b71c1c; }
+    body.dark .wrong-highlight .result-indicator { color: #e57373; }
+    
+    .feedback-panel { margin-top: 22px; border-radius: 24px; padding: 18px 22px; border-right: 6px solid; font-size: 1rem; display: none; }
+    .feedback-correct { background: var(--feedback-correct-bg); border-right-color: var(--feedback-correct-border); }
+    .feedback-wrong { background: var(--feedback-wrong-bg); border-right-color: var(--feedback-wrong-border); }
+    .explanation-text { margin-top: 8px; color: var(--text); }
+
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 12px; gap: 12px; }
+    .nav-btn { background: var(--btn-bg); color: var(--btn-text); border: none; padding: 12px 28px; font-weight: 600; border-radius: 50px; cursor: pointer; border: 1px solid var(--btn-border); box-shadow: 0 3px 0 var(--btn-shadow); transition: 0.1s; min-width: 110px; font-family: 'Cairo', sans-serif;}
     .nav-btn:active { transform: translateY(3px); box-shadow: none; }
-    .nav-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: 0 3px 0 #a3927e; }
-    .finish-btn { background: #8f7a64; color: #fdf7f0; border-color: #6e5c4c; box-shadow: 0 3px 0 #5e4e3f; }
+    .nav-btn:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; transform: translateY(3px); }
+    .finish-btn { background: var(--finish-btn-bg); color: var(--finish-btn-text); }
+    .back-btn { background: transparent; color: var(--text-secondary); border: 1px solid var(--btn-border); padding: 8px 18px; border-radius: 30px; font-size: 0.9rem; cursor: pointer; margin-bottom: 10px; font-family: 'Cairo', sans-serif; }
+    .back-btn:hover { background: var(--option-hover-bg); }
+    
     #resultSection { display: none; }
-    .result-screen { text-align: center; padding: 15px 0 10px; }
-    .final-score { font-size: 2.8rem; font-weight: 800; background: #efe2d4; display: inline-block; padding: 18px 48px; border-radius: 80px; margin: 25px 0; color: #3f2f1d; border: 2px solid #cab89e; }
-    .time-final { font-size: 1.4rem; margin-bottom: 20px; color: #5c4f3f; }
-    .analysis-box { background: #f3ede5; border-radius: 24px; padding: 18px 22px; margin: 20px 0; text-align: right; border-right: 6px solid #7a6852; font-size: 1rem; }
+    .result-screen { text-align: center; padding: 10px 0; }
+    .final-score { font-size: 2.6rem; font-weight: 800; background: var(--result-bg); display: inline-block; padding: 16px 44px; border-radius: 80px; margin: 20px 0; color: var(--result-text); border: 2px solid var(--result-border); }
+    .time-final { font-size: 1.3rem; margin-bottom: 15px; color: var(--text-secondary); }
+    
+    .analysis-box { background: var(--analysis-bg); border-radius: 24px; padding: 18px 22px; margin: 20px 0; text-align: right; border-right: 6px solid var(--analysis-border); font-size: 1rem; color: var(--text); }
     .section-scores { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin: 20px 0; }
-    .section-badge { background: #e5d9cd; padding: 8px 20px; border-radius: 40px; font-size: 0.95rem; border: 1px solid #cdbcab; }
-    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
-    .restart-btn { background: #a28d78; color: white; border: none; font-size: 1.1rem; padding: 14px 36px; border-radius: 50px; cursor: pointer; font-weight: 600; }
-    .home-btn { background: #7a6852; color: white; border: none; font-size: 1.1rem; padding: 14px 36px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+    .section-badge { background: var(--counter-bg); color: var(--text); padding: 8px 20px; border-radius: 40px; font-size: 0.95rem; border: 1px solid var(--btn-border); }
+
+    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 18px; }
+    .restart-btn { background: var(--restart-bg); color: white; border: none; font-size: 1.1rem; padding: 14px 32px; border-radius: 50px; cursor: pointer; font-weight: 600; font-family: 'Cairo', sans-serif;}
+    .home-btn { background: var(--btn-bg); color: var(--btn-text); border: none; font-size: 1.1rem; padding: 14px 32px; border-radius: 50px; cursor: pointer; font-weight: 600; border: 1px solid var(--btn-border); font-family: 'Cairo', sans-serif;}
     .flex-center { display: flex; justify-content: center; }
-    @media (max-width: 550px) {
-      .platform-wrapper { padding: 18px 14px; }
-      .q-text { font-size: 1.15rem; }
-      .nav-btn { padding: 12px 16px; font-size: 1rem; min-width: 90px; }
+    
+    .footer-note { text-align: center; color: var(--footer-color); margin-top: 24px; font-size: 0.85rem; border-top: 1px dashed var(--border); padding-top: 16px;}
+    .footer-note a { color: var(--badge-text); text-decoration: none; font-weight: bold; }
+    
+    .home-link-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: var(--badge-bg);
+      padding: 4px 12px;
+      border-radius: 30px;
+      transition: all 0.2s;
+      color: var(--badge-text);
+    }
+    .home-link-icon:hover {
+      background: var(--gold-accent);
+      transform: scale(1.02);
+    }
+
+    @media (max-width:550px) {
+      .content-inner { padding: 18px 14px; }
+      .q-text { font-size: 1.05rem; }
+      .nav-btn { padding: 8px 16px; min-width: 80px; }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Poppins:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="platform-wrapper" id="platformWrapper">
-  <div id="homeSection">
-    <h1>🏛️ النظم السياسية</h1>
-    <div class="subtitle">الباب الأول · اختر المبحث للبدء</div>
-    <div class="section-grid">
-      <div class="section-card" data-section="1">
-        <div class="section-icon">🌍</div><div class="section-name">المبحث الأول</div>
-        <div class="section-desc">أركان الدولة · المقدمة · الاعتراف</div><div class="section-count">33 سؤالاً</div>
+<div class="platform-wrapper">
+  <div class="brand-bar"><span class="brand-name">Madar</span></div>
+  <div class="content-inner">
+    <div class="top-actions"><button class="toggle-theme-btn" id="toggleThemeBtn">🌓</button></div>
+    
+    <div id="homeSection">
+      <h1>🏛️ النظم السياسية</h1>
+      <div class="subtitle">الباب الأول · اختر المبحث للبدء</div>
+      <div class="section-grid">
+        <div class="section-card" data-section="1">
+          <div class="card-icon">🌍</div><div class="card-title">المبحث الأول</div>
+          <div class="card-desc">أركان الدولة · المقدمة · الاعتراف</div><div class="card-count">33 سؤالاً</div>
+        </div>
+        <div class="section-card" data-section="2">
+          <div class="card-icon">⚖️</div><div class="card-title">المبحث الثاني</div>
+          <div class="card-desc">الشخصية المعنوية · السيادة · حدود السيادة</div><div class="card-count">32 سؤالاً</div>
+        </div>
+        <div class="section-card" data-section="3">
+          <div class="card-icon">🏴</div><div class="card-title">المبحث الثالث</div>
+          <div class="card-desc">أشكال الدول · الاتحادات · السيادة الرقمية</div><div class="card-count">27 سؤالاً</div>
+        </div>
       </div>
-      <div class="section-card" data-section="2">
-        <div class="section-icon">⚖️</div><div class="section-name">المبحث الثاني</div>
-        <div class="section-desc">الشخصية المعنوية · السيادة · حدود السيادة</div><div class="section-count">32 سؤالاً</div>
-      </div>
-      <div class="section-card" data-section="3">
-        <div class="section-icon">🏴</div><div class="section-name">المبحث الثالث</div>
-        <div class="section-desc">أشكال الدول · الاتحادات · السيادة الرقمية</div><div class="section-count">27 سؤالاً</div>
-      </div>
-    </div>
-    <p style="text-align:center;color:#7b6852;margin-top:20px;">اختر مبحثاً لبدء اختبار تفاعلي متسلسل مع تصحيح فوري وتحليل للأداء</p>
-    <div class="footer-credit">
-      تواصل عبر تيليجرام: <a href="https://t.me/GIX37">@GIX37</a> &nbsp;|&nbsp; آخر تحديث: ٤ مايو ٢٠٢٦
-    </div>
-  </div>
-  <div id="quizSection">
-    <div class="top-bar">
-      <span class="subject-badge" id="currentSectionTitle">المبحث الأول</span>
-      <button class="back-btn" id="backToHomeBtn">← العودة للقائمة</button>
-    </div>
-    <div class="progress-area">
-      <span class="q-counter" id="questionCounter">السؤال 1 / 33</span>
-      <span class="timer-display" id="timerDisplay">⏱️ 00:00</span>
-      <span class="badge-score" id="miniScore">✨ تقدمك</span>
-    </div>
-    <div class="question-card">
-      <div class="q-header"><span class="q-num" id="qNumDisplay">1</span><span class="q-text" id="qTextDisplay">تحميل...</span></div>
-      <div id="mcOptions" class="options-container"></div>
-      <div id="feedbackArea" class="feedback-panel">
-        <div id="feedbackIcon"></div><div id="feedbackMessage"></div>
-        <div id="explanationBlock" class="explanation-text"></div>
+      <div class="footer-note">
+        تواصل عبر تيليجرام: <a href="https://t.me/GIX37">@GIX37</a>
       </div>
     </div>
-    <div class="nav-buttons">
-      <button class="nav-btn" id="prevBtn" disabled>← السابق</button>
-      <button class="nav-btn" id="nextBtn">التالي →</button>
-    </div>
-    <div class="flex-center" style="margin-top:12px;">
-      <button class="nav-btn finish-btn" id="finishBtn" style="display:none;">📋 إنهاء وعرض النتيجة</button>
-    </div>
-  </div>
-  <div id="resultSection">
-    <div class="result-screen">
-      <h2>📊 نتيجتك في <span id="resultSectionName"></span></h2>
-      <div class="final-score" id="finalScoreDisplay">0 / 0</div>
-      <div id="percentageDisplay" style="font-size:1.6rem;margin-bottom:5px;"></div>
-      <div class="time-final" id="finalTimeDisplay"></div>
-      <div class="section-scores" id="sectionScores"></div>
-      <div class="analysis-box" id="analysisBox"></div>
-      <div class="btn-group">
-        <button class="restart-btn" id="restartQuizBtn">🔄 إعادة الاختبار</button>
-        <button class="home-btn" id="homeFromResultBtn">🏠 العودة للقائمة</button>
+
+    <div id="quizSection">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <span id="currentSectionTitle" style="font-weight:bold; color:var(--header-color); font-size:1.1rem;">المبحث</span>
+        <button class="back-btn" id="backToHomeBtn">← العودة للقائمة</button>
       </div>
-      <div class="footer-credit">
-        تواصل عبر تيليجرام: <a href="https://t.me/GIX37">@GIX37</a> &nbsp;|&nbsp; آخر تحديث: ٤ مايو ٢٠٢٦
+      
+      <div class="progress-area">
+        <span class="q-counter" id="questionCounter">السؤال 1 / 33</span>
+        <span class="timer-display" id="timerDisplay">⏱️ 00:00</span>
+        <span class="badge-score" id="miniScore">✨ تقدمك</span>
+      </div>
+      <div class="question-card">
+        <div class="q-header"><span class="q-num" id="qNumDisplay">1</span><span class="q-text" id="qTextDisplay">تحميل...</span></div>
+        <div id="mcOptions" class="options-container"></div>
+        <div id="feedbackArea" class="feedback-panel">
+          <div id="feedbackIcon" style="font-weight:bold; margin-bottom:5px;"></div>
+          <div id="feedbackMessage" style="font-weight:bold;"></div>
+          <div id="explanationBlock" class="explanation-text"></div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" disabled>← السابق</button>
+        <button class="nav-btn" id="nextBtn">التالي →</button>
+      </div>
+      <div class="flex-center" style="margin-top:12px;">
+        <button class="nav-btn finish-btn" id="finishBtn" style="display:none;">📋 إنهاء وعرض النتيجة</button>
+      </div>
+    </div>
+
+    <div id="resultSection">
+      <div class="result-screen">
+        <h2 style="color:var(--header-color);">📊 نتيجتك في <span id="resultSectionName"></span></h2>
+        <div class="final-score" id="finalScoreDisplay">0 / 0</div>
+        <div id="percentageDisplay" style="font-size:1.6rem;margin-bottom:5px;color:var(--text);font-weight:bold;"></div>
+        <div class="time-final" id="finalTimeDisplay"></div>
+        <div class="section-scores" id="sectionScores"></div>
+        <div class="analysis-box" id="analysisBox"></div>
+        <div class="btn-group">
+          <button class="restart-btn" id="restartQuizBtn">🔄 إعادة الاختبار</button>
+          <button class="home-btn" id="homeFromResultBtn">🏠 العودة للقائمة</button>
+        </div>
+        <div class="footer-note">
+          تواصل عبر تيليجرام: <a href="https://t.me/GIX37">@GIX37</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- أيقونة الرابط الرئيسي مع عبارة "الواجهة الرئيسية" على اليسار -->
+    <div class="footer-note" style="margin-top: 16px; padding-top: 12px;">
+      <div class="home-link-icon" onclick="showMainPageLink()">
+        <span>الواجهة الرئيسية</span>
+        <span>ⓘ</span>
       </div>
     </div>
   </div>
 </div>
+
 <script>
 (function(){
 "use strict";
 
-// ============ بنوك الأسئلة الثلاثة (بعد حذف المتكرر) ============
 const sectionsData = {
   "1": { name: "المبحث الأول: أركان الدولة", rawQuestions: [
     { type:'mc', text:'يهتم علم النظم السياسية في جوهره بـ:', options:['صياغة النصوص.','تفسير القواعد.','فلسفة الحكم.','الإلزام القانوني.'], correct:2, explanation:'علم النظم يبحث في "لماذا" (الفلسفة) وليس "كيف" (النص القانوني).', topic:'المقدمة' },
@@ -196,14 +308,14 @@ const sectionsData = {
     { type:'mc', text:'الرابطة التي تمنح الفرد صفة "المواطن" هي رابطة:', options:['جغرافية.','عرقية.','سياسية وقانونية.','اقتصادية.'], correct:2, explanation:'الجنسية هي الرابطة القانونية والسياسية المقصودة.', topic:'الشعب' },
     { type:'mc', text:'الفرق الجوهري بين "الشعب" و"السكان" يكمن في:', options:['العدد.','الحقوق السياسية.','مكان الإقامة.','مدة البقاء.'], correct:1, explanation:'السكان يشملون الأجانب، وهم محرومون من الحقوق السياسية.', topic:'الشعب' },
     { type:'mc', text:'أي من المفاهيم التالية يعبر عن رغبة جماعة في العيش معاً بناءً على "وحدة المصير"؟', options:['الشعب.','الأمة.','السكان.','الرعايا.'], correct:1, explanation:'الأمة مفهوم معنوي يقوم على التاريخ والمصير المشترك.', topic:'الشعب' },
-    { type:'mc', text:'فيما يتعلق بركن "عدد الشعب" ، يعتبر العدد شرطاً:', options:['للوجود القانوني.','للقوة والنفوذ.','للاعتراف الدولي.','لمنح الجنسية.'], correct:1, explanation:'العدد لا يمنع قيام الدولة (مثل الفاتيكان) لكنه يمنح الثقل.', topic:'الشعب' },
+    { type:'mc', text:'فيما يتعلق بركن "عدد الشعب" ، يعتبر العدد شرطاً:', options:['للوجود القانوني.','للاعتراف الدولي.','للقوة والنفوذ.','لمنح الجنسية.'], correct:2, explanation:'العدد لا يمنع قيام الدولة (مثل الفاتيكان) لكنه يمنح الثقل.', topic:'الشعب' },
     { type:'mc', text:'"الاتصال الجغرافي" لليابسة في الإقليم البري يعتبر:', options:['شرطاً جوهرياً.','غير ملزم قانوناً.','أساس السيادة.','معياراً للاعتراف.'], correct:1, explanation:'الدولة قد تكون مجزأة (أرخبيل أو ولايات منفصلة) وتظل دولة.', topic:'الإقليم' },
     { type:'mc', text:'تمارس الدولة سيادة "كاملة" مع قيد "المرور البريء" في:', options:['المياه الداخلية.','البحر الإقليمي.','المنطقة المتاخمة.','المنطقة الاقتصادية.'], correct:1, explanation:'البحر الإقليمي هو المنطقة الوحيدة التي تجمع السيادة مع حق المرور البريء.', topic:'الإقليم' },
     { type:'mc', text:'تبدأ السيادة "الرقابية" (جمركياً وأمنياً) للدولة بعد مسافة:', options:['12 ميلاً.','24 ميلاً.','200 ميل.','100 كم.'], correct:0, explanation:'الرقابة تبدأ في "المنطقة المتاخمة" التي تلي الـ 12 ميلاً الإقليمية.', topic:'الإقليم' },
     { type:'mc', text:'"المنطقة الاقتصادية الخالصة" تمنح الدولة حقوقاً:', options:['سيادية مطلقة.','وظيفية استغلالية.','تشريعية كاملة.','رقابية أمنية.'], correct:1, explanation:'حقوق الدولة هناك محصورة في الموارد (سمك، غاز) وليست سيادة إقليمية.', topic:'الإقليم' },
     { type:'mc', text:'ينتهي الإقليم الجوي للدولة عند:', options:['طبقة الأوزون.','أعلى نقطة طيران.','خط كارمان.','نهاية الغلاف الجوي.'], correct:2, explanation:'خط كارمان (100 كم) هو الحد الفاصل بين الجو والفضاء دولياً.', topic:'الإقليم' },
     { type:'mc', text:'"احتكار القوة المادية" هو مظهر لسيادة السلطة في:', options:['الداخل فقط.','الخارج فقط.','الداخل والخارج.','المنظمات الدولية.'], correct:0, explanation:'احتكار القوة مظهر داخلي للسيادة لفرض النظام ومنع الميليشيات.', topic:'السلطة' },
-    { type:'mc', text:'"تآكل الشرعية وعجز المؤسسات" يشير تقنياً إلى الدولة:', options:['الناشئة.','الفاشلة.','الديمقراطية.','الفيدرالية.'], correct:1, explanation:'الدولة الفاشلة هي التي تفقد السيطرة المؤسسية والأمنية.', topic:'السلطة' },
+    { type:'mc', text:'"تآكل الشرعية وعجز المؤسسات" يشير تقنياً إلى الدولة:', options:['الناشئة.','الديمقراطية.','الفاشلة.','الفيدرالية.'], correct:2, explanation:'الدولة الفاشلة هي التي تفقد السيطرة المؤسسية والأمنية.', topic:'السلطة' },
     { type:'mc', text:'وفقاً للاتجاه "المنشئ"، تعتبر الدولة موجودة بمجرد:', options:['اكتمال الأركان.','إعلان الاستقلال.','صدور الاعتراف.','صياغة الدستور.'], correct:2, explanation:'المنشئ يرى أن الاعتراف هو "شهادة الميلاد" القانونية.', topic:'الاعتراف' },
     { type:'mc', text:'"الاعتراف لا يخلق الدولة بل يقر بوجودها" هو جوهر الاتجاه:', options:['المنشئ.','المقرر.','الفقهي.','السياسي.'], correct:1, explanation:'المقرر يرى الدولة "واقعة مادية" تسبق الاعتراف.', topic:'الاعتراف' },
     { type:'mc', text:'حظر سحب الاعتراف بالدولة هو مبدأ استقر عليه العمل في:', options:['اتفاقية شيكاغو.','اتفاقية مونتيفيديو.','ميثاق الأمم المتحدة.','معاهدة فيينا.'], correct:1, explanation:'المادة 6 من اتفاقية مونتيفيديو نصت صراحة على عدم جواز سحبه.', topic:'الاعتراف' },
@@ -221,7 +333,7 @@ const sectionsData = {
     { type:'tf', text:'المنطق القانوني للاتجاه "المنشئ" يقتضي ضمناً إجازة سحب الاعتراف بالدولة الجديدة.', correct:true, explanation:'إذا كان الاعتراف هو من "خلق" الدولة، فإن زواله يؤدي لزوالها نظرياً.', topic:'الاعتراف' },
     { type:'tf', text:'تعتبر اتفاقية "مونتيفيديو" أن الاعتراف هو شرط أساسي لنشوء الشخصية القانونية للدولة.', correct:false, explanation:'الاتفاقية تبنت الاتجاه "المقرر" الذي يعتبر وجود الدولة مستقلاً عن الاعتراف.', topic:'الاعتراف' },
     { type:'mc', text:'🎯 واقعة "سفينة الصيد والمطاردة البحرية": قامت سفينة أجنبية بالصيد غير المشروع على مسافة 18 ميلاً بحرياً من ساحل الدولة. أي العبارات تصف الوضع القانوني بدقة؟', options:['للدولة حق توقيفها لأنها في البحر الإقليمي.','للدولة حق المطاردة لأن الواقعة حدثت في المنطقة الاقتصادية حيث تملك الدولة حقوقاً سيادية على الثروات.','لا يحق للدولة توقيفها لأنها تجاوزت مسافة 12 ميلاً.','يحق للدولة توقيفها فقط إذا كانت السفينة تهدد الأمن القومي.'], correct:1, explanation:'المسافة (18 ميلاً) تقع في المنطقة الاقتصادية، وللدولة "حقوق سيادية وظيفية" على الموارد.', topic:'مركبة', isComplex:true },
-    { type:'mc', text:'🎯 معضلة "الدولة الوليدة والعدوان": نشأ كيان جديد ولم تعترف به أي دولة، ثم تعرض لهجوم عسكري. حسب الاتجاه المقرر واتفاقية مونتيفידيو:', options:['ليس للكيان حق الدفاع لأن الشخصية القانونية لا تنشأ إلا بالاعتراف.','للكيان حق الدفاع لأن وجوده واقعة مادية تسبق الاعتراف.','يعتبر الهجوم شرعياً لأن الكيان لم يصبح دولة بعد.','يتوقف حق الدفاع على نيل اعتراف مستقبلي من الأمم المتحدة.'], correct:1, explanation:'الوجود المادي للأركان كافٍ لمنح حقوق البقاء والدفاع حسب الاتجاه المقرر.', topic:'مركبة', isComplex:true },
+    { type:'mc', text:'🎯 معضلة "الدولة الوليدة والعدوان": نشأ كيان جديد ولم تعترف به أي دولة، ثم تعرض لهجوم عسكري. حسب الاتجاه المقرر واتفاقية مونتيفيديو:', options:['ليس للكيان حق الدفاع لأن الشخصية القانونية لا تنشأ إلا بالاعتراف.','للكيان حق الدفاع لأن وجوده واقعة مادية تسبق الاعتراف.','يعتبر الهجوم شرعياً لأن الكيان لم يصبح دولة بعد.','يتوقف حق الدفاع على نيل اعتراف مستقبلي من الأمم المتحدة.'], correct:1, explanation:'الوجود المادي للأركان كافٍ لمنح حقوق البقاء والدفاع حسب الاتجاه المقرر.', topic:'مركبة', isComplex:true },
     { type:'mc', text:'🎯 التكييف القانوني لـ "الاضطراب المؤسسي": دولة تعاني من ميليشيات مسلحة وعجز حكومي. وفقاً لمصطلحات علم النظم، يوصف هذا بأنه:', options:['فقد ركن الإقليم قانوناً.','تحول إلى أمة لغياب التنظيم السياسي.','دخل في طور الدولة الفاشلة.','زالت عنه صفة الدولة فوراً.'], correct:2, explanation:'الفشل يعني عجز "ركن السلطة" عن ممارسة مهامه الأساسية وليس زوال الدولة قانوناً.', topic:'مركبة', isComplex:true },
     { type:'mc', text:'🎯 السيادة الجوية والأقمار الصناعية: قمر صناعي على ارتفاع 150 كم. بالاعتماد على خط كارمان، الرد القانوني:', options:['الاحتجاج صحيح؛ السيادة تمتد لما لا نهاية.','الاحتجاج غير صحيح؛ القمر في الفضاء الخارجي المشاع.','الاحتجاج صحيح طالما تملك الدولة تكنولوجيا الإسقاط.','يتوقف على موافقة منظمة الطيران المدني الدولي.'], correct:1, explanation:'خط كارمان (100 كم) هو الحد الفاصل؛ وما فوقه يخرج عن سيادة الدول.', topic:'مركبة', isComplex:true }
   ]},
@@ -274,7 +386,7 @@ const sectionsData = {
     { type:'mc', text:'نشأة دولة فيدرالية عن طريق تفكك دولة موحدة بسيطة يهدف غالباً إلى:', options:['التوسع العسكري.','تجنب الانفصال الكلي.','الاندماج الاقتصادي.','توحيد القوانين المحلية.'], correct:1, explanation:'لمنح أقاليمها قدراً من الاستقلال الذاتي لمنع انفصالها كلياً.', topic:'الاتحاد الفيدرالي' },
     { type:'mc', text:'الرابطة الأساسية التي يبنى عليها "الاتحاد الشخصي" هي:', options:['معاهدة دولية ملزمة.','دستور توافقي.','وحدة رئيس الدولة.','برلمان مشترك.'], correct:2, explanation:'المظهر الوحيد هو خضوع الدولتين لشخص واحد (ملك أو رئيس).', topic:'الاتحاد الشخصي' },
     { type:'mc', text:'القاعدة العامة في قرارات الهيئة المشتركة في الاتحاد الكونفدرالي أنها تصدر بـ:', options:['الأغلبية البسيطة.','الأغلبية المطلقة.','الإجماع.','التصويت الشعبي.'], correct:2, explanation:'قراراتها تصدر بإجماع الآراء للحفاظ على سيادة الدول الأعضاء.', topic:'الاتحاد الكونفدرالي' },
-    { type:'mc', text:'خروج دولة كبريطانيا من الاتحاد الأوروبي يكيف قانونياً على أنه:', options:['ممارسة طبيعية للسيادة.','انفصال غير مشروع.','ثورة دستورية.','انتهاك لمعاهدة الفرسائل.'], correct:0, explanation:'في الاتحاد الكونفدرالي يحق لكل دولة الانسحاب لاحتفاظها بسيادتها.', topic:'الاتحاد الكونفدرالي' },
+    { type:'mc', text:'خروج دولة كبريطانيا من الاتحاد الأوروبي يكيف قانونياً على أنه:', options:['ممارسة طبيعية للسيادة.','انفصال غير مشروع.','ثورة دستورية.','انتهاك لمعاهدة فرساي.'], correct:0, explanation:'في الاتحاد الكونفدرالي يحق لكل دولة الانسحاب لاحتفاظها بسيادتها.', topic:'الاتحاد الكونفدرالي' },
     { type:'mc', text:'السند القانوني المنشئ للدولة الفيدرالية مقارنة بالاتحاد الكونفدرالي هو على الترتيب:', options:['معاهدة - دستور.','دستور - معاهدة.','دستور - قرار أممي.','معاهدة - اتفاق شخصي.'], correct:1, explanation:'الفيدرالي ينشأ بدستور اتحادي، والكونفدرالي بمعاهدة دولية.', topic:'مقارنات' },
     { type:'tf', text:'تحول الدولة من المركزية الإدارية إلى اللامركزية الإدارية يغير من وصفها كدولة بسيطة.', correct:false, explanation:'تظل الدولة بسيطة طالما بقيت المركزية السياسية.', topic:'الدولة البسيطة' },
     { type:'tf', text:'في الدولة الموحدة، يجب أن تكون جميع القوانين مطبقة بشكل متماثل حرفياً دون استثناء.', correct:false, explanation:'قد توجد استثناءات قانونية مثل حالة السودان 1899.', topic:'الدولة البسيطة' },
@@ -293,8 +405,18 @@ const sectionsData = {
 // ============ متغيرات الحالة ============
 let currentSection = null, questions = [], TOTAL = 0, currentIndex = 0, userAnswers = [], timerSeconds = 0, timerInterval = null, quizFinished = false;
 
-// ============ دوال التخزين ============
-function getStorageKey() { return `political_systems_section_${currentSection}`; }
+// ============ إعدادات السمة (Theme) ============
+const THEME_KEY = 'political_systems_theme';
+function applyTheme(theme) {
+  if(theme === 'dark') { document.body.classList.add('dark'); document.getElementById('toggleThemeBtn').textContent = '☀️'; }
+  else { document.body.classList.remove('dark'); document.getElementById('toggleThemeBtn').textContent = '🌙'; }
+  localStorage.setItem(THEME_KEY, theme);
+}
+document.getElementById('toggleThemeBtn').addEventListener('click', () => { const isDark = document.body.classList.contains('dark'); applyTheme(isDark ? 'light' : 'dark'); });
+const savedTheme = localStorage.getItem(THEME_KEY) || 'light'; applyTheme(savedTheme);
+
+// ============ التخزين ============
+function getStorageKey() { return `ps_quiz_section_${currentSection}`; }
 function saveState() { if (!currentSection) return; localStorage.setItem(getStorageKey(), JSON.stringify({ currentIndex, userAnswers, timerSeconds })); }
 function loadState() {
   if (!currentSection) return false;
@@ -304,7 +426,7 @@ function loadState() {
 }
 function clearState() { if (currentSection) localStorage.removeItem(getStorageKey()); }
 
-// ============ دوال المؤقت ============
+// ============ المؤقت ============
 function formatTime(secs) { const m = Math.floor(secs / 60).toString().padStart(2, '0'); const s = (secs % 60).toString().padStart(2, '0'); return `${m}:${s}`; }
 function startTimer() { if (timerInterval) clearInterval(timerInterval); timerInterval = setInterval(() => { if (!quizFinished) { timerSeconds++; document.getElementById('timerDisplay').textContent = `⏱️ ${formatTime(timerSeconds)}`; saveState(); } }, 1000); }
 function stopTimer() { quizFinished = true; if (timerInterval) clearInterval(timerInterval); }
@@ -314,13 +436,27 @@ function applyVisualFeedback(index) {
   const q = questions[index], userAns = userAnswers[index];
   if (userAns === null) return;
   const rows = document.querySelectorAll('.option-row');
+  
   rows.forEach((row, optIdx) => {
+    const old = row.querySelector('.result-indicator'); if (old) old.remove();
     row.classList.remove('correct-highlight', 'wrong-highlight', 'disabled-opt');
-    if (q.type === 'mc') { if (optIdx === q.correct) row.classList.add('correct-highlight'); else if (optIdx === userAns) row.classList.add('wrong-highlight'); }
-    else { if ((optIdx === 0 && q.correct === true) || (optIdx === 1 && q.correct === false)) row.classList.add('correct-highlight'); else if (optIdx === userAns) row.classList.add('wrong-highlight'); }
+    
+    let isOptCorrect = false;
+    if (q.type === 'mc' && optIdx === q.correct) isOptCorrect = true;
+    if (q.type !== 'mc' && ((optIdx === 0 && q.correct === true) || (optIdx === 1 && q.correct === false))) isOptCorrect = true;
+
+    if (isOptCorrect) { 
+      row.classList.add('correct-highlight'); 
+      const ind = document.createElement('span'); ind.className = 'result-indicator'; ind.textContent = '✓'; row.appendChild(ind); 
+    } else if (optIdx === userAns) { 
+      row.classList.add('wrong-highlight'); 
+      const ind = document.createElement('span'); ind.className = 'result-indicator'; ind.textContent = '✗'; row.appendChild(ind); 
+    }
     row.classList.add('disabled-opt');
   });
+  
   document.querySelectorAll(`input[name="q${index}"]`).forEach(r => r.disabled = true);
+  
   const isCorrect = (q.type === 'mc') ? (userAns === q.correct) : ((userAns === 0 && q.correct) || (userAns === 1 && !q.correct));
   const fb = document.getElementById('feedbackArea'); fb.style.display = 'block';
   fb.className = `feedback-panel ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
@@ -336,17 +472,19 @@ function renderQuestion(index) {
   document.getElementById('qTextDisplay').textContent = q.text;
   document.getElementById('questionCounter').textContent = `السؤال ${index+1} / ${TOTAL}`;
   let html = '';
+  
   if (q.type === 'mc') {
     q.options.forEach((opt, optIdx) => {
       const chk = userAnswers[index] === optIdx ? 'checked' : '', dis = userAnswers[index] !== null ? 'disabled' : '';
-      html += `<div class="option-row" onclick="${userAnswers[index]===null ? `window.selectRadio(${index},${optIdx})` : ''}"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${String.fromCharCode(65+optIdx)}) ${opt}</label></div>`;
+      html += `<div class="option-row" onclick="if(window.userAnswers && window.userAnswers[${index}]===null) window.selectRadio(${index},${optIdx})"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${String.fromCharCode(65+optIdx)}) ${opt}</label></div>`;
     });
   } else {
     ['صح','خطأ'].forEach((opt, optIdx) => {
       const chk = userAnswers[index] === optIdx ? 'checked' : '', dis = userAnswers[index] !== null ? 'disabled' : '';
-      html += `<div class="option-row" onclick="${userAnswers[index]===null ? `window.selectRadio(${index},${optIdx})` : ''}"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${optIdx===0?'✔️':'❌'} ${opt}</label></div>`;
+      html += `<div class="option-row" onclick="if(window.userAnswers && window.userAnswers[${index}]===null) window.selectRadio(${index},${optIdx})"><input type="radio" name="q${index}" value="${optIdx}" ${chk} ${dis}><label>${optIdx===0?'✔️':'❌'} ${opt}</label></div>`;
     });
   }
+  
   document.getElementById('mcOptions').innerHTML = html;
   if (userAnswers[index] !== null) applyVisualFeedback(index); else document.getElementById('feedbackArea').style.display = 'none';
   updateNavButtons(); updateMiniScore();
@@ -379,56 +517,4 @@ function finishQuiz() {
   document.getElementById('resultSectionName').textContent = sectionsData[currentSection].name;
   document.getElementById('finalScoreDisplay').textContent = `${correctCount} / ${TOTAL}`;
   document.getElementById('percentageDisplay').textContent = `${percent}%`;
-  document.getElementById('finalTimeDisplay').textContent = `⏱️ الوقت المستغرق: ${formatTime(timerSeconds)}`;
-  const topicStats = {}; questions.forEach(q => { if (!topicStats[q.topic]) topicStats[q.topic] = { correct: 0, total: 0 }; topicStats[q.topic].total++; });
-  questions.forEach((q, i) => { if (userAnswers[i] !== null) { const isCorrect = (q.type==='mc' ? (userAnswers[i]===q.correct) : ((userAnswers[i]===0&&q.correct)||(userAnswers[i]===1&&!q.correct))); if (isCorrect) topicStats[q.topic].correct++; } });
-  let sectionHtml = ''; for (let t in topicStats) sectionHtml += `<div class="section-badge">${t}: ${topicStats[t].correct}/${topicStats[t].total}</div>`;
-  document.getElementById('sectionScores').innerHTML = sectionHtml;
-  let analysis = '<strong>📌 تحليل الأداء حسب الموضوعات:</strong><br>';
-  for (let t in topicStats) { const p = Math.round((topicStats[t].correct / topicStats[t].total) * 100); analysis += `• ${t}: ${p}% ${p>=70?'(متمكن)':(p>=50?'(متوسط)':'(يحتاج مراجعة)')}<br>`; }
-  analysis += `<br><strong>💡 توصية:</strong> ${percent>=70?'أداء ممتاز في هذا المبحث.':'يُنصح بمراجعة الموضوعات التي تحتاج تحسيناً.'}`;
-  document.getElementById('analysisBox').innerHTML = analysis;
-  clearState();
-}
-
-// ============ بدء اختبار مبحث ============
-function startSection(sectionKey) {
-  currentSection = sectionKey;
-  const sectionData = sectionsData[sectionKey];
-  document.getElementById('currentSectionTitle').textContent = sectionData.name;
-  const regular = sectionData.rawQuestions.filter(q => !q.isComplex), complex = sectionData.rawQuestions.filter(q => q.isComplex);
-  function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
-  questions = [...shuffle(regular), ...shuffle(complex)]; TOTAL = questions.length;
-  document.getElementById('homeSection').style.display = 'none'; document.getElementById('quizSection').style.display = 'block'; document.getElementById('resultSection').style.display = 'none';
-  const hasState = loadState();
-  if (!hasState) { currentIndex = 0; userAnswers = new Array(TOTAL).fill(null); timerSeconds = 0; }
-  document.getElementById('timerDisplay').textContent = `⏱️ ${formatTime(timerSeconds)}`;
-  quizFinished = false; renderQuestion(currentIndex); startTimer();
-}
-
-function backToHome() { stopTimer(); saveState(); document.getElementById('homeSection').style.display='block'; document.getElementById('quizSection').style.display='none'; document.getElementById('resultSection').style.display='none'; }
-function restartQuiz() {
-  stopTimer(); clearState();
-  if (currentSection) {
-    const sectionData = sectionsData[currentSection];
-    const regular = sectionData.rawQuestions.filter(q => !q.isComplex), complex = sectionData.rawQuestions.filter(q => q.isComplex);
-    function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
-    questions = [...shuffle(regular), ...shuffle(complex)]; TOTAL = questions.length;
-    userAnswers = new Array(TOTAL).fill(null); currentIndex = 0; timerSeconds = 0; document.getElementById('timerDisplay').textContent = '⏱️ 00:00'; quizFinished = false;
-    document.getElementById('resultSection').style.display = 'none'; document.getElementById('quizSection').style.display = 'block';
-    renderQuestion(0); startTimer();
-  }
-}
-
-// ============ ربط الأحداث ============
-document.querySelectorAll('.section-card').forEach(card => { card.addEventListener('click', function() { startSection(this.dataset.section); }); });
-document.getElementById('backToHomeBtn').addEventListener('click', backToHome);
-document.getElementById('homeFromResultBtn').addEventListener('click', () => { document.getElementById('resultSection').style.display='none'; document.getElementById('homeSection').style.display='block'; });
-document.getElementById('restartQuizBtn').addEventListener('click', restartQuiz);
-document.getElementById('prevBtn').addEventListener('click', goPrev);
-document.getElementById('nextBtn').addEventListener('click', goNext);
-document.getElementById('finishBtn').addEventListener('click', finishQuiz);
-})();
-</script>
-</body>
-</html>
+  document.getElementById('finalTimeDisplay').textContent = `⏱️ الوقت
