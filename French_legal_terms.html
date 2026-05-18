@@ -67,7 +67,7 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* ═══ MADAR BAR (الشريط العلوي) ═══ */
+/* ═══ MADAR BAR ═══ */
 .madar-bar {
   background: linear-gradient(135deg, #1a2744 0%, #243560 50%, #3e2c1c 100%);
   display: flex;
@@ -527,6 +527,22 @@ body.dark .quiz-card { background: #1b2234; border-color: var(--gold); }
 }
 .quiz-header h2 { font-family: 'Cairo'; color: var(--navy); font-size: 1.4rem; }
 .quiz-progress { font-family: 'Cairo'; font-size: 0.95rem; color: var(--text-mid); font-weight: 600; background: var(--gold-pale); padding: 5px 15px; border-radius: 20px;}
+
+/* كود المؤقت */
+.q-timer {
+  font-family: 'Cairo';
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--navy);
+  background: var(--gold-pale);
+  padding: 5px 15px;
+  border-radius: 20px;
+  border: 2px solid var(--gold);
+  min-width: 70px;
+  text-align: center;
+  transition: color 0.3s, border-color 0.3s;
+}
+
 .q-term {
   font-family: 'Source Serif 4', serif;
   font-size: 2.2rem;
@@ -717,6 +733,7 @@ footer {
       <div class="quiz-header">
         <button class="home-quiz-btn" onclick="exitQuiz()" title="العودة للجدول">🏠</button>
         <h2 id="qTitle">اختبار مجموعة X</h2>
+        <div id="qTimer" class="q-timer">⏳ 5</div>
         <div class="quiz-progress">السؤال <span id="qCurrent">1</span> من <span id="qTotal">30</span></div>
       </div>
       <div class="q-term" id="dtTerm">Terme</div>
@@ -955,7 +972,7 @@ let currentBtn = null;
 
 function stopCurrentSpeech() {
   if (currentUtterance && window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel(); // إلغاء النطق الحالي
+    window.speechSynthesis.cancel();
   }
   if (currentBtn) {
     currentBtn.classList.remove("playing");
@@ -968,12 +985,10 @@ function playFrench(text, btn, slow) {
     alert("المتصفح لا يدعم النطق الصوتي.");
     return;
   }
-  // إذا ضغط على نفس الزر أثناء النطق نوقف
   if (currentBtn === btn && window.speechSynthesis.speaking) {
     stopCurrentSpeech();
     return;
   }
-  // إيقاف أي نطق سابق
   stopCurrentSpeech();
 
   const utterance = new SpeechSynthesisUtterance(text);
@@ -1002,7 +1017,6 @@ function playFrench(text, btn, slow) {
   window.speechSynthesis.speak(utterance);
 }
 
-// الاستمرار في باقي الكود دون تغيير...
 function initUI() {
   const tabsContainer = document.getElementById("groupTabs");
   const dropdownList = document.getElementById("dropdownList");
@@ -1089,7 +1103,12 @@ let quizQuestions = [];
 let currentQIndex = 0;
 let quizScore = 0;
 
+// متغيرات المؤقت الجديدة
+let timerInterval;
+let timeLeft = 5;
+
 function startQuiz(groupIndex) {
+  clearInterval(timerInterval); // إيقاف أي مؤقت سابق
   document.getElementById("dropdownMenu").classList.remove("show");
   currentQuizGroupIndex = groupIndex;
   const groupData = groups[groupIndex];
@@ -1125,9 +1144,48 @@ function renderQuestion() {
   const fb = document.getElementById("qFeedback");
   fb.className = "q-feedback"; fb.style.display = "none";
   document.getElementById("qNext").style.display = "none";
+
+  // إعداد وتشغيل المؤقت
+  clearInterval(timerInterval);
+  timeLeft = 5;
+  const timerEl = document.getElementById("qTimer");
+  timerEl.textContent = "⏳ " + timeLeft;
+  timerEl.style.color = "var(--navy)";
+  timerEl.style.borderColor = "var(--gold)";
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = "⏳ " + timeLeft;
+    
+    // تغيير اللون للأحمر عندما يتبقى ثانيتين
+    if (timeLeft <= 2) {
+      timerEl.style.color = "#c0392b";
+      timerEl.style.borderColor = "#c0392b";
+    }
+    
+    // انتهاء الوقت
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeout();
+    }
+  }, 1000);
+}
+
+// دالة جديدة للتعامل مع انتهاء الوقت
+function handleTimeout() {
+  const q = quizQuestions[currentQIndex];
+  document.getElementById("btnTrue").disabled = true;
+  document.getElementById("btnFalse").disabled = true;
+  
+  const fb = document.getElementById("qFeedback");
+  fb.className = "q-feedback wrong";
+  fb.innerHTML = "انتهى الوقت! ⏱️<br>الترجمة الصحيحة هي: " + q.correctAr;
+  fb.style.display = "block";
+  document.getElementById("qNext").style.display = "inline-block";
 }
 
 function submitAnswer(userTrue) {
+  clearInterval(timerInterval); // إيقاف المؤقت فور الإجابة
   const q = quizQuestions[currentQIndex];
   document.getElementById("btnTrue").disabled = true;
   document.getElementById("btnFalse").disabled = true;
@@ -1149,6 +1207,7 @@ function nextQuestion() {
 }
 
 function showQuizResults() {
+  clearInterval(timerInterval); // أمان إضافي
   document.getElementById("qaArea").style.display = "none";
   document.getElementById("qrArea").style.display = "block";
   document.getElementById("rScore").textContent = quizScore + "/" + quizQuestions.length;
@@ -1158,6 +1217,7 @@ function showQuizResults() {
 }
 
 function exitQuiz() {
+  clearInterval(timerInterval); // إيقاف المؤقت عند الخروج من الاختبار
   document.getElementById("quizView").style.display = "none";
   document.getElementById("mainView").style.display = "block";
 }
@@ -1196,4 +1256,4 @@ document.addEventListener("keydown", e => {
 });
 </script>
 </body>
-  </html>
+</html>
