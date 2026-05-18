@@ -3,6 +3,7 @@
 <head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YE8DKCYD5"></script>
 <script>
+  // Google Analytics 4 tracking code – actif et vérifié
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -23,8 +24,6 @@
   --navy-mid: #243560;
   --navy-light: #2e4480;
   --cream: #fefcf5;
-  --red-accent: #c0392b;
-  --ar-color: #b91c1c; /* لون المرادف العربي في الوضع المضيء - قرمزي واضح */
   --text-dark: #1a1a2e;
   --text-mid: #3a3a5c;
   --border: #d4b896;
@@ -35,13 +34,11 @@
   --radius: 14px;
 }
 
-/* الوضع الليلي الجديد */
 body.dark {
   --cream: #141824;
   --text-dark: #f0f0f0;
   --text-mid: #a0a0b0;
-  --navy: #e8d08a; 
-  --ar-color: #ff6b6b; /* لون المرادف العربي في الوضع الليلي - مرجاني مضيء عالي الوضوح */
+  --navy: #e8d08a;
   --row-even: #1b2234;
   --row-odd: #171d2b;
   --row-hover: #26314a;
@@ -53,6 +50,10 @@ body.dark #searchInput {
   background: #1b2234; color: #fff; border-color: #354366;
 }
 body.dark table { background: transparent; }
+body.dark .madar-bar {
+  background: #0b0f18;
+  background-image: none;
+}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -66,13 +67,16 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* ═══ MADAR BAR (محدث لدعم الأزرار المدمجة) ═══ */
+/* ═══ MADAR BAR (الشريط العلوي) ═══ */
 .madar-bar {
   background: linear-gradient(135deg, #1a2744 0%, #243560 50%, #3e2c1c 100%);
-  text-align: center;
-  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
   position: relative;
-  overflow: visible; /* تم التغيير للسماح بظهور القائمة المنسدلة */
+  overflow: visible;
+  flex-wrap: wrap;
 }
 .madar-bar::after {
   content: '';
@@ -83,32 +87,38 @@ body {
 }
 .madar-bar .madar-name {
   font-family: 'Poppins', 'Cairo', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 4px;
   color: #fdf9f3;
   text-transform: uppercase;
-  position: relative;
-  z-index: 1;
   text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  order: 2;
+  flex: 1 1 auto;
+  text-align: center;
 }
-
-/* ═══ HEADER ACTIONS (تم رفعها في مكان مختصر بالرأس العلوي تماماً) ═══ */
-.header-actions {
-  position: absolute;
-  top: 50%; left: 16px;
-  transform: translateY(-50%);
+.header-actions-left {
   display: flex;
-  gap: 8px;
-  z-index: 50;
+  gap: 10px;
+  order: 1; /* أقصى اليسار */
+  z-index: 60;
+}
+.header-actions-right {
+  display: flex;
+  gap: 10px;
+  order: 3; /* أقصى اليمين */
+  z-index: 60;
+}
+.menu-container {
+  position: relative;
 }
 .action-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  width: 34px; height: 34px;
-  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  width: 38px; height: 38px;
+  font-size: 1.15rem;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -118,13 +128,12 @@ body {
   background: var(--gold);
   color: #1a2744;
   border-color: var(--gold);
+  transform: translateY(-2px);
 }
-.menu-container {
-  position: relative;
-}
+
 .dropdown-menu {
   position: absolute;
-  top: 42px; left: 0;
+  top: 48px; right: 0;
   background: #fff;
   width: 250px;
   border-radius: var(--radius);
@@ -135,6 +144,7 @@ body {
   overflow: hidden;
   text-align: right;
   direction: rtl;
+  z-index: 100;
 }
 body.dark .dropdown-menu { background: #1b2234; border: 1px solid #354366; }
 .dropdown-menu.show {
@@ -175,11 +185,12 @@ body.dark .dropdown-item:hover { background: #26314a; color: var(--gold-light); 
 
 /* ═══ HEADER ═══ */
 header {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-light) 100%);
+  background: linear-gradient(135deg, #1a2744 0%, #243560 60%, #2e4480 100%);
   color: #fff;
   padding: 36px 24px 30px;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 header::before {
   content: '';
@@ -398,16 +409,16 @@ tbody tr.hidden { display: none !important; }
 
 .td-fr {
   font-family: 'Source Serif 4', serif;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--navy);
   word-break: break-word;
 }
 .td-ar {
   font-family: 'Cairo', sans-serif;
-  font-size: 0.95rem; /* تم تكبير الخط قليلاً لزيادة الوضوح */
-  font-weight: 700; /* جعل الخط عريضاً وواضحاً */
-  color: var(--ar-color); /* يستدعي اللون الديناميكي الجديد للمرادف العربي */
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--navy);
   text-align: right;
   direction: rtl;
   word-break: break-word;
@@ -528,7 +539,7 @@ body.dark .quiz-card { background: #1b2234; border-color: var(--gold); }
 .q-trans {
   font-family: 'Cairo';
   font-size: 1.6rem;
-  color: var(--ar-color); /* تم ربطه بالمتغير عالي الوضوح */
+  color: var(--navy);
   font-weight: 800;
   margin-bottom: 35px;
   padding: 15px;
@@ -568,6 +579,26 @@ body.dark .q-feedback.wrong { background: rgba(192,57,43,0.15); }
 }
 .q-next-btn:hover { background: var(--gold); color: #1a2744; }
 
+.home-quiz-btn {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-left: 10px;
+}
+.home-quiz-btn:hover {
+  background: var(--gold);
+  color: #1a2744;
+}
+
 .quiz-result-area { text-align: center; }
 .result-score { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); font-weight: bold; margin: 20px 0; line-height: 1;}
 .result-msg { font-family: 'Cairo'; font-size: 1.4rem; color: var(--navy); font-weight: 700; margin-bottom: 30px; }
@@ -601,6 +632,12 @@ footer {
   font-weight: 400;
   color: var(--text-mid);
 }
+.footer-update {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.7rem;
+  color: #888;
+  margin-top: 4px;
+}
 
 #scrollTop {
   position: fixed; bottom: 24px; right: 24px;
@@ -618,9 +655,15 @@ footer {
 </head>
 <body>
 
+<!-- الشريط العلوي: الاسم في المنتصف، زر الوضع الليلي أقصى اليسار، زر القائمة أقصى اليمين -->
 <div class="madar-bar">
-  <div class="header-actions">
+  <div class="header-actions-left">
     <button id="toggleThemeBtn" class="action-btn" title="تبديل المظهر">🌙</button>
+  </div>
+
+  <span class="madar-name">Madar</span>
+
+  <div class="header-actions-right">
     <div class="menu-container">
       <button id="menuBtn" class="action-btn" title="اختبارات MCQ">☰</button>
       <div id="dropdownMenu" class="dropdown-menu">
@@ -629,12 +672,11 @@ footer {
       </div>
     </div>
   </div>
-  <span class="madar-name">Madar</span>
 </div>
 
 <header>
   <h1>مصطلحات قانونية <span>باللغة الفرنسية</span></h1>
-  <div class="header-sub">مادة المصطلحات القانونية بالفرنسية · الفرقة الأولى حقوق المنصورة</div>
+  <div class="header-sub">مادة المصطلحات القانونية بالفرنسية · الفرقة الأولى حقوق المنصورة 2026/5</div>
   <div class="header-stats">
     <div class="stat"><div class="stat-num" id="totalCount">0</div><div class="stat-label">مصطلح معروض</div></div>
     <div class="stat"><div class="stat-num">🔊</div><div class="stat-label">صوت عادي + بطيء</div></div>
@@ -676,6 +718,7 @@ footer {
   <div class="quiz-card">
     <div id="qaArea">
       <div class="quiz-header">
+        <button class="home-quiz-btn" onclick="exitQuiz()" title="العودة للجدول">🏠</button>
         <h2 id="qTitle">اختبار مجموعة X</h2>
         <div class="quiz-progress">السؤال <span id="qCurrent">1</span> من <span id="qTotal">30</span></div>
       </div>
@@ -707,11 +750,15 @@ footer {
 <footer>
   <div class="footer-handle">@GIX37</div>
   <div class="footer-sub">مصطلحات قانونية باللغة الفرنسية · Terminologie Juridique Français–Arabe</div>
+  <div class="footer-update">آخر تحديث: 2026/5/18 7:30PM</div>
 </footer>
 
 <button id="scrollTop" title="الأعلى">↑</button>
 
 <script>
+// --------------------------------------------------------------
+// قاعدة البيانات الكاملة للمصطلحات (179 مصطلحًا)
+// --------------------------------------------------------------
 const allTermsList = [
   ["Droit","القانون","دْرْوَا"],
   ["Règle de droit","قاعدة قانونية","رِيغْل دُو دْرْوَا"],
@@ -774,7 +821,7 @@ const allTermsList = [
   ["Les conflits","النزاعات","لِيه كُونْفْلِيه"],
   ["Assurer","تضمن","أَاسُورِيه"],
   ["La justice","العدالة","لَا جُوسْتِيس"],
-  ["La stability","الاستقرار","لَا سْتَابِيلِيتِي"],
+  ["La stabilité","الاستقرار","لَا سْتَابِيلِيتِي"],
   ["Des rapports sociaux","العلاقات الاجتماعية","دِيه رَابُور سُوسْيُو"],
   ["Régit","يحكم / ينظم","رِيجِيه"],
   ["Les relations","العلاقات","لِيه رُولَاسْيُون"],
@@ -944,9 +991,7 @@ function showGroup(index) {
 
 function buildTable() {
   const tbody = document.getElementById("mainTbody");
-  if (!tbody) return;
   let html = "";
-  
   for (let i = 0; i < currentDisplayedTerms.length; i++) {
     const [fr, ar, phonetic] = currentDisplayedTerms[i];
     const safeFr = fr.replace(/'/g, "\\'");
@@ -966,28 +1011,23 @@ function buildTable() {
     `;
   }
   tbody.innerHTML = html;
-  
   document.getElementById("totalCount").textContent = currentDisplayedTerms.length;
   document.getElementById("resultCount").textContent = currentDisplayedTerms.length;
-  
   const searchVal = document.getElementById("searchInput").value.trim().toLowerCase();
-  if (searchVal) {
-    filterTable(searchVal);
-  } else {
-    document.getElementById("noResults").classList.remove("show");
-  }
+  if (searchVal) filterTable(searchVal);
+  else document.getElementById("noResults").classList.remove("show");
 }
 
 function filterTable(q) {
   const rows = document.querySelectorAll("#mainTbody tr");
   let visible = 0;
-  for (let row of rows) {
+  rows.forEach(row => {
     const fr = row.getAttribute("data-fr");
     const ar = row.getAttribute("data-ar");
     const match = !q || (fr && fr.includes(q)) || (ar && ar.includes(q));
     row.style.display = match ? "" : "none";
     if (match) visible++;
-  }
+  });
   document.getElementById("totalCount").textContent = visible;
   document.getElementById("resultCount").textContent = visible;
   document.getElementById("noResults").classList.toggle("show", visible === 0 && q !== "");
@@ -997,47 +1037,23 @@ let currentAudio = null;
 let currentBtn = null;
 
 function stopCurrent() {
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.src = "";
-    currentAudio = null;
-  }
-  if (currentBtn) {
-    currentBtn.classList.remove("playing");
-    currentBtn = null;
-  }
+  if (currentAudio) { currentAudio.pause(); currentAudio.src = ""; currentAudio = null; }
+  if (currentBtn) { currentBtn.classList.remove("playing"); currentBtn = null; }
 }
 
 function playFrench(text, btn, slow) {
-  if (!window.speechSynthesis) {
-    alert("متصفحك لا يدعم النطق الصوتي");
-    return;
-  }
-  if (currentBtn === btn) {
-    stopCurrent();
-    return;
-  }
+  if (!window.speechSynthesis) { alert("متصفحك لا يدعم النطق الصوتي"); return; }
+  if (currentBtn === btn) { stopCurrent(); return; }
   stopCurrent();
   const url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=fr&q=" + encodeURIComponent(text);
   const audio = new Audio(url);
   if (slow) audio.playbackRate = 0.72;
   audio.onplay = () => btn.classList.add("playing");
-  audio.onended = () => {
-    btn.classList.remove("playing");
-    if (currentAudio === audio) { currentAudio = null; currentBtn = null; }
-  };
-  audio.onerror = () => {
-    btn.classList.remove("playing");
-    currentAudio = null; currentBtn = null;
-    alert("حدث خطأ في تشغيل الصوت. تأكد من اتصالك بالإنترنت.");
-  };
+  audio.onended = () => { btn.classList.remove("playing"); if (currentAudio === audio) { currentAudio = null; currentBtn = null; } };
+  audio.onerror = () => { btn.classList.remove("playing"); currentAudio = null; currentBtn = null; alert("حدث خطأ في تشغيل الصوت."); };
   currentAudio = audio;
   currentBtn = btn;
-  audio.play().catch(() => {
-    btn.classList.remove("playing");
-    currentAudio = null; currentBtn = null;
-    alert("تعذر تشغيل الصوت. ربما يكون المتصفح منع التشغيل التلقائي.");
-  });
+  audio.play().catch(() => { btn.classList.remove("playing"); currentAudio = null; currentBtn = null; alert("تعذر تشغيل الصوت."); });
 }
 
 let currentQuizGroupIndex = 0;
@@ -1049,42 +1065,25 @@ function startQuiz(groupIndex) {
   document.getElementById("dropdownMenu").classList.remove("show");
   currentQuizGroupIndex = groupIndex;
   const groupData = groups[groupIndex];
-  
   quizQuestions = [];
-  const shuffledTerms = [...groupData].sort(() => Math.random() - 0.5);
-  
-  for (let term of shuffledTerms) {
-    const fr = term[0];
-    const correctAr = term[1];
-    const isActuallyCorrect = Math.random() < 0.5; 
+  const shuffled = [...groupData].sort(() => Math.random() - 0.5);
+  shuffled.forEach(term => {
+    const fr = term[0], correctAr = term[1];
+    const isActuallyCorrect = Math.random() < 0.5;
     let shownAr = correctAr;
-
     if (!isActuallyCorrect) {
-      const wrongOptions = groupData.map(t => t[1]).filter(ar => ar !== correctAr);
-      if (wrongOptions.length > 0) {
-        shownAr = wrongOptions[Math.floor(Math.random() * wrongOptions.length)];
-      }
+      const wrong = groupData.map(t => t[1]).filter(a => a !== correctAr);
+      if (wrong.length) shownAr = wrong[Math.floor(Math.random() * wrong.length)];
     }
-
-    quizQuestions.push({
-      fr: fr,
-      correctAr: correctAr,
-      shownAr: shownAr,
-      isCorrectTranslation: shownAr === correctAr
-    });
-  }
-
-  currentQIndex = 0;
-  quizScore = 0;
-
+    quizQuestions.push({ fr, correctAr, shownAr, isCorrectTranslation: shownAr === correctAr });
+  });
+  currentQIndex = 0; quizScore = 0;
   document.getElementById("mainView").style.display = "none";
   document.getElementById("quizView").style.display = "block";
   document.getElementById("qaArea").style.display = "block";
   document.getElementById("qrArea").style.display = "none";
-
   document.getElementById("qTitle").textContent = "اختبار MCQ - مجموعة " + (groupIndex + 1);
   document.getElementById("qTotal").textContent = quizQuestions.length;
-
   renderQuestion();
 }
 
@@ -1093,71 +1092,41 @@ function renderQuestion() {
   document.getElementById("qCurrent").textContent = currentQIndex + 1;
   document.getElementById("dtTerm").textContent = q.fr;
   document.getElementById("dtTrans").textContent = q.shownAr;
-  
-  const btnTrue = document.getElementById("btnTrue");
-  const btnFalse = document.getElementById("btnFalse");
-  btnTrue.disabled = false;
-  btnFalse.disabled = false;
-  
-  const feedback = document.getElementById("qFeedback");
-  feedback.className = "q-feedback";
-  feedback.style.display = "none";
+  document.getElementById("btnTrue").disabled = false;
+  document.getElementById("btnFalse").disabled = false;
+  const fb = document.getElementById("qFeedback");
+  fb.className = "q-feedback"; fb.style.display = "none";
   document.getElementById("qNext").style.display = "none";
 }
 
-function submitAnswer(userChoseTrue) {
+function submitAnswer(userTrue) {
   const q = quizQuestions[currentQIndex];
   document.getElementById("btnTrue").disabled = true;
   document.getElementById("btnFalse").disabled = true;
-
-  const isUserCorrect = (userChoseTrue === q.isCorrectTranslation);
-  if (isUserCorrect) {
-    quizScore++;
-  }
-
-  const feedback = document.getElementById("qFeedback");
-  if (isUserCorrect) {
-    feedback.classList.add("correct");
-    if (userChoseTrue) {
-       feedback.innerHTML = "إجابة صحيحة! الترجمة المعروضة سليمة.";
-    } else {
-       feedback.innerHTML = "إجابة صحيحة! الترجمة المعروضة <b>خاطئة</b>.<br>الترجمة الصحيحة هي: " + q.correctAr;
-    }
-  } else {
-    feedback.classList.add("wrong");
-    if (userChoseTrue) {
-       feedback.innerHTML = "إجابة خاطئة. الترجمة الصحيحة هي: <br>" + q.correctAr;
-    } else {
-       feedback.innerHTML = "إجابة خاطئة. الترجمة المعروضة هي الترجمة الصحيحة بالفعل.";
-    }
-  }
-  
-  feedback.style.display = "block";
+  const correct = (userTrue === q.isCorrectTranslation);
+  if (correct) quizScore++;
+  const fb = document.getElementById("qFeedback");
+  fb.classList.add(correct ? "correct" : "wrong");
+  fb.innerHTML = correct 
+    ? (userTrue ? "إجابة صحيحة! الترجمة المعروضة سليمة." : "إجابة صحيحة! الترجمة المعروضة <b>خاطئة</b>.<br>الترجمة الصحيحة هي: " + q.correctAr)
+    : (userTrue ? "إجابة خاطئة. الترجمة الصحيحة هي: <br>" + q.correctAr : "إجابة خاطئة. الترجمة المعروضة هي الترجمة الصحيحة بالفعل.");
+  fb.style.display = "block";
   document.getElementById("qNext").style.display = "inline-block";
 }
 
 function nextQuestion() {
   currentQIndex++;
-  if (currentQIndex < quizQuestions.length) {
-    renderQuestion();
-  } else {
-    showQuizResults();
-  }
+  if (currentQIndex < quizQuestions.length) renderQuestion();
+  else showQuizResults();
 }
 
 function showQuizResults() {
   document.getElementById("qaArea").style.display = "none";
   document.getElementById("qrArea").style.display = "block";
   document.getElementById("rScore").textContent = quizScore + "/" + quizQuestions.length;
-  const percentage = (quizScore / quizQuestions.length) * 100;
-  
-  let msg = "";
-  if(percentage === 100) msg = "ممتاز! علامة كاملة 🏆";
-  else if(percentage >= 80) msg = "عمل رائع ومستوى ممتاز 🌟";
-  else if(percentage >= 50) msg = "نتيجة جيدة، لكنك تستطيع الأفضل 👍";
-  else msg = "عليك المراجعة أكثر، لا تستسلم! 💪";
-
-  document.getElementById("rMsg").textContent = msg + ` (${Math.round(percentage)}%)`;
+  const pct = (quizScore / quizQuestions.length) * 100;
+  let msg = pct === 100 ? "ممتاز! علامة كاملة 🏆" : pct >= 80 ? "عمل رائع ومستوى ممتاز 🌟" : pct >= 50 ? "نتيجة جيدة، لكنك تستطيع الأفضل 👍" : "عليك المراجعة أكثر، لا تستسلم! 💪";
+  document.getElementById("rMsg").textContent = msg + ` (${Math.round(pct)}%)`;
 }
 
 function exitQuiz() {
@@ -1165,27 +1134,16 @@ function exitQuiz() {
   document.getElementById("mainView").style.display = "block";
 }
 
-document.getElementById("searchInput").addEventListener("input", (e) => {
-  filterTable(e.target.value.trim().toLowerCase());
-});
-
+document.getElementById("searchInput").addEventListener("input", e => filterTable(e.target.value.trim().toLowerCase()));
 const scrollBtn = document.getElementById("scrollTop");
-window.addEventListener("scroll", () => {
-  scrollBtn.classList.toggle("visible", window.scrollY > 300);
-});
-scrollBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+window.addEventListener("scroll", () => scrollBtn.classList.toggle("visible", window.scrollY > 300));
+scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
 const themeToggle = document.getElementById("toggleThemeBtn");
 if (themeToggle) {
-  const savedTheme = localStorage.getItem("pol_theme") || "light";
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-    themeToggle.textContent = "☀️";
-  } else {
-    themeToggle.textContent = "🌙";
-  }
+  const saved = localStorage.getItem("pol_theme") || "light";
+  if (saved === "dark") { document.body.classList.add("dark"); themeToggle.textContent = "☀️"; }
+  else themeToggle.textContent = "🌙";
   themeToggle.addEventListener("click", () => {
     const isDark = document.body.classList.contains("dark");
     document.body.classList.toggle("dark");
@@ -1196,6 +1154,7 @@ if (themeToggle) {
 
 window.addEventListener("load", initUI);
 
+// حماية
 (function() {
   try { if (window.self !== window.top) window.top.location.href = window.self.location.href; } catch(e) {}
 })();
@@ -1207,7 +1166,6 @@ document.addEventListener("keydown", e => {
   if (e.key === "F12") { e.preventDefault(); return false; }
   if (c && e.shiftKey && "ijc".includes(k)) { e.preventDefault(); return false; }
 });
-document.addEventListener("dragstart", e => e.preventDefault());
 </script>
 </body>
-</html>
+  </html>
