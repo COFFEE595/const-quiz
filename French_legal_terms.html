@@ -100,13 +100,13 @@ body {
 .header-actions-left {
   display: flex;
   gap: 10px;
-  order: 1; /* أقصى اليسار */
+  order: 1;
   z-index: 60;
 }
 .header-actions-right {
   display: flex;
   gap: 10px;
-  order: 3; /* أقصى اليمين */
+  order: 3;
   z-index: 60;
 }
 .menu-container {
@@ -655,14 +655,11 @@ footer {
 </head>
 <body>
 
-<!-- الشريط العلوي: الاسم في المنتصف، زر الوضع الليلي أقصى اليسار، زر القائمة أقصى اليمين -->
 <div class="madar-bar">
   <div class="header-actions-left">
     <button id="toggleThemeBtn" class="action-btn" title="تبديل المظهر">🌙</button>
   </div>
-
   <span class="madar-name">Madar</span>
-
   <div class="header-actions-right">
     <div class="menu-container">
       <button id="menuBtn" class="action-btn" title="اختبارات MCQ">☰</button>
@@ -952,6 +949,60 @@ for (let i = 1; i <= 6; i++) {
 let activeGroupIndex = 'all';
 let currentDisplayedTerms = allTermsList;
 
+// ---------- الصوت باستخدام Web Speech API ----------
+let currentUtterance = null;
+let currentBtn = null;
+
+function stopCurrentSpeech() {
+  if (currentUtterance && window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel(); // إلغاء النطق الحالي
+  }
+  if (currentBtn) {
+    currentBtn.classList.remove("playing");
+    currentBtn = null;
+  }
+}
+
+function playFrench(text, btn, slow) {
+  if (!window.speechSynthesis) {
+    alert("المتصفح لا يدعم النطق الصوتي.");
+    return;
+  }
+  // إذا ضغط على نفس الزر أثناء النطق نوقف
+  if (currentBtn === btn && window.speechSynthesis.speaking) {
+    stopCurrentSpeech();
+    return;
+  }
+  // إيقاف أي نطق سابق
+  stopCurrentSpeech();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'fr-FR';
+  utterance.rate = slow ? 0.75 : 1.0;
+  
+  utterance.onstart = () => {
+    btn.classList.add("playing");
+    currentBtn = btn;
+  };
+  utterance.onend = () => {
+    btn.classList.remove("playing");
+    currentBtn = null;
+    currentUtterance = null;
+  };
+  utterance.onerror = (e) => {
+    btn.classList.remove("playing");
+    currentBtn = null;
+    currentUtterance = null;
+    if (e.error !== 'canceled' && e.error !== 'interrupted') {
+      alert("تعذر تشغيل الصوت. تأكد من إعدادات المتصفح.");
+    }
+  };
+
+  currentUtterance = utterance;
+  window.speechSynthesis.speak(utterance);
+}
+
+// الاستمرار في باقي الكود دون تغيير...
 function initUI() {
   const tabsContainer = document.getElementById("groupTabs");
   const dropdownList = document.getElementById("dropdownList");
@@ -1031,29 +1082,6 @@ function filterTable(q) {
   document.getElementById("totalCount").textContent = visible;
   document.getElementById("resultCount").textContent = visible;
   document.getElementById("noResults").classList.toggle("show", visible === 0 && q !== "");
-}
-
-let currentAudio = null;
-let currentBtn = null;
-
-function stopCurrent() {
-  if (currentAudio) { currentAudio.pause(); currentAudio.src = ""; currentAudio = null; }
-  if (currentBtn) { currentBtn.classList.remove("playing"); currentBtn = null; }
-}
-
-function playFrench(text, btn, slow) {
-  if (!window.speechSynthesis) { alert("متصفحك لا يدعم النطق الصوتي"); return; }
-  if (currentBtn === btn) { stopCurrent(); return; }
-  stopCurrent();
-  const url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=fr&q=" + encodeURIComponent(text);
-  const audio = new Audio(url);
-  if (slow) audio.playbackRate = 0.72;
-  audio.onplay = () => btn.classList.add("playing");
-  audio.onended = () => { btn.classList.remove("playing"); if (currentAudio === audio) { currentAudio = null; currentBtn = null; } };
-  audio.onerror = () => { btn.classList.remove("playing"); currentAudio = null; currentBtn = null; alert("حدث خطأ في تشغيل الصوت."); };
-  currentAudio = audio;
-  currentBtn = btn;
-  audio.play().catch(() => { btn.classList.remove("playing"); currentAudio = null; currentBtn = null; alert("تعذر تشغيل الصوت."); });
 }
 
 let currentQuizGroupIndex = 0;
