@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9YE8DKCYD5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9YE8DKCYD5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="MADAR Platform — @GIX37">
+<meta name="copyright" content="MADAR 2026 — All Rights Reserved">
+<title>MADAR — مصطلحات قانونية فرنسية</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8d08a;
+  --gold-pale: #fdf6e3;
+  --navy: #1a2744;
+  --navy-mid: #243560;
+  --navy-light: #2e4480;
+  --cream: #fefcf5;
+  --red-accent: #c0392b;
+  --ar-color: #b91c1c; /* لون المرادف العربي في الوضع المضيء - قرمزي واضح */
+  --text-dark: #1a1a2e;
+  --text-mid: #3a3a5c;
+  --border: #d4b896;
+  --row-even: #fffdf5;
+  --row-odd: #fff8e7;
+  --row-hover: #fef3c7;
+  --shadow: 0 4px 28px rgba(26,39,68,0.11);
+  --radius: 14px;
+}
+
+/* الوضع الليلي الجديد */
+body.dark {
+  --cream: #141824;
+  --text-dark: #f0f0f0;
+  --text-mid: #a0a0b0;
+  --navy: #e8d08a; 
+  --ar-color: #ff6b6b; /* لون المرادف العربي في الوضع الليلي - مرجاني مضيء عالي الوضوح */
+  --row-even: #1b2234;
+  --row-odd: #171d2b;
+  --row-hover: #26314a;
+  --border: #354366;
+  --gold-pale: #1a233b;
+  background: var(--cream);
+}
+body.dark #searchInput {
+  background: #1b2234; color: #fff; border-color: #354366;
+}
+body.dark table { background: transparent; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 10% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 100%, rgba(26,39,68,0.07) 0%, transparent 60%);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ═══ MADAR BAR (محدث لدعم الأزرار المدمجة) ═══ */
+.madar-bar {
+  background: linear-gradient(135deg, #1a2744 0%, #243560 50%, #3e2c1c 100%);
+  text-align: center;
+  padding: 10px 20px;
+  position: relative;
+  overflow: visible; /* تم التغيير للسماح بظهور القائمة المنسدلة */
+}
+.madar-bar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 120px; height: 2px;
+  background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+}
+.madar-bar .madar-name {
+  font-family: 'Poppins', 'Cairo', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #fdf9f3;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* ═══ HEADER ACTIONS (تم رفعها في مكان مختصر بالرأس العلوي تماماً) ═══ */
+.header-actions {
+  position: absolute;
+  top: 50%; left: 16px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 50;
+}
+.action-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  width: 34px; height: 34px;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+.action-btn:hover {
+  background: var(--gold);
+  color: #1a2744;
+  border-color: var(--gold);
+}
+.menu-container {
+  position: relative;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 42px; left: 0;
+  background: #fff;
+  width: 250px;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  opacity: 0; pointer-events: none;
+  transform: translateY(-15px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  text-align: right;
+  direction: rtl;
+}
+body.dark .dropdown-menu { background: #1b2234; border: 1px solid #354366; }
+.dropdown-menu.show {
+  opacity: 1; pointer-events: auto; transform: translateY(0);
+}
+.dropdown-header {
+  background: var(--gold-pale);
+  color: var(--navy);
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 18px;
+  border-bottom: 2px solid var(--gold);
+}
+.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: right;
+  padding: 12px 18px;
+  background: transparent;
+  border: none;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: background 0.2s, color 0.2s, padding-right 0.2s;
+}
+.dropdown-item:last-child { border-bottom: none; }
+.dropdown-item:hover {
+  background: var(--row-hover);
+  color: #c9a84c;
+  padding-right: 24px;
+}
+body.dark .dropdown-item { border-bottom-color: #26314a; }
+body.dark .dropdown-item:hover { background: #26314a; color: var(--gold-light); }
+
+/* ═══ HEADER ═══ */
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-light) 100%);
+  color: #fff;
+  padding: 36px 24px 30px;
+  text-align: center;
+  position: relative;
+}
+header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(201,168,76,0.04) 40px,rgba(201,168,76,0.04) 41px);
+  pointer-events: none;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 140px; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+header h1 {
+  font-family: 'Cairo', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  color: #fff;
+  direction: rtl;
+}
+header h1 span { color: var(--gold); }
+.header-sub {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.55);
+  direction: rtl;
+  margin-top: 4px;
+}
+.header-stats {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-top: 3px;
+  font-family: 'Cairo', sans-serif;
+}
+
+/* ═══ CONTROLS & GROUP BUTTONS ═══ */
+.controls {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+.search-wrap { flex: 1 1 280px; position: relative; direction: rtl;}
+.search-wrap::before {
+  content: '🔍';
+  position: absolute;
+  right: 14px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+}
+#searchInput {
+  width: 100%;
+  padding: 11px 42px 11px 16px;
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.93rem;
+  background: #fff;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+#searchInput:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+}
+.counter-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: #1a2744;
+  border-radius: 50px;
+  padding: 3px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
+  white-space: nowrap;
+}
+
+.group-tabs {
+  max-width: 1200px;
+  margin: 16px auto;
+  padding: 0 16px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  direction: rtl;
+}
+.group-tab-btn {
+  padding: 6px 18px;
+  border-radius: 30px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-mid);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.group-tab-btn:hover {
+  background: var(--gold-pale);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+.group-tab-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a2744;
+  box-shadow: 0 3px 10px rgba(201,168,76,0.3);
+}
+
+/* ═══ TABLE & MAIN VIEW ═══ */
+#mainView, #quizView {
+  animation: fadeIn 0.4s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.table-wrap {
+  max-width: 1200px;
+  margin: 16px auto 30px;
+  padding: 0 12px;
+}
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) #f5f0e8;
+}
+.table-scroll::-webkit-scrollbar { height: 6px; }
+.table-scroll::-webkit-scrollbar-track { background: #f5f0e8; }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+.scroll-hint {
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.74rem;
+  color: #a0875a;
+  margin-bottom: 6px;
+  direction: rtl;
+  display: none;
+}
+@media (max-width: 900px) { .scroll-hint { display: block; } }
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background: #fff;
+  min-width: 700px;
+}
+thead tr { background: var(--gold-pale); }
+th {
+  padding: 10px 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1a2744;
+  border-bottom: 2px solid var(--gold);
+  white-space: nowrap;
+}
+body.dark th { color: #f0f0f0; }
+
+th:nth-child(1) { width: 27%; text-align: left; }
+th:nth-child(2) { width: 27%; text-align: right; direction: rtl; }
+th:nth-child(3) { width: 28%; text-align: center; }
+th:nth-child(4) { width: 18%; text-align: center; }
+
+td {
+  padding: 8px 12px;
+  vertical-align: middle;
+  border-right: 1px solid rgba(212,184,150,0.3);
+}
+td:last-child { border-right: none; }
+tbody tr {
+  border-bottom: 1px solid rgba(212,184,150,0.25);
+}
+tbody tr.even-pair { background: var(--row-even); }
+tbody tr.odd-pair  { background: var(--row-odd); }
+tbody tr:hover { background: var(--row-hover); }
+tbody tr.hidden { display: none !important; }
+
+.td-fr {
+  font-family: 'Source Serif 4', serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+  word-break: break-word;
+}
+.td-ar {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.95rem; /* تم تكبير الخط قليلاً لزيادة الوضوح */
+  font-weight: 700; /* جعل الخط عريضاً وواضحاً */
+  color: var(--ar-color); /* يستدعي اللون الديناميكي الجديد للمرادف العربي */
+  text-align: right;
+  direction: rtl;
+  word-break: break-word;
+  line-height: 1.4;
+}
+.td-phonetic {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: var(--text-mid);
+  text-align: center;
+  direction: rtl;
+  line-height: 1.4;
+  word-break: break-word;
+  padding-right: 12px;
+}
+.td-listen { 
+  text-align: center; 
+  white-space: nowrap;
+  padding-left: 8px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-right: 0;
+}
+.listen-btn {
+  background: none;
+  border: 2px solid var(--gold);
+  border-radius: 50px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--navy);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.2s;
+}
+.listen-btn:hover { background: var(--navy); border-color: var(--navy); color: #fff; transform: scale(1.02); }
+.listen-btn.slow { border-color: #6b8fc4; color: #1e3a6e; }
+body.dark .listen-btn.slow { color: #a4c2f4; }
+.listen-btn.slow:hover { background: #1e3a6e; border-color: #1e3a6e; color: #fff; }
+.listen-btn.playing {
+  background: var(--gold); border-color: var(--gold); color: #1a2744;
+  animation: pulse 0.9s ease-in-out infinite alternate;
+}
+.listen-btn.slow.playing {
+  background: #6b8fc4; border-color: #6b8fc4; color: #fff;
+  animation: pulse-blue 0.9s ease-in-out infinite alternate;
+}
+@keyframes pulse {
+  from { box-shadow: 0 0 0 0 rgba(201,168,76,0.5); }
+  to   { box-shadow: 0 0 0 7px rgba(201,168,76,0); }
+}
+@keyframes pulse-blue {
+  from { box-shadow: 0 0 0 0 rgba(107,143,196,0.5); }
+  to   { box-shadow: 0 0 0 7px rgba(107,143,196,0); }
+}
+
+.no-results {
+  text-align: center; padding: 48px;
+  font-family: 'Cairo', sans-serif; color: #aaa; font-size: 1rem;
+  display: none;
+}
+.no-results.show { display: block; }
+
+.source-credit {
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #a0a0a0;
+  margin: 0 0 8px 0;
+  padding: 0;
+  background: transparent;
+  direction: rtl;
+}
+
+/* ═══ QUIZ VIEW CSS ═══ */
+.quiz-wrap {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 16px;
+  direction: rtl;
+}
+.quiz-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 30px;
+  text-align: center;
+  border-top: 5px solid var(--gold);
+}
+body.dark .quiz-card { background: #1b2234; border-color: var(--gold); }
+.quiz-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 15px;
+}
+.quiz-header h2 { font-family: 'Cairo'; color: var(--navy); font-size: 1.4rem; }
+.quiz-progress { font-family: 'Cairo'; font-size: 0.95rem; color: var(--text-mid); font-weight: 600; background: var(--gold-pale); padding: 5px 15px; border-radius: 20px;}
+.q-term {
+  font-family: 'Source Serif 4', serif;
+  font-size: 2.2rem;
+  color: var(--navy);
+  margin-bottom: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.q-trans-label { font-family: 'Cairo'; font-size: 1rem; color: var(--text-mid); margin-bottom: 6px; }
+.q-trans {
+  font-family: 'Cairo';
+  font-size: 1.6rem;
+  color: var(--ar-color); /* تم ربطه بالمتغير عالي الوضوح */
+  font-weight: 800;
+  margin-bottom: 35px;
+  padding: 15px;
+  background: var(--row-odd);
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+}
+.q-options { display: flex; gap: 16px; justify-content: center; margin-bottom: 20px; }
+.q-btn {
+  flex: 1; max-width: 160px; padding: 14px;
+  font-family: 'Cairo'; font-size: 1.2rem; font-weight: 700;
+  border-radius: 12px; cursor: pointer; border: none;
+  transition: 0.2s; color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.q-btn.btn-true { background: #2e8b57; }
+.q-btn.btn-false { background: #c0392b; }
+.q-btn:hover { opacity: 0.9; transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+.q-btn:disabled { opacity: 0.4; pointer-events: none; transform: none; box-shadow: none; }
+
+.q-feedback {
+  margin-top: 20px; font-family: 'Cairo'; font-size: 1.1rem;
+  font-weight: 700; padding: 15px; border-radius: 10px;
+  display: none; animation: fadeIn 0.3s;
+}
+.q-feedback.correct { background: #e8f8f5; color: #1e8449; border: 1px solid #1e8449; display: block; }
+.q-feedback.wrong { background: #fdedec; color: #c0392b; border: 1px solid #c0392b; display: block; }
+body.dark .q-feedback.correct { background: rgba(30,132,73,0.15); }
+body.dark .q-feedback.wrong { background: rgba(192,57,43,0.15); }
+
+.q-next-btn {
+  background: var(--navy); color: #fff; border: none; padding: 10px 40px;
+  font-family: 'Cairo'; font-size: 1.1rem; font-weight: bold;
+  cursor: pointer; border-radius: 50px; margin-top: 20px;
+  transition: 0.3s;
+  display: none;
+}
+.q-next-btn:hover { background: var(--gold); color: #1a2744; }
+
+.quiz-result-area { text-align: center; }
+.result-score { font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold); font-weight: bold; margin: 20px 0; line-height: 1;}
+.result-msg { font-family: 'Cairo'; font-size: 1.4rem; color: var(--navy); font-weight: 700; margin-bottom: 30px; }
+.result-actions { display: flex; gap: 12px; justify-content: center; }
+.result-btn {
+  padding: 12px 24px; font-family: 'Cairo'; font-size: 1rem; font-weight: bold;
+  border-radius: 50px; cursor: pointer; border: 2px solid var(--navy); transition: 0.3s;
+}
+.result-btn.primary { background: var(--navy); color: #fff; }
+.result-btn.secondary { background: transparent; color: var(--navy); }
+.result-btn:hover { background: var(--gold); color: #1a2744; border-color: var(--gold); }
+body.dark .result-btn.secondary { color: #f0f0f0; border-color: #f0f0f0; }
+
+/* ═══ FOOTER ═══ */
+footer {
+  text-align: center;
+  padding: 20px 16px 16px;
+  border-top: 1px solid var(--border);
+  direction: rtl;
+}
+.footer-handle {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: 3px;
+}
+.footer-sub {
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--text-mid);
+}
+
+#scrollTop {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--navy); color: #fff;
+  border: none; border-radius: 50%;
+  width: 44px; height: 44px;
+  font-size: 1.3rem; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(26,39,68,0.28);
+  transition: opacity 0.3s, transform 0.3s;
+  opacity: 0; pointer-events: none; z-index: 999;
+}
+#scrollTop.visible { opacity: 1; pointer-events: auto; }
+#scrollTop:hover { transform: translateY(-3px); background: var(--navy-light); }
+</style>
+</head>
+<body>
+
+<div class="madar-bar">
+  <div class="header-actions">
+    <button id="toggleThemeBtn" class="action-btn" title="تبديل المظهر">🌙</button>
+    <div class="menu-container">
+      <button id="menuBtn" class="action-btn" title="اختبارات MCQ">☰</button>
+      <div id="dropdownMenu" class="dropdown-menu">
+        <div class="dropdown-header">اختبار MCQ - المجموعات</div>
+        <div id="dropdownList"></div>
+      </div>
+    </div>
+  </div>
+  <span class="madar-name">Madar</span>
+</div>
+
+<header>
+  <h1>مصطلحات قانونية <span>باللغة الفرنسية</span></h1>
+  <div class="header-sub">مادة المصطلحات القانونية بالفرنسية · الفرقة الأولى حقوق المنصورة</div>
+  <div class="header-stats">
+    <div class="stat"><div class="stat-num" id="totalCount">0</div><div class="stat-label">مصطلح معروض</div></div>
+    <div class="stat"><div class="stat-num">🔊</div><div class="stat-label">صوت عادي + بطيء</div></div>
+    <div class="stat"><div class="stat-num">🔍</div><div class="stat-label">بحث فوري</div></div>
+  </div>
+</header>
+
+<div id="mainView">
+  <div class="controls">
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="ابحث عن مصطلح بالفرنسية أو العربية...">
+    </div>
+    <span id="resultCount" class="counter-badge">…</span>
+  </div>
+
+  <div id="groupTabs" class="group-tabs"></div>
+
+  <div class="table-wrap">
+    <div class="scroll-hint">← اسحب يميناً ويساراً لعرض كل الأعمدة →</div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Terme français</th>
+            <th>الترجمة العربية</th>
+            <th>النطق بالعربية</th>
+            <th>🔊 استمع</th>
+          </tr>
+        </thead>
+        <tbody id="mainTbody"></tbody>
+      </table>
+    </div>
+    <div class="source-credit">المصدر: سنتر ثري</div>
+    <div class="no-results" id="noResults">لا توجد نتائج مطابقة · Aucun résultat trouvé</div>
+  </div>
+</div>
+
+<div id="quizView" class="quiz-wrap" style="display: none;">
+  <div class="quiz-card">
+    <div id="qaArea">
+      <div class="quiz-header">
+        <h2 id="qTitle">اختبار مجموعة X</h2>
+        <div class="quiz-progress">السؤال <span id="qCurrent">1</span> من <span id="qTotal">30</span></div>
+      </div>
+      <div class="q-term" id="dtTerm">Terme</div>
+      <div class="q-trans-label">الترجمة المفترضة:</div>
+      <div class="q-trans" id="dtTrans">الترجمة</div>
+      <div class="q-options">
+        <button class="q-btn btn-true" id="btnTrue" onclick="submitAnswer(true)">صحيح ✓</button>
+        <button class="q-btn btn-false" id="btnFalse" onclick="submitAnswer(false)">خطأ ✗</button>
+      </div>
+      <div id="qFeedback" class="q-feedback"></div>
+      <button id="qNext" class="q-next-btn" onclick="nextQuestion()">التالي »</button>
+    </div>
+
+    <div id="qrArea" class="quiz-result-area" style="display: none;">
+      <div class="quiz-header" style="border-bottom: none; justify-content: center;">
+        <h2 id="rTitle">اكتمل الاختبار!</h2>
+      </div>
+      <div class="result-score" id="rScore">0/30</div>
+      <div class="result-msg" id="rMsg">عمل رائع!</div>
+      <div class="result-actions">
+        <button class="result-btn primary" onclick="startQuiz(currentQuizGroupIndex)">إعادة الاختبار ↺</button>
+        <button class="result-btn secondary" onclick="exitQuiz()">العودة للجدول ⇦</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-handle">@GIX37</div>
+  <div class="footer-sub">مصطلحات قانونية باللغة الفرنسية · Terminologie Juridique Français–Arabe</div>
+</footer>
+
+<button id="scrollTop" title="الأعلى">↑</button>
+
+<script>
+const allTermsList = [
+  ["Droit","القانون","دْرْوَا"],
+  ["Règle de droit","قاعدة قانونية","رِيغْل دُو دْرْوَا"],
+  ["Norme juridique","معيار قانوني","نُورْم جُورِيدِيك"],
+  ["Ordre juridique","نظام قانوني","أُورْدْر جُورِيدِيك"],
+  ["Sujet de droit","شخص قانوني","سُوجِي دُو دْرْوَا"],
+  ["Personne physique","شخص طبيعي","بِيرْسُون فِيزِيك"],
+  ["Personne morale","شخص اعتباري","بِيرْسُون مُورَال"],
+  ["Capacité juridique","الأهلية القانونية","كَابَاسِيتِي جُورِيدِيك"],
+  ["Responsabilité","المسؤولية","رِيسْبُونْسَابِيلِيتِي"],
+  ["Sanction","الجزاء","سَانْكْسْيُون"],
+  ["Obligation","الالتزام","أُوبْلِيغَاسْيُون"],
+  ["Acte juridique","تصرف قانوني","أَكْت جُورِيدِيك"],
+  ["Fait juridique","واقعة قانونية","فِيه جُورِيدِيك"],
+  ["Contrat","عقد","كُونْتْرَا"],
+  ["Convention","اتفاق","كُونْفَانْسْيُون"],
+  ["Nullité","بطلان","نُولِيتِي"],
+  ["Prescription","تقادم","بْرِيسْكْرِيبْسْيُون"],
+  ["Compétence","اختصاص","كُومْبِيتَانْس"],
+  ["Juridiction","جهة قضائية","جُورِيدِيكْسْيُون"],
+  ["Contentieux","منازعة قضائية","كُونْتَانْسْيُو"],
+  ["Constitution","دستور","كُونْسْتِيتُوسْيُون"],
+  ["Souveraineté","سيادة","سُوفِيرِينِيتِي"],
+  ["État","دولة","إِيتَا"],
+  ["État de droit","دولة القانون","إِيتَا دُو دْرْوَا"],
+  ["Séparation des pouvoirs","الفصل بين السلطات","سِيبَارَاسْيُون دِي بُوفْوَار"],
+  ["Pouvoir législatif","السلطة التشريعية","بُوفْوَار لِيجِيسْلَاتِيف"],
+  ["Pouvoir exécutif","السلطة التنفيذية","بُوفْوَار إِيكْزِيكُوتِيف"],
+  ["Pouvoir judiciaire","السلطة القضائية","بُوفْوَار جُودِيسْيِير"],
+  ["Légalité","المشروعية","لِيغَالِيتِي"],
+  ["Contrôle de constitutionnalité","الرقابة على الدستورية","كُونْتْرُول دُو كُونْسْتِيتُوسْيُونَالِيتِي"],
+  ["Droits fondamentaux","الحقوق الأساسية","دْرْوَا فُونْدَامَانْتُو"],
+  ["Libertés publiques","الحريات العامة","لِيبِيرْتِي بُوبْلِيك"],
+  ["Une norme","قاعدة سلوكية","أُون نُورْم"],
+  ["Générale","عامة","جِينِيرَال"],
+  ["Obligatoire","ملزمة","أُوبْلِيغَاتُوَار"],
+  ["Édictée","منصوص عليها","إِيدِيكْتِي"],
+  ["Reconnue","معترف بها","رُوكُونُو"],
+  ["Par","بواسطة","بَار"],
+  ["L'autorité compétente","السلطة المختصة","لُوتُورِيتِي كُومْبِيتَانْت"],
+  ["Respect","احترام","رِيسْبِيه"],
+  ["Finalité","الهدف","فِينَالِيتِي"],
+  ["Organiser","تنظيم","أُورْغَانِيزِي"],
+  ["L'équilibre","التوازن","لِيكِيلِيبْر"],
+  ["Intérêts individuels","المصالح الشخصية","إِينْتِيرِيه زَانْدِيفِيدُوِيل"],
+  ["L'intérêt général","المصلحة العامة","لِينْتِيرِيه جِينِيرَال"],
+  ["Les traits","الخصائص","لِيه تْرِيه"],
+  ["Impersonnelle","غير شخصية","إِيمْبِيرْسُونِيل"],
+  ["La généralité","العمومية","لَا جِينِيرَالِيتِي"],
+  ["L'abstraction","التجريد","لَابْسْتْرَاكْسْيُون"],
+  ["Des situations susceptibles","حالات محتملة","دِيه سِيتُوَاسْيُون سُوسِيبْتِيبْل"],
+  ["Le caractère obligatoire","الطابع الملزم","لُو كَارَاكْتِير أُوبْلِيغَاتُوَار"],
+  ["La sanction étatique","الجزاء العائد للدولة","لَا سَانْكْسْيُون إِيتَاتِيك"],
+  ["Une sanction prévue","جزاء مقرر / منصوص عليه","أُون سَانْكْسْيُون بْرِيفُو"],
+  ["Le droit public","القانون العام","لُو دْرْوَا بُوبْلِيك"],
+  ["Le droit privé","القانون الخاص","لُو دْرْوَا بْرِيفِيه"],
+  ["La finalité sociale","الهدف الاجتماعي","لَا فِينَالِيتِي سُوسْيَال"],
+  ["La coexistence sociale","التعايش الاجتماعي","لَا كُوإِيكْزِيسْتَانْس سُوسْيَال"],
+  ["Prévenir","تمنع","بْرِيفَانِير"],
+  ["Les conflits","النزاعات","لِيه كُونْفْلِيه"],
+  ["Assurer","تضمن","أَاسُورِيه"],
+  ["La justice","العدالة","لَا جُوسْتِيس"],
+  ["La stability","الاستقرار","لَا سْتَابِيلِيتِي"],
+  ["Des rapports sociaux","العلاقات الاجتماعية","دِيه رَابُور سُوسْيُو"],
+  ["Régit","يحكم / ينظم","رِيجِيه"],
+  ["Les relations","العلاقات","لِيه رُولَاسْيُون"],
+  ["Une personne publique","الشخص العام","أُون بِيرْسُون بُوبْلِيك"],
+  ["Puissance publique","السلطة العامة","بُوِيسَانْس بُوبْلِيك"],
+  ["Organise","ينظم","أُورْغَانِيز"],
+  ["L'administration","الإدارة","لَادْمِينِيسْتْرَاسْيُون"],
+  ["Relations internationales","العلاقات الدولية","رُولَاسْيُون إِينْتِيرْنَاسْيُونَال"],
+  ["Certaines","بعض","سِيرْتِين"],
+  ["Caractéristiques principales","الخصائص الأساسية","كَارَاكْتِيرِيسْتِيك بْرِينْسِيبَال"],
+  ["Présence","وجود","بْرِيزَانْس"],
+  ["Collectivité territoriale","الجماعة الإقليمية","كُولِيكْتِيفِيتِي تِيرِيتُورْيَال"],
+  ["Prérogatives","امتيازات","بْرِيرُوغَاتِيف"],
+  ["Branches","فروع","بْرَانْش"],
+  ["Le droit constitutional","القانون الدستوري","لُو دْرْوَا كُونْسْتِيتُوسْيُونِيل"],
+  ["Le droit administratif","القانون الإداري","لُو دْرْوَا أَادْمِينِيسْتْرَاتِيف"],
+  ["Le droit des finances publiques","قانون المالية العامة","لُو دْرْوَا دِيه فِينَانْس بُوبْلِيك"],
+  ["Le droit international public","القانون الدولي العام","لُو دْرْوَا إِينْتِيرْنَاسْيُونَال بُوبْلِيك"],
+  ["Le droit international privé","القانون الدولي الخاص","لُو دْرْوَا إِينْتِيرْنَاسْيُونَال بْرِيفِيه"],
+  ["Le droit civil","القانون المدني","لُو دْرْوَا سِيفِيل"],
+  ["Le droit commercial","القانون التجاري","لُو دْرْوَا كُومِيرْسْيَال"],
+  ["Recherche","يبحث","رُوشِيرْش"],
+  ["La protection","الحماية","لَا بْرُوتِيكْسْيُون"],
+  ["Intérêts particuliers","المصالح الخاصة","إِينْتِيرِيه بَارْتِيكُولْيِير"],
+  ["Absence","غياب","أَابْسَانْس"],
+  ["La tradition juridique","التقاليد القانونية","لَا تْرَادِيسْيُون جُورِيدِيك"],
+  ["Le critère","معيار","لُو كْرِيتِير"],
+  ["Le droit pénal","القانون الجنائي","لُو دْرْوَا بِينَال"],
+  ["Principal","رئيسي","بْرِينْسِيبَال"],
+  ["Organisation","تنظيم","أُورْغَانِيزَاسْيُون"],
+  ["Réside","يكمن","رِيزِيد"],
+  ["La quality des parties","صفة الأطراف","لَا كَالِيتِيه دِيه بَارْتِيه"],
+  ["La nature du rapport juridique","طبيعة العلاقة القانونية","لَا نَاتُور دُو رَابُور جُورِيدِيك"],
+  ["Rapport d'égalité","علاقة المساواة","رَابُور دِيغَالِيتِي"],
+  ["L'architecture du système juridique","بنية النظام القانوني","لَارْشِيتِيكْتُور دُو سِيسْتِيم جُورِيدِيك"],
+  ["Constitue la vie en société","يشكل الحياة في المجتمع","كُونْسْتِيتُو لَا فِيه أَنْ سُوسْيِيتِي"],
+  ["La sanction","العقوبة","لَا سَانْكْسْيُون"],
+  ["Institutions publiques","المؤسسات العامة","إِينْسْتِيتُوسْيُون بُوبْلِيك"],
+  ["Un simple ensemble de règles techniques","مجموعة بسيطة من القواعد التقنية","أَان سَانْبْل أَنْسَانْبْل دُو رِيغْل تِيكْنِيك"],
+  ["L'ordre interne","الشؤون الداخلية","لُوردْر إِينْتِيرْن"],
+  ["La fonction","الوظيفة","لَا فُونْكْسْيُون"],
+  ["Réflexion","تفكير","رِيفْلِيكْسْيُون"],
+  ["Exécutif","تنفيذي","إِيكْزِيكُوتِيف"],
+  ["Le droit romano-germanique","القانون الروماني الجرماني","لُو دْرْوَا رُومَانُو جِيرْمَانِيك"],
+  ["Législatif","تشريعية","لِيجِيسْلَاتِيف"],
+  ["Juridictionnel","قضائية","جُورِيدِيكْسْيُونِيل"],
+  ["Personne morale souveraine","شخص معنوي صاحب سيادة","بِيرْسُون مُورَال سُوفِيرِين"],
+  ["Développée","متطور","دِيفِيلُوبِيه"],
+  ["Libertés","الحريات","لِيبِيرْتِيه"],
+  ["Poursuivie","المقصود / المتبع","بُورْسُوِيفِي"],
+  ["La liberté","الحرية","لَا لِيبِيرْتِيه"],
+  ["Distinction","التمييز","دِيسْتَانْكْسْيُون"],
+  ["Mondialisation","العولمة","مُونْدْيَالِيزَاسْيُون"],
+  ["Le contexte contemporain","الوقت المعاصر","لُو كُونْتِيكْسْت كُونْتَانْبُورِين"],
+  ["Le droit international","القانون الدولي","لُو دْرْوَا إِينْتِيرْنَاسْيُونَال"],
+  ["La poursuite de l'intérêt général","تحقيق المصلحة العامة","لَا بُورْسُوِيت دُو لِينْتِيرِيه جِينِيرَال"],
+  ["Doivent satisfaire","يجب إشباعها","دْوَافْ سَاتِيسْفِير"],
+  ["Coopération internationale","التعاون الدولي","كُوأُوبِيرَاسْيُون إِينْتِيرْنَاسْيُونَال"],
+  ["Difficile à définir","صعب التحديد","دِيفِيسِيل أَا دِيفِينِير"],
+  ["Prérogatives de puissance publique","امتيازات السلطة العامة","بْرِيرُوغَاتِيف دُو بُوِيسَانْس بُوبْلِيك"],
+  ["Fixer les limites","يضع لها حدود","فِيكْسِيه لِيه لِيمِيت"],
+  ["Classiquement","قديماً","كْلَاسِيكْمَان"],
+  ["La soumission","الخضوع","لَا سُومِيسْيُون"],
+  ["Un territoire","الإقليم","أَان تِيرِيتُوَار"],
+  ["Les usagers","المستخدمين","لِيزُوزَاجِيه"],
+  ["Conseil d'État","مجلس الدولة","كُونْسِيه دِيتَا"],
+  ["Pouvoir","السلطة","بُوفْوَار"],
+  ["Fondamentalement","بشكل أساسي","فُونْدَامَانْتَالْمَان"],
+  ["Population","الشعب / السكان","بُوبُولَاسْيُون"],
+  ["Soumises au droit","خاضعة للقانون","سُومِيز أُو دْرْوَا"],
+  ["Gouvernement","حكومة","غُوفِيرْنُومَان"],
+  ["Les dépenses","النفقات","لِيه دِيبَانْس"],
+  ["Le Pouvoir suprême","السلطة العليا","لُو بُوفْوَار سُوبْرِيم"],
+  ["L'expropriation pour cause d'utilité publique","نزع الملكية للمنفعة العامة","لِيكْسْبْرُوبْرْيَاسْيُون بُور كُوز دُوتِيلِيتِي بُوبْلِيك"],
+  ["Les actes administratifs unilatéraux","الأعمال الإدارية الانفرادية","لِيزَاكْت أَادْمِينِيسْتْرَاتِيف يُونِيلَاتِيرُو"],
+  ["Les contrats administratifs","العقود الإدارية","لِيه كُونْتْرَا أَادْمِينِيسْتْرَاتِيف"],
+  ["Les traités internationaux","المعاهدات الدولية","لِيه تْرِيتِيه إِينْتِيرْنَاسْيُونُو"],
+  ["Autorité supérieure","سلطة أعلى","أُوتُورِيتِيه سُوبِيرْيُور"],
+  ["Conseil constitutionnel","المجلس الدستوري","كُونْسِيه كُونْسْتِيتُوسْيُونِيل"],
+  ["Le contrôle juridictionnel des actes administratifs","الرقابة القضائية على الأعمال الإدارية","لُو كُونْتْرُول جُورِيدِيكْسْيُونِيل دِيزَاكْت أَادْمِينِيسْتْرَاتِيف"],
+  ["La responsabilité administrative","المسؤولية الإدارية","لَا رِيسْبُونْسَابِيلِيتِيه أَادْمِينِيسْتْرَاتِيف"],
+  ["Le service public","المرفق العام","لُو سِيرْفِيس بُوبْلِيك"],
+  ["La police administrative","الضبط / البوليس الإداري","لَا بُولِيس أَادْمِينِيسْتْرَاتِيف"],
+  ["L'émergence","ظهور","لِيمِيرْجَانْس"],
+  ["Le droit fiscal","قانون الضريبة / القانون الضريبي","لُو دْرْوَا فِيسْكَال"],
+  ["La perception de l'impôt","تحصيل الضريبة","لَا بِيرْسِيبْسْيُون دُو لِيمْبُو"],
+  ["Le principe de légalité","مبدأ المشروعية / سيادة القانون","لُو بْرِينْسِيب دُو لِيغَالِيتِي"],
+  ["Les droits et libertés fondamentaux","الحقوق والحريات الأساسية","لِيه دْرْوَا إِيه لِيبِيرْتِيه فُونْدَامَانْتُو"],
+  ["Le contrôle de constitutionnalité","الرقابة على دستورية القوانين","لُو كُونْتْرُول دُو كُونْسْتِيتُوسْيُونَالِيتِي"],
+  ["Piliers de l'État de droit","أعمدة دولة القانون","بِيلْيِيه دُو لِيتَا دُو دْرْوَا"],
+  ["La hiérarchie des normes","تدرج القواعد القانونية","لَا يِيرَارْشِيه دِيه نُورْم"],
+  ["La coutume internationale","العرف الدولي","لَا كُوتُوم إِينْتِيرْنَاسْيُونَال"],
+  ["Organisation des Nations Unies","منظمة الأمم المتحدة","أُورْغَانِيزَاسْيُون دِيه نَاسْيُون يُونِي"],
+  ["Les finances publiques","المالية العامة","لِيه فِينَانْس بُوبْلِيك"],
+  ["Le contrôle des finances publiques","الرقابة على الأموال العامة","لُو كُونْتْرُول دِيه فِينَانْس بُوبْلِيك"],
+  ["Personnes publiques","الأشخاص العامة","بِيرْسُون بُوبْلِيك"],
+  ["Le droit public économique","القانون العام الاقتصادي","لُو دْرْوَا بُوبْلِيك إِيكُونُومِيك"],
+  ["La vie économique","الحياة الاقتصادية","لَا فِيه إِيكُونُومِيك"],
+  ["Les principes généraux du droit","المبادئ العامة للقانون","لِيه بْرِينْسِيب جِينِيرُو دُو دْرْوَا"],
+  ["L'interdépendance croissante","الترابط المتزايد","لِينْتِيرْدِيبَانْدَانْس كْرُوَاسَانْت"],
+  ["Ordre juridique international","نظام قانوني دولي","أُوردْر جُورِيدِيك إِينْتِيرْنَاسْيُونَال"],
+  ["Les règles relatives aux ressources","القواعد المتعلقة بالإيرادات","لِيه رِيغْل رُولَاتِيف أُو رُوسُورْس"],
+  ["Le droit budgétaire","قانون الميزانية","لُو دْرْوَا بُودجِيتِير"],
+  ["Le droit des collectivités","قانون الهيئات المحلية","لُو دْرْوَا دِيه كُولِيكْتِيفِيتِي"],
+  ["La régulation des marchés","تنظيم الأسواق","لَا رِيغُولَاسْيُون دِيه مَارْشِيه"],
+  ["Les autorités administratives indépendantes","السلطات الإدارية المستقلة","لِيزُوتُورِيتِيه أَادْمِينِيسْتْرَاتِيف إِيندِيبَانْدَانْت"],
+  ["Les entreprises publiques des collectivités locales","المشروعات العامة للهيئات المحلية","لِيزَانْتْرُوبْرِيز بُوبْلِيك دِيه كُولِيكْتِيفِيتِي لُوكَال"],
+  ["Le principe de décentralisation","مبدأ اللامركزية","لُو بْرِينْسِيب دُو دِيسَانْتْرَالِيزَاسْيُون"],
+  ["La primauté de la constitution","مبدأ سمو الدستور","لَا بْرِيمُوتِيه دُو لَا كُونْسْتِيتُوسْيُون"],
+  ["L'étude de la jurisprudence","دراسة أحكام القضاء / السوابق القضائية","لِيتُود دُو لَا جُورِيسْبْرُودَانْس"],
+  ["Cohérence","الترابط / الاتساق","كُوإِيرَانْس"],
+  ["L'analyse des textes normatifs","تحليل النصوص المعيارية","لَانَالِيز دِيه تِيكْسْت نُورْمَاتِيف"],
+  ["La protection des droits fondamentaux","حماية الحقوق الأساسية","لَا بْرُوتِيكْسْيُون دِيه دْرْوَا فُونْدَامَانْتُو"],
+  ["La recherche de l'intérêt général","البحث عن المصلحة العامة","لَا رُوشِيرْش دُو لِينْتِيرِيه جِينِيرَال"],
+  ["Fondée","قائمة ومؤسسة على","فُونْدِيه"],
+  ["La fragmentation excessive des disciplines","التجزئة المفرطة للتخصصات","لَا فْرَاغْمَانْتَاسْيُون إِيكْسِيسِيف دِيه دِيسِيبْلِين"],
+  ["Le contexte politique et institutionnel","السياق السياسي والمؤسسي","لُو كُونْتِيكْسْت بُولِيتِيك إِيه إِينْسْتِيتُوسْيُونِيل"]
+];
+
+const groups = [];
+let startIndex = 0;
+for (let i = 1; i <= 6; i++) {
+  let count = (i === 6) ? 29 : 30;
+  groups.push(allTermsList.slice(startIndex, startIndex + count));
+  startIndex += count;
+}
+
+let activeGroupIndex = 'all';
+let currentDisplayedTerms = allTermsList;
+
+function initUI() {
+  const tabsContainer = document.getElementById("groupTabs");
+  const dropdownList = document.getElementById("dropdownList");
+  
+  tabsContainer.innerHTML = `<button class="group-tab-btn active" id="tab-all" onclick="showGroup('all')">الكل (179)</button>`;
+  
+  for(let i=0; i<6; i++) {
+    tabsContainer.innerHTML += `<button class="group-tab-btn" id="tab-${i}" onclick="showGroup(${i})">مجموعة ${i+1}</button>`;
+    dropdownList.innerHTML += `<button class="dropdown-item" onclick="startQuiz(${i})">اختبار MCQ - مجموعة ${i+1}</button>`;
+  }
+  
+  buildTable();
+
+  const menuBtn = document.getElementById("menuBtn");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  
+  menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle("show");
+  });
+
+  document.addEventListener("click", (e) => {
+    if(!dropdownMenu.contains(e.target) && e.target !== menuBtn) {
+      dropdownMenu.classList.remove("show");
+    }
+  });
+}
+
+function showGroup(index) {
+  activeGroupIndex = index;
+  document.querySelectorAll(".group-tab-btn").forEach(btn => btn.classList.remove("active"));
+  document.getElementById(`tab-${index}`).classList.add("active");
+  currentDisplayedTerms = (index === 'all') ? allTermsList : groups[index];
+  document.getElementById("searchInput").value = "";
+  buildTable();
+}
+
+function buildTable() {
+  const tbody = document.getElementById("mainTbody");
+  if (!tbody) return;
+  let html = "";
+  
+  for (let i = 0; i < currentDisplayedTerms.length; i++) {
+    const [fr, ar, phonetic] = currentDisplayedTerms[i];
+    const safeFr = fr.replace(/'/g, "\\'");
+    const parityClass = i % 2 === 0 ? "even-pair" : "odd-pair";
+    html += `
+      <tr class="${parityClass}" data-fr="${fr.toLowerCase()}" data-ar="${ar}">
+        <td class="td-fr">${fr}</td>
+        <td class="td-ar">${ar}</td>
+        <td class="td-phonetic">${phonetic}</td>
+        <td class="td-listen">
+          <div class="btn-group">
+            <button class="listen-btn" onclick="playFrench('${safeFr}', this, false)">🔊 عادي</button>
+            <button class="listen-btn slow" onclick="playFrench('${safeFr}', this, true)">🐢 بطيء</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+  tbody.innerHTML = html;
+  
+  document.getElementById("totalCount").textContent = currentDisplayedTerms.length;
+  document.getElementById("resultCount").textContent = currentDisplayedTerms.length;
+  
+  const searchVal = document.getElementById("searchInput").value.trim().toLowerCase();
+  if (searchVal) {
+    filterTable(searchVal);
+  } else {
+    document.getElementById("noResults").classList.remove("show");
+  }
+}
+
+function filterTable(q) {
+  const rows = document.querySelectorAll("#mainTbody tr");
+  let visible = 0;
+  for (let row of rows) {
+    const fr = row.getAttribute("data-fr");
+    const ar = row.getAttribute("data-ar");
+    const match = !q || (fr && fr.includes(q)) || (ar && ar.includes(q));
+    row.style.display = match ? "" : "none";
+    if (match) visible++;
+  }
+  document.getElementById("totalCount").textContent = visible;
+  document.getElementById("resultCount").textContent = visible;
+  document.getElementById("noResults").classList.toggle("show", visible === 0 && q !== "");
+}
+
+let currentAudio = null;
+let currentBtn = null;
+
+function stopCurrent() {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.src = "";
+    currentAudio = null;
+  }
+  if (currentBtn) {
+    currentBtn.classList.remove("playing");
+    currentBtn = null;
+  }
+}
+
+function playFrench(text, btn, slow) {
+  if (!window.speechSynthesis) {
+    alert("متصفحك لا يدعم النطق الصوتي");
+    return;
+  }
+  if (currentBtn === btn) {
+    stopCurrent();
+    return;
+  }
+  stopCurrent();
+  const url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=fr&q=" + encodeURIComponent(text);
+  const audio = new Audio(url);
+  if (slow) audio.playbackRate = 0.72;
+  audio.onplay = () => btn.classList.add("playing");
+  audio.onended = () => {
+    btn.classList.remove("playing");
+    if (currentAudio === audio) { currentAudio = null; currentBtn = null; }
+  };
+  audio.onerror = () => {
+    btn.classList.remove("playing");
+    currentAudio = null; currentBtn = null;
+    alert("حدث خطأ في تشغيل الصوت. تأكد من اتصالك بالإنترنت.");
+  };
+  currentAudio = audio;
+  currentBtn = btn;
+  audio.play().catch(() => {
+    btn.classList.remove("playing");
+    currentAudio = null; currentBtn = null;
+    alert("تعذر تشغيل الصوت. ربما يكون المتصفح منع التشغيل التلقائي.");
+  });
+}
+
+let currentQuizGroupIndex = 0;
+let quizQuestions = [];
+let currentQIndex = 0;
+let quizScore = 0;
+
+function startQuiz(groupIndex) {
+  document.getElementById("dropdownMenu").classList.remove("show");
+  currentQuizGroupIndex = groupIndex;
+  const groupData = groups[groupIndex];
+  
+  quizQuestions = [];
+  const shuffledTerms = [...groupData].sort(() => Math.random() - 0.5);
+  
+  for (let term of shuffledTerms) {
+    const fr = term[0];
+    const correctAr = term[1];
+    const isActuallyCorrect = Math.random() < 0.5; 
+    let shownAr = correctAr;
+
+    if (!isActuallyCorrect) {
+      const wrongOptions = groupData.map(t => t[1]).filter(ar => ar !== correctAr);
+      if (wrongOptions.length > 0) {
+        shownAr = wrongOptions[Math.floor(Math.random() * wrongOptions.length)];
+      }
+    }
+
+    quizQuestions.push({
+      fr: fr,
+      correctAr: correctAr,
+      shownAr: shownAr,
+      isCorrectTranslation: shownAr === correctAr
+    });
+  }
+
+  currentQIndex = 0;
+  quizScore = 0;
+
+  document.getElementById("mainView").style.display = "none";
+  document.getElementById("quizView").style.display = "block";
+  document.getElementById("qaArea").style.display = "block";
+  document.getElementById("qrArea").style.display = "none";
+
+  document.getElementById("qTitle").textContent = "اختبار MCQ - مجموعة " + (groupIndex + 1);
+  document.getElementById("qTotal").textContent = quizQuestions.length;
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizQuestions[currentQIndex];
+  document.getElementById("qCurrent").textContent = currentQIndex + 1;
+  document.getElementById("dtTerm").textContent = q.fr;
+  document.getElementById("dtTrans").textContent = q.shownAr;
+  
+  const btnTrue = document.getElementById("btnTrue");
+  const btnFalse = document.getElementById("btnFalse");
+  btnTrue.disabled = false;
+  btnFalse.disabled = false;
+  
+  const feedback = document.getElementById("qFeedback");
+  feedback.className = "q-feedback";
+  feedback.style.display = "none";
+  document.getElementById("qNext").style.display = "none";
+}
+
+function submitAnswer(userChoseTrue) {
+  const q = quizQuestions[currentQIndex];
+  document.getElementById("btnTrue").disabled = true;
+  document.getElementById("btnFalse").disabled = true;
+
+  const isUserCorrect = (userChoseTrue === q.isCorrectTranslation);
+  if (isUserCorrect) {
+    quizScore++;
+  }
+
+  const feedback = document.getElementById("qFeedback");
+  if (isUserCorrect) {
+    feedback.classList.add("correct");
+    if (userChoseTrue) {
+       feedback.innerHTML = "إجابة صحيحة! الترجمة المعروضة سليمة.";
+    } else {
+       feedback.innerHTML = "إجابة صحيحة! الترجمة المعروضة <b>خاطئة</b>.<br>الترجمة الصحيحة هي: " + q.correctAr;
+    }
+  } else {
+    feedback.classList.add("wrong");
+    if (userChoseTrue) {
+       feedback.innerHTML = "إجابة خاطئة. الترجمة الصحيحة هي: <br>" + q.correctAr;
+    } else {
+       feedback.innerHTML = "إجابة خاطئة. الترجمة المعروضة هي الترجمة الصحيحة بالفعل.";
+    }
+  }
+  
+  feedback.style.display = "block";
+  document.getElementById("qNext").style.display = "inline-block";
+}
+
+function nextQuestion() {
+  currentQIndex++;
+  if (currentQIndex < quizQuestions.length) {
+    renderQuestion();
+  } else {
+    showQuizResults();
+  }
+}
+
+function showQuizResults() {
+  document.getElementById("qaArea").style.display = "none";
+  document.getElementById("qrArea").style.display = "block";
+  document.getElementById("rScore").textContent = quizScore + "/" + quizQuestions.length;
+  const percentage = (quizScore / quizQuestions.length) * 100;
+  
+  let msg = "";
+  if(percentage === 100) msg = "ممتاز! علامة كاملة 🏆";
+  else if(percentage >= 80) msg = "عمل رائع ومستوى ممتاز 🌟";
+  else if(percentage >= 50) msg = "نتيجة جيدة، لكنك تستطيع الأفضل 👍";
+  else msg = "عليك المراجعة أكثر، لا تستسلم! 💪";
+
+  document.getElementById("rMsg").textContent = msg + ` (${Math.round(percentage)}%)`;
+}
+
+function exitQuiz() {
+  document.getElementById("quizView").style.display = "none";
+  document.getElementById("mainView").style.display = "block";
+}
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  filterTable(e.target.value.trim().toLowerCase());
+});
+
+const scrollBtn = document.getElementById("scrollTop");
+window.addEventListener("scroll", () => {
+  scrollBtn.classList.toggle("visible", window.scrollY > 300);
+});
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+const themeToggle = document.getElementById("toggleThemeBtn");
+if (themeToggle) {
+  const savedTheme = localStorage.getItem("pol_theme") || "light";
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    themeToggle.textContent = "☀️";
+  } else {
+    themeToggle.textContent = "🌙";
+  }
+  themeToggle.addEventListener("click", () => {
+    const isDark = document.body.classList.contains("dark");
+    document.body.classList.toggle("dark");
+    localStorage.setItem("pol_theme", isDark ? "light" : "dark");
+    themeToggle.textContent = isDark ? "🌙" : "☀️";
+  });
+}
+
+window.addEventListener("load", initUI);
+
+(function() {
+  try { if (window.self !== window.top) window.top.location.href = window.self.location.href; } catch(e) {}
+})();
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  const k = e.key.toLowerCase(), c = e.ctrlKey || e.metaKey;
+  if (c && k === "u") { e.preventDefault(); return false; }
+  if (c && k === "s") { e.preventDefault(); return false; }
+  if (e.key === "F12") { e.preventDefault(); return false; }
+  if (c && e.shiftKey && "ijc".includes(k)) { e.preventDefault(); return false; }
+});
+document.addEventListener("dragstart", e => e.preventDefault());
+</script>
+</body>
+</html>
